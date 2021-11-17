@@ -28,7 +28,7 @@ include_directories(vendor/stb/)
 file(GLOB_RECURSE "engine" SRC src/engine/*.c)
 add_library(T3Vtech STATIC ${engine})
 
-#target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2}")
+target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2}")
 #target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_ttf}")
 #target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_mixer}")
 #target_link_libraries(T3Vtech LINK_PRIVATE m)
