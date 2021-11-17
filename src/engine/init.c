@@ -1,16 +1,22 @@
 #include <tt.h>
 
 extern SDL_Window *tt_window;
+extern uint32_t tt_res_x;
+extern uint32_t tt_res_y;
+extern uint32_t tt_desktop_res_x;
+extern uint32_t tt_desktop_res_y;
 
 //return true if successful
 bool tt_init(
-	const char* window_name,
-	uint32_t res_x, 
-	uint32_t res_y,
-	bool fullscreen)
+	const char *window_name,
+	const uint32_t res_x, 
+	const uint32_t res_y,
+	const bool fullscreen)
 {
 
 	printf("initialize T3Vtech 3 engine\n");
+	tt_res_x=res_x;
+	tt_res_y=res_y;
 
 	//zero as return value means everything is fine
 	if(0!=SDL_Init(
@@ -28,10 +34,20 @@ bool tt_init(
 	}
 	
 
+	SDL_DisplayMode dm;
+	SDL_GetDesktopDisplayMode(0, &dm);
+	tt_desktop_res_x=dm.w;
+	tt_desktop_res_y=dm.h;
+	printf(
+		"desktop resolution is %ix%i at %iHz\n",
+		tt_desktop_res_x,
+		tt_desktop_res_y,
+		dm.refresh_rate);
+
 	if(fullscreen)
 	{
 		tt_window=SDL_CreateWindow(
-			"T3Vtech3", 
+			window_name, 
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			res_x, res_y,
@@ -41,7 +57,7 @@ bool tt_init(
 	else
 	{
 		tt_window=SDL_CreateWindow(
-			"T3Vtech3", 
+			window_name, 
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			res_x, res_y,
@@ -55,7 +71,15 @@ bool tt_init(
 	else
 	{
 		printf("SDL2 window created\n");
+		printf(
+			"game resolution is %ix%i\n",
+			tt_res_x,
+			tt_res_y);
 	}
+
+	SDL_DisableScreenSaver();
+
+	atexit(tt_quit);
 
 	return true;
 }

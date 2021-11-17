@@ -7,6 +7,7 @@
 
 //stdlib
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <inttypes.h>
 
@@ -15,6 +16,7 @@
 
 //engine headers
 #include <init.h>
+#include <quit.h>
 
 #ifdef __cplusplus
 	}
