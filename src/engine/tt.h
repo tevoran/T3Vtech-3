@@ -15,8 +15,8 @@
 #include <SDL2/SDL.h>
 
 //engine headers
-#include <init.h>
-#include <quit.h>
+#include <common/init.h>
+#include <common/quit.h>
 
 #ifdef __cplusplus
 	}
