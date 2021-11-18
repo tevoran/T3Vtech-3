@@ -5,6 +5,7 @@ extern uint32_t tt_res_x;
 extern uint32_t tt_res_y;
 extern uint32_t tt_desktop_res_x;
 extern uint32_t tt_desktop_res_y;
+extern SDL_GLContext tt_glcontext;
 
 //return true if successful
 bool tt_init(
@@ -75,6 +76,16 @@ bool tt_init(
 			"game resolution is %ix%i\n",
 			tt_res_x,
 			tt_res_y);
+	}
+
+	tt_glcontext=SDL_GL_CreateContext(tt_window);
+	if(tt_glcontext==NULL)
+	{
+		printf("[ERROR] couldn't create OpenGL context\n");
+	}
+	else
+	{
+		printf("SDL2 OpenGL context created\n");
 	}
 
 	SDL_DisableScreenSaver();

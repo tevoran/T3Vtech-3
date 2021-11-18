@@ -3,6 +3,7 @@
 extern SDL_Window *tt_window;
 extern uint32_t tt_desktop_res_x;
 extern uint32_t tt_desktop_res_y;
+extern SDL_GLContext tt_glcontext;
 
 void tt_quit()
 {
@@ -12,6 +13,10 @@ void tt_quit()
 		tt_window,
 		tt_desktop_res_x,
 		tt_desktop_res_y);
+
+	printf("destroying SDL2 OpenGL context...");
+		SDL_GL_DeleteContext(tt_glcontext);
+	printf("done\n");
 
 	printf("destroying SDL window...");
 		SDL_DestroyWindow(tt_window);
