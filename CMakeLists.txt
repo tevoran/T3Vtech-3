@@ -15,7 +15,6 @@ SET(CMAKE_CXX_FLAGS "-g -Werror -Wall -Wextra")
 
 include(FindPkgConfig)
 find_library(SDL2 SDL2)
-find_package(SDL2 REQUIRED)
 find_library(SDL2_ttf SDL2_ttf)
 find_library(SDL2_mixer SDL2_mixer)
 find_library(GLEW GLEW)
@@ -29,10 +28,10 @@ file(GLOB_RECURSE "engine" SRC src/engine/*.c)
 add_library(T3Vtech STATIC ${engine})
 
 target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2}")
+target_link_libraries(T3Vtech LINK_PRIVATE "${GLEW}")
 #target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_ttf}")
 #target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_mixer}")
 #target_link_libraries(T3Vtech LINK_PRIVATE m)
-#target_link_libraries(T3Vtech LINK_PRIVATE "${GLEW}")
 #target_link_libraries(T3Vtech LINK_PRIVATE "${GL}")
 
 #creating library test

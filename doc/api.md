@@ -18,7 +18,7 @@ If you call other T3Vtech3 functions without initializing the engine first then 
 
 ## Quitting
 
-At the end of the game you should quit the engine. Although tt_quit() will be also called if there happens something unexpected.
+At the end of the game you should quit the engine. Although tt_quit() will be also called if there happens something unexpected that closes the engine. And it will get called if the game just gets to its end of execution anyway.
 
 ```c
 void tt_quit();
