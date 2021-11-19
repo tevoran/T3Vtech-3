@@ -15,7 +15,7 @@ bool tt_init(
 	const bool fullscreen)
 {
 
-	printf("initialize T3Vtech 3 engine\n");
+	printf("initialize T3Vtech-3 engine\n");
 	tt_res_x=res_x;
 	tt_res_y=res_y;
 
@@ -34,7 +34,8 @@ bool tt_init(
 		printf("SDL2 initialized\n");
 	}
 	
-
+	//get current desktop resolution to avoid resolution errors
+	//at the end of execution of the game
 	SDL_DisplayMode dm;
 	SDL_GetDesktopDisplayMode(0, &dm);
 	tt_desktop_res_x=dm.w;
@@ -82,15 +83,44 @@ bool tt_init(
 	if(tt_glcontext==NULL)
 	{
 		printf("[ERROR] couldn't create OpenGL context\n");
+		return false;
 	}
 	else
 	{
 		printf("SDL2 OpenGL context created\n");
 	}
 
+
+	if(glewInit()!=GLEW_OK)
+	{
+		printf("[ERROR] GLEW couldn't be initialized\n");
+		return false;
+	}
+	else
+	{
+		printf("GLEW initialized\n");
+	}
+
+	//setting the desired OpenGL version
+	printf("using OpenGL 4.5\n");
+    SDL_GL_SetAttribute (SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute (SDL_GL_CONTEXT_MINOR_VERSION, 5);
+
 	SDL_DisableScreenSaver();
 
+	//making sure tt_quit gets called when game is closed
 	atexit(tt_quit);
+
+	if(!tt_gfx_init())
+	{
+		printf(
+			"[ERROR] couldn't set up the GFX functionalities of T3Vtech-3\n");
+		return false;
+	}
+	else
+	{
+		printf("GFX functionalities initialized\n");
+	}
 
 	return true;
 }

@@ -13,10 +13,13 @@
 
 //vendor
 #include <SDL2/SDL.h>
+#include <GL/glew.h>
 
 //engine headers
 #include <common/init.h>
 #include <common/quit.h>
+
+#include <gfx/gfx.h>
 
 #ifdef __cplusplus
 	}
