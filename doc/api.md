@@ -23,3 +23,11 @@ At the end of the game you should quit the engine. Although tt_quit() will be al
 ```c
 void tt_quit();
 ```
+
+## Frame Update
+
+To show what has been drawn onto the screen you have to call tt_new_frame(). It will show the latest frame and will update some things that need to be updated on a per frame basis.
+
+```c
+void tt_new_frame();
+```
