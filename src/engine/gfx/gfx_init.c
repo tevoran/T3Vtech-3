@@ -33,12 +33,12 @@ bool tt_gfx_init()
 		"shaders/std_fragment.glsl");
 	if(tt_std_3d_shader==0)
 	{
-		printf("[ERROR] failed to create the standard 2d shader\n");
+		printf("[ERROR] failed to create the standard 3d shader\n");
 		return false;
 	}
 	else
 	{
-		printf("successfully built the standard 2d shader\n");
+		printf("successfully built the standard 3d shader\n");
 	}
 	
 	return true;
