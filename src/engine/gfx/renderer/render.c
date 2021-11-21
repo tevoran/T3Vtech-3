@@ -1,5 +1,8 @@
 #include <tt.h>
 
+extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
+extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
+
 
 //test data
 GLfloat tri[]=
@@ -11,6 +14,8 @@ GLfloat tri[]=
 
 void tt_gfx_render()
 {
+	glUseProgram(tt_std_3d_shader);
+	
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);

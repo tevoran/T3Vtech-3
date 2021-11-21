@@ -2,9 +2,9 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1366, 768, false);
+	tt_init("T3Vtech3 test window", 1920, 1080, true);
 
-	for(int i=0; i<1000; i++)
+	for(int i=0; i<600; i++)
 	{
 		tt_new_frame();		
 	}
