@@ -14,5 +14,5 @@ uint32_t tt_desktop_res_y; //desktop resolution
 SDL_GLContext tt_glcontext; //OpenGL context for SDL2
 
 //shaders
-GLuint tt_std_3d_shader; //the default shader for all 3d objects
-GLuint tt_std_2d_shader; //the default shader for all 2d objects
+GLuint tt_std_3d_shader; //the default shader program for all 3d objects
+GLuint tt_std_2d_shader; //the default shader program for all 2d objects

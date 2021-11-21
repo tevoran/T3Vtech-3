@@ -10,19 +10,13 @@ struct shader
 	GLuint fragment;
 };
 
-
+//shader compilation helper function to reduce code size
 //returns true if successful and false in the case of an error
 bool tt_gfx_shader_compilation(
 	GLuint* shader,
 	const char *path_to_shader, 
 	const GLenum shader_type)
 {
-//GL_COMPUTE_SHADER
-//GL_VERTEX_SHADER
-//GL_TESS_CONTROL_SHADER
-//GL_TESS_EVALUATION_SHADER
-//GL_GEOMETRY_SHADER
-//GL_FRAGMENT_SHADER
 	Uint32 shader_size;
 	FILE *shader_file;
 	char *shader_buffer;
@@ -101,7 +95,7 @@ bool tt_gfx_shader_compilation(
 	shader_size++; //necessary for the zero termination of the C string
 	shader_buffer=malloc(shader_size);
 	fread(shader_buffer, shader_size, 1, shader_file);
-	shader_buffer[shader_size]=0; //zero termination
+	shader_buffer[shader_size-1]=0; //zero termination
 
 	//create shader object
 	*shader=glCreateShader(shader_type);
@@ -118,7 +112,7 @@ bool tt_gfx_shader_compilation(
 	glShaderSource(*shader, 1, &shader_buffer_src, NULL);
 	Uint32 shader_size_check_length;
 	//debug option
-	/*glGetShaderiv(
+	glGetShaderiv(
 		*shader,
 		GL_SHADER_SOURCE_LENGTH,
 		&shader_size_check_length);
@@ -128,7 +122,7 @@ bool tt_gfx_shader_compilation(
 		free(shader_buffer);
 		fclose(shader_file);
 		return false;
-	}*/
+	}
 
 	//compiling the shader
 	glCompileShader(*shader);

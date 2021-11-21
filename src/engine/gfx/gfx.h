@@ -3,6 +3,7 @@
 
 #include <tt.h>
 #include "shaders.h"
+#include "renderer/renderer.h"
 
 bool tt_gfx_init(); //returns true if successfull
 
