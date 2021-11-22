@@ -59,6 +59,11 @@ tt_node* tt_list_new_node(tt_node *current_node)
 	return node;
 }
 
+void tt_list_remove_node(tt_node *current_node)
+{
+	
+}
+
 void tt_list_node_set_data(tt_node *current_node, void *data)
 {
 	current_node->data=data;

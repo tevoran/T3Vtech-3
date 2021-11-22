@@ -2,7 +2,7 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1366, 720, false);
+	tt_init("T3Vtech3 test window", 1920, 1080, true);
 
 	tt_vec3 pos={0.5,0.5,0.0};
 	tt_vec3 orientation={0.5,0.5,0.0};
@@ -29,7 +29,7 @@ int main()
 	tt_vec3 pos8={0.5,-0.5,0.0};
 	tt_3d_object *quad8=tt_new_quad(pos8, orientation);
 	
-	for(int i=0; i<1; i++)
+	for(int i=0; i<5; i++)
 	{
 		tt_new_frame();
 		SDL_Delay(3000);		
