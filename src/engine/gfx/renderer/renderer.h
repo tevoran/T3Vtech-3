@@ -5,4 +5,8 @@
 
 void tt_gfx_render();
 
+void tt_gfx_3d_preparation();
+void tt_gfx_2d_preparation();
+
+
 #endif

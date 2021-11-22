@@ -18,6 +18,7 @@
 //engine headers
 #include <common/init.h>
 #include <common/quit.h>
+#include <common/list.h>
 #include <common/new_frame.h>
 
 #include <gfx/gfx.h>
