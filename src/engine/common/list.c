@@ -51,8 +51,8 @@ tt_node* tt_list_new_node(tt_node *current_node)
 	}
 
 	//if current node is in between other nodes
-	
 	node->next=current_node->next;
+	current_node->next=node;
 	node->last=current_node;
 	tt_node *following=node->next;
 	following->last=node;

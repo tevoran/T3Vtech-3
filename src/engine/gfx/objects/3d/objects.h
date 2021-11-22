@@ -11,9 +11,11 @@ struct tt_3d_object
 	//OpenGL relevant data
 	GLuint vao;
 	GLuint vbo;
+	GLuint ibo;
+	uint32_t num_verts;
 } typedef tt_3d_object;
 
 
-tt_3d_object* tt_new_quad();
+tt_3d_object* tt_new_quad(tt_vec3 pos, tt_vec3 orientation);
 
 #endif

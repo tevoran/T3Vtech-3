@@ -16,6 +16,8 @@
 #include <GL/glew.h>
 
 //engine headers
+#include <math/vector.h>
+		
 #include <common/init.h>
 #include <common/quit.h>
 #include <common/list.h>
