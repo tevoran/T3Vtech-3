@@ -2,7 +2,7 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, true);
+	tt_init("T3Vtech3 test window", 1920, 1080, false);
 
 	tt_vec3 pos={0.5,0.5,0.0};
 	tt_vec3 orientation={0.5,0.5,0.0};
@@ -29,13 +29,27 @@ int main()
 	tt_vec3 pos8={0.5,-0.5,0.0};
 	tt_3d_object *quad8=tt_new_quad(pos8, orientation);
 	
-	tt_delete_3d_object(quad);
+	tt_delete_3d_object(&quad2);
 	for(int i=0; i<5; i++)
 	{
+		printf("i: %i\n", i);
 		tt_new_frame();
 		SDL_Delay(3000);
 
-		tt_delete_3d_object(quad2);
+		if(i==0)
+		{
+			tt_delete_3d_object(&quad);
+		}
+
+		if(i==2)
+		{
+			tt_delete_3d_object(&quad3);
+		}
+		if(i==3)
+		{
+			tt_delete_3d_object(&quad4);
+		}
+
 	}
 
 
