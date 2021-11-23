@@ -17,5 +17,6 @@ struct tt_3d_object
 
 
 tt_3d_object* tt_new_quad(tt_vec3 pos, tt_vec3 orientation);
+void tt_delete_3d_object(tt_3d_object *object);
 
 #endif

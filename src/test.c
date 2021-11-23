@@ -29,10 +29,13 @@ int main()
 	tt_vec3 pos8={0.5,-0.5,0.0};
 	tt_3d_object *quad8=tt_new_quad(pos8, orientation);
 	
+	tt_delete_3d_object(quad);
 	for(int i=0; i<5; i++)
 	{
 		tt_new_frame();
-		SDL_Delay(3000);		
+		SDL_Delay(3000);
+
+		tt_delete_3d_object(quad2);
 	}
 
 

@@ -59,9 +59,50 @@ tt_node* tt_list_new_node(tt_node *current_node)
 	return node;
 }
 
-void tt_list_remove_node(tt_node *current_node)
+//moves current node to the next node after deletion
+//becomes NULL if there are no nodes left
+void tt_list_remove_node(tt_node **current_node)
 {
-	
+	tt_node *node;
+
+	//if first node
+	if(!(*current_node)->last && (*current_node)->next)
+	{
+		node=(*current_node)->next;
+		node->last=NULL;
+		free(*current_node);
+		*current_node=node;
+		return;
+	}
+
+	//if sole node
+	if(!(*current_node)->last && !(*current_node)->next)
+	{
+		node=NULL;
+		free(*current_node);
+		*current_node=NULL;
+		return;
+	}
+
+	//if last node
+	if((*current_node)->last && !(*current_node)->next)
+	{
+		node=(*current_node)->last;
+		node->next=NULL;
+		free(*current_node);
+		*current_node=node;
+		return;
+	}
+
+	//if it's a node in between
+	node=(*current_node)->last;
+	node->next=(*current_node)->next;
+	node=(*current_node)->next;
+	node->last=(*current_node)->last;
+	node=(*current_node)->last;
+	free(*current_node);
+	*current_node=node->next;
+	return;
 }
 
 void tt_list_node_set_data(tt_node *current_node, void *data)
