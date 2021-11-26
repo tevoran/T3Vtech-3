@@ -7,6 +7,9 @@ extern SDL_GLContext tt_glcontext;
 
 void tt_quit()
 {
+	//quitting the graphics system
+	tt_gfx_quit();
+
 	//resetting the window size to the desktop resolution to
 	//avoid strange resolution issues after closing the game
 	SDL_SetWindowSize(

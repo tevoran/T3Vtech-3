@@ -18,7 +18,7 @@ If you call other T3Vtech3 functions without initializing the engine first then 
 
 ## Quitting
 
-At the end of the game you should quit the engine. Although tt_quit() will be also called if there happens something unexpected that closes the engine. And it will get called if the game just gets to its end of execution anyway.
+At the end of the game the engine will clean itself up. So there is no need to actually calling tt_quit() yourself.
 
 ```c
 void tt_quit();
@@ -30,4 +30,26 @@ To show what has been drawn onto the screen you have to call tt_new_frame(). It 
 
 ```c
 void tt_new_frame();
+```
+
+## 3D
+
+### 3D Objects
+
+A 3D object has the following life cycle. At first you need to create an empty 3D object which you have to destroy at the end of its life. While it is alive it is usually part of the rendering process, where it gets rendered each frame if it's visible. Also it is possible to modify it during its life cycle. This kind of modification is necessary to give the 3D object a specific shape or apply transformations like rotations to it.
+
+#### Creation of a 3D Object
+
+A 3D object gets created by calling tt_3d_object_new(). This basically starts the 3D object's life but immediately after its creation there is nothing to display yet. It is necessary to add at least a model to it.
+
+```c
+tt_3d_object* tt_3d_object_new();
+```
+
+#### Destruction of a 3D Object
+
+At the end of its life it is necessary to delete a 3D object. It can't get displayed anymore. But it is important to note that deleting the object doesn't free the resources that are used by the object. 
+
+```c
+void tt_3d_object_delete(tt_3d_object **object);
 ```

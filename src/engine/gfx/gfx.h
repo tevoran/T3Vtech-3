@@ -8,5 +8,7 @@
 
 bool tt_gfx_init(); //returns true if successfull
 
+//cleaning up what was initalized by the graphics system
+void tt_gfx_quit();
 
 #endif

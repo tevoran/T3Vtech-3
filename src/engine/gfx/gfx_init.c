@@ -41,5 +41,8 @@ bool tt_gfx_init()
 		printf("successfully built the standard 3d shader\n");
 	}
 	
+	//preparing the primitives to be able to create them faster on the fly
+	tt_gfx_prepare_quad();
+
 	return true;
 }

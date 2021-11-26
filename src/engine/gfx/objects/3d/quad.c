@@ -3,15 +3,24 @@
 //this is the beginning of the 3D object rendering list
 extern tt_node *tt_3d_list_entry_node;
 
-tt_3d_object* tt_new_quad(tt_vec3 pos, tt_vec3 orientation)
+//the quad preparation OpenGL ID
+extern GLuint tt_gfx_3d_quad_vao;
+extern GLuint tt_gfx_3d_quad_vbo;
+extern GLuint tt_gfx_3d_quad_ibo;
+
+void tt_gfx_prepare_quad()
 {
 	//quad model data
 	GLfloat quad[]=
 	{
-		pos.x, pos.y, pos.z,
-		pos.x, pos.y + orientation.y, pos.z,
-		pos.x + orientation.x, pos.y, pos.z + orientation.z,
-		pos.x + orientation.x, pos.y + orientation.y, pos.z + orientation.z,
+		-0.5, -0.5, 0,
+		-0.5, 0.5, 0,
+		0.5, -0.5, 0,
+		0.5, 0.5, 0,
+		//pos.x, pos.y, pos.z,
+		//pos.x, pos.y + orientation.y, pos.z,
+		//pos.x + orientation.x, pos.y, pos.z + orientation.z,
+		//pos.x + orientation.x, pos.y + orientation.y, pos.z + orientation.z,
 	};
 
 	GLuint quad_indices[]=
@@ -20,29 +29,25 @@ tt_3d_object* tt_new_quad(tt_vec3 pos, tt_vec3 orientation)
 		1,2,3,
 	};
 
-	//creating the 3d object and putting it into the render list
-	tt_3d_object *new_object=malloc(sizeof(tt_3d_object));
-	new_object->node=tt_list_new_node(tt_3d_list_entry_node);
-	if(!tt_3d_list_entry_node) //save the entry node if it's one
-	{
-		tt_3d_list_entry_node=new_object->node;
-	}
-	tt_list_node_set_data(new_object->node, new_object);
-	new_object->num_verts=6; //it is a quad, it has 6 vertices
-
-	//OpenGL stuff
-	glGenVertexArrays(1, &new_object->vao);
-	glBindVertexArray(new_object->vao);
-	glGenBuffers(1, &new_object->vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, new_object->vbo);
+	//create the OpenGL IDs
+	glGenVertexArrays(1, &tt_gfx_3d_quad_vao);
+	glBindVertexArray(tt_gfx_3d_quad_vao);
+	glGenBuffers(1, &tt_gfx_3d_quad_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, tt_gfx_3d_quad_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quad), quad, GL_STATIC_DRAW);
-	glGenBuffers(1, &new_object->ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_object->ibo);
+	glGenBuffers(1, &tt_gfx_3d_quad_ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tt_gfx_3d_quad_ibo);
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,
 		sizeof(quad_indices),
 		quad_indices,
 		GL_STATIC_DRAW);
+}
 
-	return new_object;
+void tt_3d_object_make_quad(tt_3d_object *object)
+{
+	object->num_verts=6; //it is a quad, it has 6 vertices
+	object->vao=tt_gfx_3d_quad_vao;
+	object->vbo=tt_gfx_3d_quad_vbo;
+	object->ibo=tt_gfx_3d_quad_ibo;
 }

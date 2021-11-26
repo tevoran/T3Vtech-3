@@ -19,3 +19,13 @@ GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 
 //this is the beginning of the 3D object rendering list
 tt_node *tt_3d_list_entry_node=NULL;
+
+//primitives
+//Here are prepared primitives. They are already created after the initialization
+//and will be used when "creating" primitives to save time.
+
+//3D
+//quad
+GLuint tt_gfx_3d_quad_vao;
+GLuint tt_gfx_3d_quad_vbo;
+GLuint tt_gfx_3d_quad_ibo;

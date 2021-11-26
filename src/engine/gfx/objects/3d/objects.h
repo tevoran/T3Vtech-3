@@ -15,8 +15,12 @@ struct tt_3d_object
 	uint32_t num_verts;
 } typedef tt_3d_object;
 
+//preparation functions
+void tt_gfx_prepare_quad();
 
-tt_3d_object* tt_new_quad(tt_vec3 pos, tt_vec3 orientation);
-void tt_delete_3d_object(tt_3d_object **object);
+
+tt_3d_object* tt_3d_object_new();
+void tt_3d_object_make_quad(tt_3d_object *object);
+void tt_3d_object_delete(tt_3d_object **object);
 
 #endif
