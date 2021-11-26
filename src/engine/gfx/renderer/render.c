@@ -20,6 +20,22 @@ void tt_gfx_render()
 
 		while(true)
 		{
+			//prepare uniforms
+			GLint translation=glGetUniformLocation(tt_std_3d_shader, "translation");
+			GLint scale=glGetUniformLocation(tt_std_3d_shader, "scale");
+			GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
+
+			//set uniforms
+			const GLfloat *mat4_uniform=(const GLfloat*)current_object->translation;
+			glUniformMatrix4fv(translation, 1, GL_FALSE, mat4_uniform);
+
+			mat4_uniform=(const GLfloat*)current_object->scale;
+			glUniformMatrix4fv(scale, 1, GL_FALSE, mat4_uniform);
+			
+			mat4_uniform=(const GLfloat*)current_object->rotation;
+			glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
+
+			//bind buffers and vertex arrays
 			glBindVertexArray(current_object->vao);
 			glBindBuffer(GL_ARRAY_BUFFER, current_object->vbo);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_object->ibo);
@@ -35,7 +51,7 @@ void tt_gfx_render()
 
 			//get to the next object to render
 			current_node=tt_list_next_node(current_node);
-			if(!current_node)
+			if(!current_node) //if no following object is left then exit
 			{
 				break;
 			}

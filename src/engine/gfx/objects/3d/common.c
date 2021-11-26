@@ -20,6 +20,10 @@ tt_3d_object* tt_3d_object_new()
 	new_object->vbo=0;
 	new_object->ibo=0;
 
+	tt_math_mat4_make_identity_matrix(new_object->translation);
+	tt_math_mat4_make_identity_matrix(new_object->scale);
+	tt_math_mat4_make_identity_matrix(new_object->rotation);
+
 	return new_object;
 }
 
