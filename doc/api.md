@@ -50,6 +50,16 @@ tt_3d_object* tt_3d_object_new();
 
 At the end of its life it is necessary to delete a 3D object. It can't get displayed anymore. But it is important to note that deleting the object doesn't free the resources that are used by the object. 
 
+Please note the pointer pointer as an argument. This pointer pointer is used to prevent set the objects pointer to NULL to avoid issues when trying to delete an object twice.
+
 ```c
 void tt_3d_object_delete(tt_3d_object **object);
+```
+
+#### Quads
+
+A created 3D object can be converted into a quad by using the function tt_3d_object_make_quad();
+
+```c
+void tt_3d_object_make_quad(tt_3d_object *object)
 ```

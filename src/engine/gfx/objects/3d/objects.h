@@ -6,13 +6,17 @@
 //all 3D objects are organized in a linked list that the render goes through
 struct tt_3d_object
 {
-	tt_node *node; //pointer to a node that points also back to the object
+	//pointer to a node in the render list that points also back to the object
+	tt_node *node;
 
 	//OpenGL relevant data
 	GLuint vao;
 	GLuint vbo;
 	GLuint ibo;
 	uint32_t num_verts;
+
+	//transformations
+
 } typedef tt_3d_object;
 
 //preparation functions
