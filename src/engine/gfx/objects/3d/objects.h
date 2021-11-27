@@ -25,9 +25,11 @@ struct tt_3d_object
 //preparation functions
 void tt_gfx_prepare_quad();
 
-
+//3D object related
 tt_3d_object* tt_3d_object_new();
 void tt_3d_object_make_quad(tt_3d_object *object);
 void tt_3d_object_delete(tt_3d_object **object);
 
+//transformations
+void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale);
 #endif

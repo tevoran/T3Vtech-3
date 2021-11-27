@@ -18,6 +18,7 @@ void tt_gfx_quit()
 	printf("done\n");
 
 	printf("cleaning up prepared primitives...");
+		//quad
 		glDeleteVertexArrays(1, &tt_gfx_3d_quad_vao);
 		glDeleteBuffers(1, &tt_gfx_3d_quad_vbo);
 		glDeleteBuffers(1, &tt_gfx_3d_quad_ibo);

@@ -51,3 +51,11 @@ void tt_3d_object_delete(tt_3d_object **object)
 	free(*object);
 	*object=NULL; //mark object as deleted
 }
+
+//transformations
+void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale)
+{
+	object->scale[0][0]=scale->x;
+	object->scale[1][1]=scale->y;
+	object->scale[2][2]=scale->z;
+}

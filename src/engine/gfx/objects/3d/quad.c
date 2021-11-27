@@ -17,10 +17,6 @@ void tt_gfx_prepare_quad()
 		-0.5, 0.5, 0,
 		0.5, -0.5, 0,
 		0.5, 0.5, 0,
-		//pos.x, pos.y, pos.z,
-		//pos.x, pos.y + orientation.y, pos.z,
-		//pos.x + orientation.x, pos.y, pos.z + orientation.z,
-		//pos.x + orientation.x, pos.y + orientation.y, pos.z + orientation.z,
 	};
 
 	GLuint quad_indices[]=
