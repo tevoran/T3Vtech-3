@@ -56,6 +56,16 @@ Please note the pointer pointer as an argument. This pointer pointer is used to 
 void tt_3d_object_delete(tt_3d_object **object);
 ```
 
+#### Transformations
+
+##### Scaling
+
+A 3D object can be scaled in each axis differently. This is the reason why a vector is for scaling instead of a simple scalar value.
+
+```c
+void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale);
+```
+
 #### Quads
 
 A created 3D object can be converted into a quad by using the function tt_3d_object_make_quad();
