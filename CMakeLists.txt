@@ -30,9 +30,9 @@ add_library(T3Vtech STATIC ${engine})
 target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2}")
 target_link_libraries(T3Vtech LINK_PRIVATE "${GLEW}")
 target_link_libraries(T3Vtech LINK_PRIVATE "${GL}")
+target_link_libraries(T3Vtech LINK_PRIVATE m)
 #target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_ttf}")
 #target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_mixer}")
-#target_link_libraries(T3Vtech LINK_PRIVATE m)
 
 #creating library test
 file(GLOB_RECURSE "test" SRC src/test.c)

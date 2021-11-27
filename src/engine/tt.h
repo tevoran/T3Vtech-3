@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <inttypes.h>
+#include <math.h>
 
 //vendor
 #include <SDL2/SDL.h>

@@ -58,6 +58,9 @@ void tt_3d_object_delete(tt_3d_object **object);
 
 #### Transformations
 
+##### Translation / Setting a position
+
+
 ##### Scaling
 
 A 3D object can be scaled in each axis differently. This is the reason why a vector is for scaling instead of a simple scalar value.

@@ -32,4 +32,5 @@ void tt_3d_object_delete(tt_3d_object **object);
 
 //transformations
 void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale);
+void tt_3d_object_set_position(tt_3d_object *object, tt_vec3 *position);
 #endif
