@@ -26,13 +26,13 @@ void tt_gfx_render()
 			GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
 
 			//set uniforms
-			const GLfloat *mat4_uniform=(const GLfloat*)current_object->translation;
+			const GLfloat *mat4_uniform=(const GLfloat*)current_object->translation.array;
 			glUniformMatrix4fv(translation, 1, GL_FALSE, mat4_uniform);
 
-			mat4_uniform=(const GLfloat*)current_object->scale;
+			mat4_uniform=(const GLfloat*)current_object->scale.array;
 			glUniformMatrix4fv(scale, 1, GL_FALSE, mat4_uniform);
 			
-			mat4_uniform=(const GLfloat*)current_object->rotation;
+			mat4_uniform=(const GLfloat*)current_object->rotation.array;
 			glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
 
 			//bind buffers and vertex arrays

@@ -20,9 +20,9 @@ tt_3d_object* tt_3d_object_new()
 	new_object->vbo=0;
 	new_object->ibo=0;
 
-	tt_math_mat4_make_identity_matrix(new_object->translation);
-	tt_math_mat4_make_identity_matrix(new_object->scale);
-	tt_math_mat4_make_identity_matrix(new_object->rotation);
+	tt_math_mat4_make_identity_matrix(&new_object->translation);
+	tt_math_mat4_make_identity_matrix(&new_object->scale);
+	tt_math_mat4_make_identity_matrix(&new_object->rotation);
 
 	return new_object;
 }
@@ -55,14 +55,20 @@ void tt_3d_object_delete(tt_3d_object **object)
 //transformations
 void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale)
 {
-	object->scale[0][0]=scale->x;
-	object->scale[1][1]=scale->y;
-	object->scale[2][2]=scale->z;
+	//object->scale[0][0]=scale->x;
+	//object->scale[1][1]=scale->y;
+	//object->scale[2][2]=scale->z;
+	object->scale.array[0][0]=scale->x;
+	object->scale.array[1][1]=scale->y;
+	object->scale.array[2][2]=scale->z;
 }
 
 void tt_3d_object_set_position(tt_3d_object *object, tt_vec3 *position)
 {
-	object->translation[3][0]=position->x;
-	object->translation[3][1]=position->y;
-	object->translation[3][2]=position->z;
+	//object->translation[3][0]=position->x;
+	//object->translation[3][1]=position->y;
+	//object->translation[3][2]=position->z;
+	object->translation.array[3][0]=position->x;
+	object->translation.array[3][1]=position->y;
+	object->translation.array[3][2]=position->z;
 }

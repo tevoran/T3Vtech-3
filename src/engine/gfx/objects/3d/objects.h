@@ -16,9 +16,9 @@ struct tt_3d_object
 	uint32_t num_verts;
 
 	//transformations
-	float translation[4][4];
-	float scale[4][4];
-	float rotation[4][4];
+	tt_mat4 translation;
+	tt_mat4 scale;
+	tt_mat4 rotation;
 
 } typedef tt_3d_object;
 

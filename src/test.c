@@ -2,7 +2,7 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, true);
+	tt_init("T3Vtech3 test window", 1920, 1080, false);
 
 	tt_vec3 pos={0.5,0.5,0.0};
 	tt_vec3 scale={1,1,1};
