@@ -1,5 +1,11 @@
 #include <tt.h>
 
+extern uint32_t tt_res_x; //game resolution
+extern uint32_t tt_res_y; //game resolution
+extern float tt_near_plane; //near clipping plane
+extern float tt_far_plane; //far clipping plane
+extern float tt_fov; //field of view in radians
+extern tt_mat4 tt_perspective_projection_mat; //the 3D perspective projection matrix
 extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 
@@ -43,6 +49,14 @@ bool tt_gfx_init()
 	
 	//preparing the primitives to be able to create them faster on the fly
 	tt_gfx_prepare_quad();
+	tt_math_mat4_make_projection_matrix(
+		&tt_perspective_projection_mat,
+		tt_res_x,
+		tt_res_y,
+		tt_fov,
+		tt_near_plane,
+		tt_far_plane);
+
 
 	return true;
 }

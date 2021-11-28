@@ -17,8 +17,13 @@ SDL_GLContext tt_glcontext; //OpenGL context for SDL2
 GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 
-//this is the beginning of the 3D object rendering list
-tt_node *tt_3d_list_entry_node=NULL;
+//3D renderer stuff
+float tt_near_plane=0.1; //near clipping plane
+float tt_far_plane=1000; //far clipping plane
+float tt_fov=0.5*tt_PI; //field of view in radians
+tt_mat4 tt_perspective_projection_mat; //the 3D perspective projection matrix
+tt_node *tt_3d_list_entry_node=NULL; //start of the 3D object rendering list
+
 
 //primitives
 //Here are prepared primitives. They are already created after the initialization
