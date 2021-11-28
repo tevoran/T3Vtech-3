@@ -60,6 +60,11 @@ void tt_3d_object_delete(tt_3d_object **object);
 
 ##### Translation / Setting a position
 
+Setting the position of a 3D object is also a quite easy task. Just create a tt_vec3 vector with the desired position and give the address of the vector and the object pointer to the function tt_3d_object_set_position().
+
+```c
+void tt_3d_object_set_position(tt_3d_object *object, tt_vec3 *position);
+```
 
 ##### Scaling
 
@@ -71,7 +76,7 @@ void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale);
 
 #### Quads
 
-A created 3D object can be converted into a quad by using the function tt_3d_object_make_quad();
+A created 3D object can be converted into a quad by using the function tt_3d_object_make_quad().
 
 ```c
 void tt_3d_object_make_quad(tt_3d_object *object)
