@@ -84,6 +84,22 @@ A 3D object can be scaled in each axis differently. This is the reason why a vec
 void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale);
 ```
 
+##### Rotation
+
+Rotations are quaternion based. This means that no matter what combination of rotations you have ends up in a gimbal lock. Additionally this gives the freedom to rotate around any arbitrary axis and not just the X, Y and Z axes.
+
+```c
+void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
+```
+
+An example of usage:
+```c
+//rotating an object 90° around the X axis
+tt_vec3 rot_axis={1,0,0};
+float rot_angle=0.5*tt_PI;
+tt_3d_object_rotate(object, &rot_axis, rot_angle);
+```
+
 #### Quads
 
 A created 3D object can be converted into a quad by using the function tt_3d_object_make_quad().
