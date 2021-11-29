@@ -49,3 +49,20 @@ void tt_math_mat4_make_projection_matrix(
 		-(1 - near_clipping_plane) / (far_clipping_plane - near_clipping_plane);
 	mat->array[3][3]=0;
 }
+
+tt_mat4 tt_math_mat4_mul(tt_mat4 *a, tt_mat4 *b)
+{
+	tt_mat4 out;
+	for(int iy=0; iy<4; iy++)
+	{
+		for(int ix=0; ix<4; ix++)
+		{
+			out.array[iy][ix]=
+				a->array[iy][0] * b->array[0][ix]
+				+ a->array[iy][1] * b->array[1][ix]
+				+ a->array[iy][2] * b->array[2][ix]
+				+ a->array[iy][3] * b->array[3][ix];
+		}
+	}
+	return out;
+}

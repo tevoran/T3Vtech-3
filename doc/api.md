@@ -36,7 +36,7 @@ void tt_new_frame();
 
 ### Field of View
 
-The field of view only affects 3D scenes but it can be set differently in each frame at all times. The effect will be visible in the next frame.
+The field of view only affects 3D scenes but it can be set differently in each frame at all times. The effect will be visible in the next frame. The input parameter is given in radians. So 1.0 * tt_PI will be 180° and 0.5 * tt_PI will be 90°. Because of the usage of tan() in the projection matrix it is recommended to have your field of view smaller than 180°.
 
 ```c
 void tt_set_fov(float radians);

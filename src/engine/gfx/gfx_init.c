@@ -49,6 +49,7 @@ bool tt_gfx_init()
 	
 	//preparing the primitives to be able to create them faster on the fly
 	tt_gfx_prepare_quad();
+
 	tt_math_mat4_make_projection_matrix(
 		&tt_perspective_projection_mat,
 		tt_res_x,
@@ -57,6 +58,7 @@ bool tt_gfx_init()
 		tt_near_plane,
 		tt_far_plane);
 
+	glDepthFunc(GL_LESS);
 
 	return true;
 }
