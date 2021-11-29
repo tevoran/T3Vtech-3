@@ -32,6 +32,16 @@ To show what has been drawn onto the screen you have to call tt_new_frame(). It 
 void tt_new_frame();
 ```
 
+## Setting Parameters
+
+### Field of View
+
+The field of view only affects 3D scenes but it can be set differently in each frame at all times. The effect will be visible in the next frame.
+
+```c
+void tt_set_fov(float radians);
+```
+
 ## 3D
 
 ### 3D Objects

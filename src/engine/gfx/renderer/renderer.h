@@ -8,5 +8,8 @@ void tt_gfx_render();
 void tt_gfx_3d_preparation();
 void tt_gfx_2d_preparation();
 
+//3D stuff
+void tt_set_fov(float radians);
+
 
 #endif
