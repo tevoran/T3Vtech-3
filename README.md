@@ -3,7 +3,7 @@ A 3D game engine in C.
 
 ## Dependencies
 
-T3Vtech-3 currently needs SDL2 as a dependency.
+T3Vtech-3 currently needs SDL2 and GLEW as a dependency. The other dependency that is used is used as a submodule.
 
 ## Building
 
