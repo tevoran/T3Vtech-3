@@ -65,6 +65,18 @@ Please note the pointer pointer as an argument. This pointer pointer is used to 
 ```c
 void tt_3d_object_delete(tt_3d_object **object);
 ```
+#### Usage of a Texture
+
+To use a texture to cover a 3D object it needs to be created first by calling tt_3d_texture_new() and is available until the call the of tt_3d_texture_delete(). In between the texture is usable on as many models as desired. And if no texture is specified then the pink default texture will be used.
+
+In order to use a created texture on a 3D object call tt_3d_object_use_texture().
+
+```c
+void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture);
+void tt_3d_object_use_default_texture(tt_3d_object *object); 
+```
+
+If the texture isn't need anymore on this particular engine you can simply use another texture or use the default texture by calling tt_3d_object_use_default_texture().
 
 #### Transformations
 
@@ -108,3 +120,26 @@ void tt_3d_object_make_quad(tt_3d_object *object)
 ```
 
 #### Textures
+
+##### In 3D
+
+Textures are an object that is very similarily used like "tt_3d_object"s. They are created and deleted and in between they can be used to cover 3D models. If no texture is specified for a 3D object then the object will get a pink default texture.
+
+```c
+tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering);
+void tt_3d_texture_delete(tt_3d_texture **texture);
+```
+
+An example of usage:
+
+```c
+tt_3d_object *quad=tt_3d_object_new();
+tt_3d_object_make_quad(quad);
+tt_3d_texture *tex=tt_3d_texture_new("path/to/asset.png", false);
+tt_3d_object_use_texture(quad, tex);
+
+//render and do stuff
+
+
+tt_3d_texture_delete(&tex);
+```
