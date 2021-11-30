@@ -16,7 +16,7 @@ int main()
 	tt_3d_texture *tex=tt_3d_texture_new("assets/smiley.png", false);
 	tt_3d_object_use_texture(quad, tex);
 
-	for(int i=0; i<500; i++)
+	for(int i=0; i<2000; i++)
 	{
 		tt_new_frame();
 		//SDL_Delay(15);
@@ -28,6 +28,10 @@ int main()
 		tt_3d_object_set_position(quad, &pos);
 
 		tt_3d_object_rotate(quad, &rot_axis, 0.02);
+		if(i==1000)
+		{
+			tt_3d_object_use_default_texture(quad);
+		}
 
 	}
 

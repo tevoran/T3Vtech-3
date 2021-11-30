@@ -30,6 +30,9 @@ tt_node *tt_3d_list_entry_node=NULL; //start of the 3D object rendering list
 //and will be used when "creating" primitives to save time.
 
 //3D
+//default texture
+GLuint tt_gfx_3d_default_tex;
+
 //quad
 GLuint tt_gfx_3d_quad_vao;
 GLuint tt_gfx_3d_quad_vbo;

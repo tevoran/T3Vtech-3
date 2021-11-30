@@ -49,6 +49,8 @@ bool tt_gfx_init()
 	
 	//preparing the primitives to be able to create them faster on the fly
 	tt_gfx_prepare_quad();
+	tt_gfx_3d_default_tex_init();
+
 
 	tt_math_mat4_make_projection_matrix(
 		&tt_perspective_projection_mat,

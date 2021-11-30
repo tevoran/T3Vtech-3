@@ -3,6 +3,8 @@
 //this is the beginning of the 3D object rendering list
 extern tt_node *tt_3d_list_entry_node;
 
+extern GLuint tt_gfx_3d_default_tex; //default texture
+
 tt_3d_object* tt_3d_object_new() 
 {
 	//creating the 3d object and putting it into the render list
@@ -24,7 +26,7 @@ tt_3d_object* tt_3d_object_new()
 	tt_math_mat4_make_identity_matrix(&new_object->scale);
 	tt_math_mat4_make_identity_matrix(&new_object->rotation);
 
-	new_object->texture=0;
+	new_object->texture=tt_gfx_3d_default_tex;
 	return new_object;
 }
 
@@ -106,4 +108,9 @@ void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
 void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture)
 {
 	object->texture=texture->texture;
+}
+
+void tt_3d_object_use_default_texture(tt_3d_object *object)
+{
+	object->texture=tt_gfx_3d_default_tex;
 }
