@@ -2,7 +2,7 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, true);
+	tt_init("T3Vtech3 test window", 1366, 768, false);
 
 	float fov=0.5*tt_PI;
 	tt_vec3 pos={0.5,0.5,1.0};
@@ -12,7 +12,11 @@ int main()
 	tt_3d_object_make_quad(quad);
 
 	tt_vec3 rot_axis={0,0,1};
-	for(int i=0; i<2000; i++)
+
+	tt_3d_texture *tex=tt_3d_texture_new("assets/smiley.png");
+	tt_3d_object_use_texture(quad, tex);
+
+	for(int i=0; i<500; i++)
 	{
 		tt_new_frame();
 		//SDL_Delay(15);
@@ -27,6 +31,7 @@ int main()
 
 	}
 
+	tt_3d_texture_delete(&tex);
 
 	return 0;
 }

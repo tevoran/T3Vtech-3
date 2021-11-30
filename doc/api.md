@@ -96,10 +96,9 @@ An example of usage:
 ```c
 //rotating an object 90° around the X axis
 tt_vec3 rot_axis={1,0,0};
-float rot_angle=0.5*tt_PI;
+float rot_angle=0.5*tt_PI; //radians instead of degrees are used
 tt_3d_object_rotate(object, &rot_axis, rot_angle);
 ```
-
 #### Quads
 
 A created 3D object can be converted into a quad by using the function tt_3d_object_make_quad().
@@ -107,3 +106,5 @@ A created 3D object can be converted into a quad by using the function tt_3d_obj
 ```c
 void tt_3d_object_make_quad(tt_3d_object *object)
 ```
+
+#### Textures

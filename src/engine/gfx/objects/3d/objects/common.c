@@ -24,6 +24,7 @@ tt_3d_object* tt_3d_object_new()
 	tt_math_mat4_make_identity_matrix(&new_object->scale);
 	tt_math_mat4_make_identity_matrix(&new_object->rotation);
 
+	new_object->texture=0;
 	return new_object;
 }
 
@@ -101,42 +102,8 @@ void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
 	object->rotation=tt_math_mat4_mul(&rot_mat, &object->rotation);
 }
 
-/*
-void gfx_model_rotate(struct model *model, float rotation, struct vec3f rot_axis)
+//setting object properties
+void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture)
 {
-	calculating quaternions
-	struct vec4f q;
-		q.x=rot_axis.x*sin(rotation/2);
-		q.y=rot_axis.y*sin(rotation/2);
-		q.z=rot_axis.z*sin(rotation/2);
-		q.w=cos(rotation/2);
-
-	q=normalize4f(q);
-	
-	GLfloat current_rotation_matrix[4][4]=
-	{
-		1-2*(q.y*q.y+q.z*q.z), 2*(q.x*q.y+q.z*q.w), 2*(q.x*q.z-q.y*q.w), 0,
-		2*(q.x*q.y-q.w*q.z), 1-2*(q.x*q.x+q.z*q.z), 2*(q.y*q.z+q.x*q.w), 0,
-		2*(q.x*q.z+q.y*q.w), 2*(q.y*q.z-q.x*q.w), 1-2*(q.x*q.x+q.y*q.y), 0,
-		0, 0, 0, 1
-	};
-	
-	float new_rotation_matrix[4][4];
-	
-	calculating the new rotation matrix that is sent to the shader
-	matrix_multiplication4x4(current_rotation_matrix, model->rotation_matrix, new_rotation_matrix);
-
-	
-	saving the rotation matrix in the model struct for the new_frame command
-	 * to put it into the shader
-	for(int ix=0,iy=0; iy<4; ix++)
-	{
-		model->rotation_matrix[ix][iy]=new_rotation_matrix[ix][iy];
-		if(ix==3)
-		{
-			ix=-1;
-			iy++;
-		}
-	}
+	object->texture=texture->texture;
 }
-*/

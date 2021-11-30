@@ -35,13 +35,20 @@ void tt_gfx_render()
 			mat4_uniform=(const GLfloat*)current_object->rotation.array;
 			glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
 
-			//bind buffers and vertex arrays
+			//bind buffers
 			glBindVertexArray(current_object->vao);
 			glBindBuffer(GL_ARRAY_BUFFER, current_object->vbo);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_object->ibo);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat)*3, (void*)0);
-			glEnableVertexAttribArray(0);
 
+			//describe vertex data
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*)0);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
+			glEnableVertexAttribArray(1);
+
+			//use textures
+			glBindTexture(GL_TEXTURE_2D, current_object->texture);
+			
 			glDrawElements(
 				GL_TRIANGLES,
 				current_object->num_verts,

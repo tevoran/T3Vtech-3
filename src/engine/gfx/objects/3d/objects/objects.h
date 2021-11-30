@@ -20,6 +20,9 @@ struct tt_3d_object
 	tt_mat4 scale;
 	tt_mat4 rotation;
 
+	//properties
+	GLuint texture;
+
 } typedef tt_3d_object;
 
 //preparation functions
@@ -34,5 +37,8 @@ void tt_3d_object_delete(tt_3d_object **object);
 void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale);
 void tt_3d_object_set_position(tt_3d_object *object, tt_vec3 *position);
 void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians);
+
+//object properties
+void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture);
 
 #endif

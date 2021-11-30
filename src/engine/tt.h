@@ -15,6 +15,7 @@
 //vendor
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
+#include <stb_image.h>
 
 //engine headers
 #include <math/math.h>
