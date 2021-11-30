@@ -10,6 +10,10 @@ extern GLuint tt_gfx_3d_quad_vao;
 extern GLuint tt_gfx_3d_quad_vbo;
 extern GLuint tt_gfx_3d_quad_ibo;
 
+//default texture
+extern GLuint tt_gfx_3d_default_tex; 
+
+
 void tt_gfx_quit()
 {
 	printf("deleting default shaders...");
@@ -22,5 +26,8 @@ void tt_gfx_quit()
 		glDeleteVertexArrays(1, &tt_gfx_3d_quad_vao);
 		glDeleteBuffers(1, &tt_gfx_3d_quad_vbo);
 		glDeleteBuffers(1, &tt_gfx_3d_quad_ibo);
+
+		//default texture
+		glDeleteTextures(1, &tt_gfx_3d_default_tex);
 	printf("done\n");
 }

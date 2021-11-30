@@ -27,7 +27,7 @@ int main()
 		pos.z=10*sin((float)i/100)+11;
 		tt_3d_object_set_position(quad, &pos);
 
-		tt_3d_object_rotate(quad, &rot_axis, 0.02);
+		//tt_3d_object_rotate(quad, &rot_axis, 0.02);
 		if(i==1000)
 		{
 			tt_3d_object_use_default_texture(quad);
