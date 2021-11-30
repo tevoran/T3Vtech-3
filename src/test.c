@@ -13,7 +13,7 @@ int main()
 
 	tt_vec3 rot_axis={0,0,1};
 
-	tt_3d_texture *tex=tt_3d_texture_new("assets/smiley.png");
+	tt_3d_texture *tex=tt_3d_texture_new("assets/smiley.png", false);
 	tt_3d_object_use_texture(quad, tex);
 
 	for(int i=0; i<500; i++)

@@ -1,6 +1,6 @@
 #include <tt.h>
 
-tt_3d_texture* tt_3d_texture_new(const char *path)
+tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering)
 {
 	tt_3d_texture *new_texture=malloc(sizeof(tt_3d_texture));
 	glGenTextures(1, &new_texture->texture);
@@ -8,9 +8,18 @@ tt_3d_texture* tt_3d_texture_new(const char *path)
 	glBindTexture(GL_TEXTURE_2D, new_texture->texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	if(bilinear_filtering)
+	{
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	}
+	else
+	{
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	}
+	
 	int x,y,n;
 	unsigned char *image_data=stbi_load(path, &x, &y, &n, 0);
 	if(image_data)
