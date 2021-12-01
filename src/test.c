@@ -16,6 +16,9 @@ int main()
 	tt_3d_texture *tex=tt_3d_texture_new("assets/smiley.png", false);
 	tt_3d_object_use_texture(quad, tex);
 
+
+	tt_3d_custom_model_load_file("assets/models/box/box.obj");
+
 	for(int i=0; i<2000; i++)
 	{
 		tt_new_frame();

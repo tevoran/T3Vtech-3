@@ -1,6 +1,12 @@
 #ifndef TT_MATH_VECTOR_H
 #define TT_MATH_VECTOR_H
 
+struct tt_vec2
+{
+	float x;
+	float y;
+} typedef tt_vec2;
+
 struct tt_vec3
 {
 	float x;

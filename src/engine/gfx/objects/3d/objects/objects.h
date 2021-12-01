@@ -25,6 +25,8 @@ struct tt_3d_object
 
 } typedef tt_3d_object;
 
+#include "custom_models/custom_model.h"
+
 //preparation functions
 void tt_gfx_prepare_quad();
 
