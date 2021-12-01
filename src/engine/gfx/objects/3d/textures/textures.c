@@ -49,16 +49,34 @@ tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering
 	{
 		printf("[ERROR] image couldn't be read from %s\n", path);
 		free(new_texture);
+		stbi_image_free(image_data);
 		return NULL;
 	}
 
 	if(n==4)
 	{
-		printf("[WARNING] image has 4 channels but only 3 are supported right now\n");
+		printf("[ERROR] image has 4 channels but only 3 are supported right now\n");
+		stbi_image_free(image_data);
+		return NULL;
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, image_data);
+	//flip image
+	uint8_t *image_flip=malloc(x*y*3*sizeof(unsigned char)); //a pixel is RGB
+	int iy_origin=0;
+	for(int iy=y-1; iy>=0; iy--)
+	{
+		for(int ix=0; ix<x; ix++)
+		{
+			image_flip[(iy*x+ix)*3]=image_data[(iy_origin*x+ix)*3];
+			image_flip[(iy*x+ix)*3+1]=image_data[(iy_origin*x+ix)*3+1];
+			image_flip[(iy*x+ix)*3+2]=image_data[(iy_origin*x+ix)*3+2];
+		}
+		iy_origin++;
+	}
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, image_flip);
 	stbi_image_free(image_data);
+	free(image_flip);
 	return new_texture;
 }
 

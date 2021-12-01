@@ -11,7 +11,7 @@ int main()
 	tt_3d_object *quad=tt_3d_object_new();
 	tt_3d_object_make_quad(quad);
 
-	tt_vec3 rot_axis={0,0,1};
+	tt_vec3 rot_axis={0,1,0};
 
 	tt_3d_texture *tex=tt_3d_texture_new("assets/smiley.png", false);
 	tt_3d_object_use_texture(quad, tex);
@@ -27,7 +27,7 @@ int main()
 		pos.z=10*sin((float)i/100)+11;
 		tt_3d_object_set_position(quad, &pos);
 
-		tt_3d_object_rotate(quad, &rot_axis, 0.02);
+		//tt_3d_object_rotate(quad, &rot_axis, 0.02);
 		if(i==1000)
 		{
 			tt_3d_object_use_default_texture(quad);
