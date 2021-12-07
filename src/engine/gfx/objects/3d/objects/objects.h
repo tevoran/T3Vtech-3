@@ -13,7 +13,7 @@ struct tt_3d_object
 	GLuint vao;
 	GLuint vbo;
 	GLuint ibo;
-	uint32_t num_verts;
+	uint32_t num_indices;
 
 	//transformations
 	tt_mat4 translation;
@@ -33,6 +33,7 @@ void tt_gfx_prepare_quad();
 //3D object related
 tt_3d_object* tt_3d_object_new();
 void tt_3d_object_make_quad(tt_3d_object *object);
+void tt_3d_object_use_custom_model(tt_3d_object *object, tt_3d_custom_model *model);
 void tt_3d_object_delete(tt_3d_object **object);
 
 //transformations

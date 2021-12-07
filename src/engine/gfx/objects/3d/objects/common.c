@@ -17,7 +17,7 @@ tt_3d_object* tt_3d_object_new()
 	tt_list_node_set_data(new_object->node, new_object);
 
 	//initializing the object to default values
-	new_object->num_verts=0;
+	new_object->num_indices=0;
 	new_object->vao=0;
 	new_object->vbo=0;
 	new_object->ibo=0;

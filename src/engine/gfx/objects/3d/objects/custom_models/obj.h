@@ -3,8 +3,13 @@
 
 #include <tt.h>
 
+//vertex and index data need to be free'd later when the model got onto
+//the video memory
 //returns true on success
 bool tt_3d_object_custom_model_load_obj_file(
 	const char *path,
-	int *num_vertices);
+	int *num_vertices,
+	int *num_indices,
+	GLfloat **vertex_data,
+	GLuint **index_data);
 #endif

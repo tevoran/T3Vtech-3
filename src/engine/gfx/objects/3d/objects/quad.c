@@ -42,7 +42,7 @@ void tt_gfx_prepare_quad()
 
 void tt_3d_object_make_quad(tt_3d_object *object)
 {
-	object->num_verts=6; //it is a quad, it has 6 vertices
+	object->num_indices=6; //it is a quad, it has 6 vertices
 	object->vao=tt_gfx_3d_quad_vao;
 	object->vbo=tt_gfx_3d_quad_vbo;
 	object->ibo=tt_gfx_3d_quad_ibo;

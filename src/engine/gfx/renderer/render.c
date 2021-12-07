@@ -51,7 +51,7 @@ void tt_gfx_render()
 			
 			glDrawElements(
 				GL_TRIANGLES,
-				current_object->num_verts,
+				current_object->num_indices,
 				GL_UNSIGNED_INT,
 				NULL);
 

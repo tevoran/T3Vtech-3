@@ -12,6 +12,7 @@ struct tt_3d_custom_model
 	GLuint vbo;
 	GLuint ibo;
 	uint32_t num_verts;
+	uint32_t num_indices;
 } typedef tt_3d_custom_model;
 
 tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path);
