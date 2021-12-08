@@ -36,7 +36,7 @@ void tt_gfx_render()
 			glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
 
 			//bind buffers
-			glBindVertexArray(current_object->vao);
+			//glBindVertexArray(current_object->vao);
 			glBindBuffer(GL_ARRAY_BUFFER, current_object->vbo);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_object->ibo);
 

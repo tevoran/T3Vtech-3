@@ -18,11 +18,7 @@ If you call other T3Vtech3 functions without initializing the engine first then 
 
 ## Quitting
 
-At the end of the game the engine will clean itself up. So there is no need to actually calling tt_quit() yourself.
-
-```c
-void tt_quit();
-```
+There is no to call tt_quit() explicitly. It will be called at the end of the program's execution anyway. It is only necessary to clean the resources that you loaded on your own during the engine's runtime.
 
 ## Frame Update
 
@@ -119,6 +115,35 @@ A created 3D object can be converted into a quad by using the function tt_3d_obj
 void tt_3d_object_make_quad(tt_3d_object *object)
 ```
 
+#### Custom Models Loaded From Files
+
+Custom models are basically the content of a 3D model file (currently only OBJ is supported) that can be used as 3D objects. You can load a 3D model from a file with 
+
+```c
+tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path);
+```
+
+This will give you a 3D custom model object that can be associated with 3D objects with
+
+```c
+void tt_3d_object_use_custom_model(tt_3d_object *object, tt_3d_custom_model *model);
+```
+
+The 3D custom model needs to be only loaded once into the video memory and can be associated with as many 3D objects as desired. After the last rendering instance is not used anymore you may want to delete the 3D custom model. In order to delete it you need to call 
+
+```c
+void tt_3d_custom_model_delete(tt_3d_custom_model **model);
+```
+
+Here is an example of usage
+
+```c
+tt_3d_object *ship=tt_3d_object_new();
+tt_3d_custom_model *ship_model=tt_3d_custom_model_load_file("assets/models/ship/ship.obj");
+tt_3d_texture *tex=tt_3d_texture_new("assets/models/ship/ship.bmp", false);
+tt_3d_object_use_texture(ship, tex);
+tt_3d_object_use_custom_model(ship, ship_model);
+```
 #### Textures
 
 ##### In 3D
