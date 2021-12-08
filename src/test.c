@@ -29,7 +29,8 @@ int main()
 
 	}
 
-	//tt_3d_texture_delete(&tex);
+	tt_3d_texture_delete(&tex);
+	tt_3d_custom_model_delete(&model);
 
 	return 0;
 }

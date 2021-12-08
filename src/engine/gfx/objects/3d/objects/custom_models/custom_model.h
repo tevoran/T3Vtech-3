@@ -16,5 +16,6 @@ struct tt_3d_custom_model
 } typedef tt_3d_custom_model;
 
 tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path);
+void tt_3d_custom_model_delete(tt_3d_custom_model **model);
 
 #endif

@@ -84,5 +84,5 @@ void tt_3d_texture_delete(tt_3d_texture **texture)
 {
 	glDeleteTextures(1, &(*texture)->texture);
 	free((*texture));
-	texture=NULL; //marking the texture as deleted
+	*texture=NULL; //marking the texture as deleted
 }

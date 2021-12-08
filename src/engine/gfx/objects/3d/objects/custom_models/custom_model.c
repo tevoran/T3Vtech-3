@@ -56,3 +56,13 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 
 	return model;
 }
+
+
+void tt_3d_custom_model_delete(tt_3d_custom_model **model)
+{
+	glDeleteVertexArrays(1, &(*model)->vao);
+	glDeleteBuffers(1, &(*model)->vbo);
+	glDeleteBuffers(1, &(*model)->ibo);
+
+	*model=NULL; //mark the custom model as deleted
+}

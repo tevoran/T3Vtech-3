@@ -107,7 +107,14 @@ void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
 //setting object properties
 void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture)
 {
-	object->texture=texture->texture;
+	if(texture) //use texture only if it exists
+	{
+		object->texture=texture->texture;
+	}
+	else //use default texture
+	{
+		object->texture=tt_gfx_3d_default_tex;
+	}
 }
 
 void tt_3d_object_use_default_texture(tt_3d_object *object)
