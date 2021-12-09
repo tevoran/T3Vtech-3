@@ -6,6 +6,13 @@
 //different file types
 #include "obj.h"
 
+struct tt_3d_custom_model_vertex
+{
+	tt_vec3 pos;
+	tt_vec2 tex_coord;
+	tt_vec3 normal;
+} typedef tt_3d_custom_model_vertex;
+
 struct tt_3d_custom_model
 {
 	GLuint vao;

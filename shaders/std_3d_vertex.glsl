@@ -2,6 +2,7 @@
 
 layout(location = 0) in vec3 pos_in;
 layout(location = 1) in vec2 base_tex_coord_in;
+layout(location = 2) in vec3 normal_in;
 
 uniform mat4 translation;
 uniform mat4 scale;

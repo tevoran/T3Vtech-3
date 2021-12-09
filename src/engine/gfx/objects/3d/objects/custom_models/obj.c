@@ -2,11 +2,6 @@
 
 #define LINE_LENGTH 1024
 
-struct vertex
-{
-	tt_vec3 pos;
-	tt_vec2 tex_coord;
-} typedef vertex;
 
 //vertex and index data need to be free'd later when the model got onto
 //the video memory
@@ -97,7 +92,7 @@ bool tt_3d_object_custom_model_load_obj_file(
 		normal_array=malloc(sizeof(tt_vec3)*num_normal);
 
 		//creating arrays for model data that goes later to OpenGL
-		*vertex_data=malloc(sizeof(vertex)* (*num_vertices));
+		*vertex_data=malloc(sizeof(tt_3d_custom_model_vertex)* (*num_vertices));
 		*index_data=malloc(sizeof(GLuint)* (*num_indices));
 
 		//loop variables
@@ -158,7 +153,8 @@ bool tt_3d_object_custom_model_load_obj_file(
 	{
 		fseek(file, 0, SEEK_SET);
 
-		vertex *vertex_array=(vertex*)*vertex_data;
+		tt_3d_custom_model_vertex *vertex_array=
+			(tt_3d_custom_model_vertex*)*vertex_data;
 		int num_verts_done=0;
 		int num_verts_pre_face=0;
 		int num_indices_done=0;
@@ -190,12 +186,10 @@ bool tt_3d_object_custom_model_load_obj_file(
 						i_tex--;
 						i_normal--;
 
-						vertex tmp_vertex;
+						tt_3d_custom_model_vertex tmp_vertex;
 						tmp_vertex.pos=pos_array[i_pos];
 						tmp_vertex.tex_coord=tex_array[i_tex];
-
-						//currently normals are not saved into the vertex
-						//as the engine doesn't use them right now
+						tmp_vertex.normal=normal_array[i_normal];
 
 						vertex_array[num_verts_done]=tmp_vertex;
 						num_verts_done++;

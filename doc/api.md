@@ -18,7 +18,7 @@ If you call other T3Vtech3 functions without initializing the engine first then 
 
 ## Quitting
 
-There is no to call tt_quit() explicitly. It will be called at the end of the program's execution anyway. It is only necessary to clean the resources that you loaded on your own during the engine's runtime.
+There is no need to call tt_quit() explicitly. It will be called at the end of the program's execution anyway. It is only necessary to clean the resources that you loaded on your own during the engine's runtime.
 
 ## Frame Update
 
