@@ -21,7 +21,7 @@ int main()
 	tt_3d_object_use_custom_model(ship, ship_model);
 
 
-	for(int i=0; i<1000; i++)
+	for(int i=0; i<4000; i++)
 	{
 		tt_new_frame();
 		//SDL_Delay(15);
