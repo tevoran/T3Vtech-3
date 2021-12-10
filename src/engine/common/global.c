@@ -23,8 +23,12 @@ float tt_far_plane=1000; //far clipping plane
 float tt_fov=0.5*tt_PI; //field of view in radians
 tt_mat4 tt_perspective_projection_mat; //the 3D perspective projection matrix
 tt_node *tt_3d_list_entry_node=NULL; //start of the 3D object rendering list
-bool tt_gfx_gouraud_shading_active=true; //toggle if gouraud shading is active
 
+//lighting
+bool tt_gfx_gouraud_shading_active=true; //toggle if gouraud shading is active
+tt_vec3 tt_gfx_light_direction; //the current direction of the light
+tt_vec3 tt_gfx_light_direction_color; //the current color of the directional light
+float tt_gfx_light_direction_strength; //directional light strength
 
 //primitives
 //Here are prepared primitives. They are already created after the initialization

@@ -10,6 +10,7 @@ extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
 
+
 //returns true if successfull
 bool tt_gfx_init()
 {
@@ -63,9 +64,13 @@ bool tt_gfx_init()
 
 	glDepthFunc(GL_LESS);
 
-	//activating gouraud shading be default
+	//setting lighting defaults
 	tt_gfx_gouraud_shading_active=true;
-
+	tt_gfx_set_light_direction_strength(0.3);
+	tt_vec3 light_direction={1.0,0.0,0.0};
+	tt_gfx_set_light_direction(&light_direction);
+	tt_vec3 light_color={1.0,1.0,1.0};
+	tt_gfx_set_light_direction_color(&light_color);
 
 	return true;
 }

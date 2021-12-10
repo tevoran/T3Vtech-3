@@ -13,25 +13,26 @@ int main()
 
 	tt_3d_object_set_position(ship, &pos);
 
-	tt_vec3 rot_axis={1,1,0};
+	tt_vec3 rot_axis={1,0,0};
 
 	tt_3d_custom_model *ship_model=tt_3d_custom_model_load_file("assets/models/ship/ship.obj");
 	tt_3d_texture *ship_tex=tt_3d_texture_new("assets/models/ship/ship.bmp", false);
 	tt_3d_object_use_texture(ship, ship_tex);
 	tt_3d_object_use_custom_model(ship, ship_model);
 
+	tt_3d_object_rotate(ship, &rot_axis, -0.3*tt_PI);
 
-	for(int i=0; i<4000; i++)
+	tt_vec3 light_color={1.0, 1.0, 1.0};
+	tt_gfx_set_light_direction_color(&light_color);
+	tt_gfx_set_light_direction_strength(.25);
+
+	for(int i=0; i<1000; i++)
 	{
 		tt_new_frame();
 		//SDL_Delay(15);
 
-		tt_3d_object_rotate(ship, &rot_axis, 0.02);
-
-		if(i==2000)
-		{
-			tt_gfx_gouraud_shading(false);
-		}
+		tt_vec3 light_direction={sin((float)i/60),0.0,cos((float)i/60)};
+		tt_gfx_set_light_direction(&light_direction);
 
 	}
 

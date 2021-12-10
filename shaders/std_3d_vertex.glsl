@@ -9,10 +9,16 @@ uniform mat4 scale;
 uniform mat4 rotation;
 uniform mat4 projection;
 
+//gouraud shading
 uniform bool gouraud_shading_toggle;
+uniform vec3 gouraud_shading_dir;
+uniform vec3 gouraud_shading_color;
+uniform float gouraud_shading_light_strength;
 
 out vec2 base_tex_coord;
 out float gouraud_strength;
+out vec3 directional_light_color;
+out float directional_light_strength;
 
 void main()
 {
@@ -23,14 +29,15 @@ void main()
 	vec3 normal=normalize(vec3(normal_tmp.xyz));
 
 	//gouraud shading
-	vec3 light_dir=vec3(-1.0, 0.0, 0.0);
+	directional_light_color=gouraud_shading_color;
+	directional_light_strength=gouraud_shading_light_strength;
 	if(gouraud_shading_toggle)
 	{
-		gouraud_strength=dot(-light_dir, normal);
+		gouraud_strength=dot(-gouraud_shading_dir, normal);
 		if(gouraud_strength<0)
 		{
 			gouraud_strength=0;
-		}		
+		}
 	}
 	else
 	{
