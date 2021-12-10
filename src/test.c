@@ -28,6 +28,11 @@ int main()
 
 		tt_3d_object_rotate(ship, &rot_axis, 0.02);
 
+		if(i==2000)
+		{
+			tt_gfx_gouraud_shading(false);
+		}
+
 	}
 
 	tt_3d_texture_delete(&ship_tex);

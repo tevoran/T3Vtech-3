@@ -8,6 +8,7 @@ extern float tt_fov; //field of view in radians
 extern tt_mat4 tt_perspective_projection_mat; //the 3D perspective projection matrix
 extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
+extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
 
 //returns true if successfull
 bool tt_gfx_init()
@@ -61,6 +62,10 @@ bool tt_gfx_init()
 		tt_far_plane);
 
 	glDepthFunc(GL_LESS);
+
+	//activating gouraud shading be default
+	tt_gfx_gouraud_shading_active=true;
+
 
 	return true;
 }

@@ -9,6 +9,8 @@ uniform mat4 scale;
 uniform mat4 rotation;
 uniform mat4 projection;
 
+uniform bool gouraud_shading_toggle;
+
 out vec2 base_tex_coord;
 out float gouraud_strength;
 
@@ -22,10 +24,17 @@ void main()
 
 	//gouraud shading
 	vec3 light_dir=vec3(-1.0, 0.0, 0.0);
-	gouraud_strength=dot(-light_dir, normal);
-	if(gouraud_strength<0)
+	if(gouraud_shading_toggle)
 	{
-		gouraud_strength=0;
+		gouraud_strength=dot(-light_dir, normal);
+		if(gouraud_strength<0)
+		{
+			gouraud_strength=0;
+		}		
+	}
+	else
+	{
+		gouraud_strength=1;
 	}
 
 	//output
