@@ -1,0 +1,11 @@
+-refactoring lighting
+	-giving a struct to the shader if possible
+-document lighting capabilities
+-move rotation quaternion to math lib
+-add primitives
+	-spheres
+	-cubes
+-add shader objects
+-add point lights
+-add ambient lighting
+-2D stuff
