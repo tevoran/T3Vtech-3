@@ -26,6 +26,7 @@ tt_node *tt_3d_list_entry_node=NULL; //start of the 3D object rendering list
 
 //lighting
 bool tt_gfx_gouraud_shading_active=true; //toggle if gouraud shading is active
+GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 tt_vec3 tt_gfx_light_direction; //the current direction of the light
 tt_vec3 tt_gfx_light_direction_color; //the current color of the directional light
 float tt_gfx_light_direction_strength; //directional light strength

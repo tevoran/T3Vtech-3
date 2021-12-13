@@ -64,13 +64,10 @@ bool tt_gfx_init()
 
 	glDepthFunc(GL_LESS);
 
-	//setting lighting defaults
-	tt_gfx_gouraud_shading_active=true;
-	tt_gfx_set_light_direction_strength(0.3);
-	tt_vec3 light_direction={1.0,0.0,0.0};
-	tt_gfx_set_light_direction(&light_direction);
-	tt_vec3 light_color={1.0,1.0,1.0};
-	tt_gfx_set_light_direction_color(&light_color);
+	//setting lighting defaults#
+	tt_gfx_gouraud_shading_active=true; //activate gouraud shading
+	tt_gfx_directional_light_setup();
+
 
 	return true;
 }

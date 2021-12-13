@@ -16,6 +16,9 @@ extern GLuint tt_gfx_3d_default_tex;
 
 void tt_gfx_quit()
 {
+	//delete light UBOs
+	tt_gfx_directional_light_cleanup();
+
 	printf("deleting default shaders...");
 		glDeleteProgram(tt_std_3d_shader);
 		glDeleteProgram(tt_std_2d_shader);
