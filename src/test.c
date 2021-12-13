@@ -2,7 +2,7 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, false);
+	tt_init("T3Vtech3 test window", 1920, 1080, true);
 
 	float fov=0.5*tt_PI;
 	tt_vec3 pos={0.0,0.0,17.0};

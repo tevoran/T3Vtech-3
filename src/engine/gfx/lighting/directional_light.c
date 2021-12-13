@@ -59,7 +59,6 @@ void tt_gfx_directional_light_setup()
 	}
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-	printf("SIZE: %i\n", sizeof(layout));
 }
 
 void tt_gfx_directional_light_cleanup()
