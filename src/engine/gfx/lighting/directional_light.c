@@ -82,7 +82,7 @@ int tt_directional_light_new()
 	return layout.num_active.x;
 }
 
-void tt_directional_light_destroy(int light_id)
+void tt_directional_light_delete(int light_id)
 {
 	layout.num_active.x=light_id-1;
 	if(layout.num_active.x<=0)

@@ -1,5 +1,3 @@
--refactoring lighting
-	-giving a struct to the shader if possible
 -document lighting capabilities
 -move rotation quaternion to math lib
 -add primitives

@@ -38,6 +38,16 @@ The field of view only affects 3D scenes but it can be set differently in each f
 void tt_set_fov(float radians);
 ```
 
+### Gouraud Shading
+
+Gouraud shading is a shading method that needs quite little resources in comparison with other methods. It is possible to activate or deactivate it by calling 
+
+```c
+void tt_gfx_gouraud_shading(bool active);
+```
+
+When active is true gouraud shading will activated and with false it will be deactivated.
+
 ## 3D
 
 ### 3D Objects
@@ -168,3 +178,51 @@ tt_3d_object_use_texture(quad, tex);
 
 tt_3d_texture_delete(&tex);
 ```
+
+### Lighting
+
+#### Directional Lights
+
+A directional light is a light that is similar to the sun. It appears to be infinitely far away. T3Vtech-3 currently supports up to 8 directional lights.
+
+A new directional light can be created by calling 
+
+```c
+int tt_directional_light_new();
+```
+
+The function returns a light_id. It is used to change attributes of that particular directional light. It is also used to delete light sources.
+
+```c
+void tt_directional_light_delete(int light_id);
+```
+
+It is important to note that the directional light sources are ordered in a stack like manner. Your most important light should be the first one that you create. If you delete your latest light then only this one gets deleted. But if you delete your second latest light then the latest AND the second latest light will be deleted.
+
+##### Setting Parameters
+
+It is possible to change the individual lights parameters. These parameters are direction, strength and color.
+
+The direction is set by calling
+
+```c
+void tt_directional_light_set_direction(int light_id, tt_vec3 *direction);
+```
+
+The light_id is the return value of a light created by tt_directional_light_new(). And direction is a tt_vec3 vector. The struct contains x, y and z members.
+
+The strength is changed by calling
+
+```c
+void tt_directional_light_set_strength(int light_id, float strength);
+```
+
+The strength is a floating point value. In most cases you want to have the value between 0.0f and 1.0f while 0.0f is basically a light that affects nothing.
+
+The last changeable property of a directional light is the color.
+
+```c
+void tt_directional_light_set_color(int light_id, tt_vec3 *color);
+```
+
+The color values are stored in a tt_vec3 vector which is a struct containg the members x, y and z. X gets interpreted as r, y as g, z as b values. The individual color values have to be between 0.0f and 1.0f.
