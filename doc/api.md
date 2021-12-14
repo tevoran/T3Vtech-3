@@ -188,6 +188,10 @@ tt_3d_texture_delete(&tex);
 
 ### Lighting
 
+#### Ambient Light
+
+Ambient light is just a diffuse light that seems to come from everywhere equally. It has two 
+
 #### Directional Lights
 
 A directional light is a light that is similar to the sun. It appears to be infinitely far away. T3Vtech-3 currently supports up to 8 directional lights.
