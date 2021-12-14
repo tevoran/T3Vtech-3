@@ -4,6 +4,12 @@ The core part of the engine is compiled as a static library and is ready to be u
 
 ## Initialization
 
+To be able to initialize the engine the main header tt.h has to be included.
+
+```c
+#include <tt.h>
+```
+
 The engine has to be initialized by calling the function
 
 ```c
