@@ -3,6 +3,7 @@
 
 #include <tt.h>
 #include "shaders.h"
+#include "camera.h"
 #include "renderer/renderer.h"
 #include "lighting/lighting.h"
 #include "objects/3d/textures/textures.h"

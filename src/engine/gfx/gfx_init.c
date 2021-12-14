@@ -53,7 +53,7 @@ bool tt_gfx_init()
 	tt_gfx_prepare_quad();
 	tt_gfx_3d_default_tex_init();
 
-
+	tt_gfx_camera_setup();
 	tt_math_mat4_make_projection_matrix(
 		&tt_perspective_projection_mat,
 		tt_res_x,
@@ -64,7 +64,7 @@ bool tt_gfx_init()
 
 	glDepthFunc(GL_LESS);
 
-	//setting lighting defaults#
+	//setting lighting defaults
 	tt_gfx_gouraud_shading_active=true; //activate gouraud shading
 	tt_gfx_directional_light_setup();
 

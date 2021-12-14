@@ -31,6 +31,9 @@ GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 	float tt_gfx_amb_light_strength=0.33; //the ambient light strength
 	tt_vec3 tt_gfx_amb_light_color={1.0,1.0,1.0}; //the ambient light color
 
+//camera
+tt_mat4 tt_camera_position; //current camera position
+
 //primitives
 //Here are prepared primitives. They are already created after the initialization
 //and will be used when "creating" primitives to save time.

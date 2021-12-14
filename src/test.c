@@ -28,10 +28,12 @@ int main()
 	tt_3d_object_rotate(ship, &rot_axis, -0.3*tt_PI);
 	tt_3d_object_rotate(ship_r, &rot_axis, -0.3*tt_PI);
 
-	tt_3d_object_light_affected(ship, false);
-
-	for(int i=0; i<2000; i++)
+	tt_vec3 cam_pos={0,0,0};
+	for(int i=0; i<10000; i++)
 	{
+		cam_pos.z-=0.01;
+		tt_camera_set_position(&cam_pos);
+
 		tt_ambient_light_set_strength(0.25*sin((float)i/120)+0.5);
 		tt_vec3 amb_color={
 			sin((float)i/30),

@@ -11,6 +11,8 @@ extern float tt_near_plane; //near clipping plane
 extern float tt_far_plane; //far clipping plane
 extern float tt_fov; //field of view in radians
 extern tt_mat4 tt_perspective_projection_mat; //the 3D perspective projection matrix
+//camera
+extern tt_mat4 tt_camera_position; //current camera position
 
 //shader stuff
 extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
@@ -43,6 +45,11 @@ void tt_gfx_3d_preparation()
 	GLint projection_mat=glGetUniformLocation(tt_std_3d_shader, "projection");
 	const GLfloat *projection_mat_ptr=(const GLfloat*) tt_perspective_projection_mat.array;
 	glUniformMatrix4fv(projection_mat, 1, GL_FALSE, projection_mat_ptr);
+
+	//camera
+	GLint cam_translation=glGetUniformLocation(tt_std_3d_shader, "cam_translation");
+	const GLfloat *cam_translation_ptr=(const GLfloat*)tt_camera_position.array;
+	glUniformMatrix4fv(cam_translation, 1, GL_FALSE, cam_translation_ptr);
 
 	//lighting
 	GLint gouraud_shading_toggle=glGetUniformLocation(tt_std_3d_shader, "gouraud_shading_toggle");
