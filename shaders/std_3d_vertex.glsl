@@ -15,17 +15,17 @@ layout(std140, binding = 0) uniform dir_light
 	vec4 dir_light_strength[NUM_MAX_DIR_LIGHTS]; //light intensity
 };
 
+//transformations
 uniform mat4 translation;
 uniform mat4 scale;
 uniform mat4 rotation;
 uniform mat4 projection;
 
-//gouraud shading
+//lighting
 uniform bool gouraud_shading_toggle;
-uniform vec3 gouraud_shading_dir;
-uniform vec3 gouraud_shading_color;
-uniform float gouraud_shading_light_strength;
+uniform bool object_light_affected;
 
+//variables to fragment shader
 out vec2 base_tex_coord;
 out float gouraud_strength;
 out float directional_light_angle[NUM_MAX_DIR_LIGHTS];
@@ -40,20 +40,23 @@ void main()
 	vec4 normal_tmp = rotation * vec4(normal_in, 1.0);
 	vec3 normal=normalize(vec3(normal_tmp.xyz));
 
-	//gouraud shading
-	//directional_light_color=gouraud_shading_color;
-	//directional_light_strength=gouraud_shading_light_strength;
-	if(gouraud_shading_toggle)
+	//lighting
+	if(object_light_affected)
 	{
-		for(int i=0; i<dir_light_num_active.x; i++)
+		//gouraud shading
+		if(gouraud_shading_toggle)
 		{
-			directional_light_angle[i]=dot(-dir_light_dir[i].xyz, normal);
-			if(directional_light_angle[i]<0)
+			for(int i=0; i<dir_light_num_active.x; i++)
 			{
-				directional_light_angle[i]=0;
+				directional_light_angle[i]=dot(-dir_light_dir[i].xyz, normal);
+				if(directional_light_angle[i]<0)
+				{
+					directional_light_angle[i]=0;
+				}
 			}
 		}
 	}
+
 
 	//output
 	gl_Position = pos;

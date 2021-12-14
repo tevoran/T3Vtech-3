@@ -14,6 +14,9 @@ layout(std140, binding = 0) uniform dir_light
 in vec2 base_tex_coord;
 in float directional_light_angle[NUM_MAX_DIR_LIGHTS];
 
+
+uniform bool object_light_affected;
+
 uniform sampler2D base_tex;
 uniform bool gouraud_shading_toggle;
 
@@ -25,14 +28,18 @@ void main()
 	color = texture(base_tex, base_tex_coord);
 
 	//lighting
-	if(gouraud_shading_toggle)
+	if(object_light_affected)
 	{
-		vec4 tmp_color[NUM_MAX_DIR_LIGHTS];
-		for(int i=0; i<dir_light_num_active.x; i++)
+		if(gouraud_shading_toggle)
 		{
-			tmp_color[i]=vec4(dir_light_color[i].xyz * dir_light_strength[i].xyz, 1.0);
-			tmp_color[i]=directional_light_angle[i] * tmp_color[i];
-			color += tmp_color[i];
-		}
+			//directional lighting
+			vec4 tmp_color[NUM_MAX_DIR_LIGHTS];
+			for(int i=0; i<dir_light_num_active.x; i++)
+			{
+				tmp_color[i]=vec4(dir_light_color[i].xyz * dir_light_strength[i].xyz, 1.0);
+				tmp_color[i]=directional_light_angle[i] * tmp_color[i];
+				color += tmp_color[i];
+			}
+		}		
 	}
 }

@@ -5,13 +5,15 @@ int main()
 	tt_init("T3Vtech3 test window", 1920, 1080, true);
 
 	float fov=0.5*tt_PI;
-	tt_vec3 pos={0.0,0.0,17.0};
+	tt_vec3 pos={-10.0,0.0,20.0};
 	tt_vec3 scale={1,1,1};
 	tt_vec3 orientation={0.5,0.5,0.0};
 	tt_3d_object *ship=tt_3d_object_new();
-	tt_3d_object *quad=tt_3d_object_new();
+	tt_3d_object *ship_r=tt_3d_object_new();
 
 	tt_3d_object_set_position(ship, &pos);
+	pos.x=10;
+	tt_3d_object_set_position(ship_r, &pos);
 
 	tt_vec3 rot_axis={1,0,0};
 
@@ -19,8 +21,14 @@ int main()
 	tt_3d_texture *ship_tex=tt_3d_texture_new("assets/models/ship/ship_low.png", false);
 	tt_3d_object_use_texture(ship, ship_tex);
 	tt_3d_object_use_custom_model(ship, ship_model);
+	tt_3d_object_use_texture(ship_r, ship_tex);
+	tt_3d_object_use_custom_model(ship_r, ship_model);
+
 
 	tt_3d_object_rotate(ship, &rot_axis, -0.3*tt_PI);
+	tt_3d_object_rotate(ship_r, &rot_axis, -0.3*tt_PI);
+
+	tt_3d_object_light_affected(ship, false);
 
 	for(int i=0; i<2000; i++)
 	{

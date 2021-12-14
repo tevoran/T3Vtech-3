@@ -23,6 +23,9 @@ struct tt_3d_object
 	//properties
 	GLuint texture;
 
+	//lighting
+	bool lighting_affected;
+
 } typedef tt_3d_object;
 
 #include "custom_models/custom_model.h"
@@ -44,5 +47,6 @@ void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
 //object properties
 void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture);
 void tt_3d_object_use_default_texture(tt_3d_object *object);
+void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
 
 #endif

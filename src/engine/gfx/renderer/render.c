@@ -24,6 +24,7 @@ void tt_gfx_render()
 			GLint translation=glGetUniformLocation(tt_std_3d_shader, "translation");
 			GLint scale=glGetUniformLocation(tt_std_3d_shader, "scale");
 			GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
+			GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
 
 			//set uniforms
 			const GLfloat *mat4_uniform=(const GLfloat*)current_object->translation.array;
@@ -34,6 +35,8 @@ void tt_gfx_render()
 			
 			mat4_uniform=(const GLfloat*)current_object->rotation.array;
 			glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
+
+			glUniform1i(affected_by_light, current_object->lighting_affected);
 
 			//bind buffers
 			//glBindVertexArray(current_object->vao);
