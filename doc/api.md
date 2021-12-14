@@ -71,6 +71,15 @@ Please note the pointer pointer as an argument. This pointer pointer is used to 
 ```c
 void tt_3d_object_delete(tt_3d_object **object);
 ```
+
+#### Enabling/Disabling Lighting Effects
+
+It can be toggled whether a 3D object is affected by light or not. This comes in handy if one wants to place a light bulb or something else that emits light. 
+
+```c
+void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
+```
+
 #### Usage of a Texture
 
 To use a texture to cover a 3D object it needs to be created first by calling tt_3d_texture_new() and is available until the call the of tt_3d_texture_delete(). In between the texture is usable on as many models as desired. And if no texture is specified then the pink default texture will be used.
