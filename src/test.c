@@ -32,12 +32,19 @@ int main()
 
 	for(int i=0; i<2000; i++)
 	{
+		tt_ambient_light_set_strength(0.25*sin((float)i/120)+0.5);
+		tt_vec3 amb_color={
+			sin((float)i/30),
+			sin((float)i/135),
+			sin((float)i/354)};
+		tt_ambient_light_set_color(&amb_color);
+
 		tt_new_frame();
 		//SDL_Delay(15);
 
 		//tt_vec3 light_direction={sin((float)i/60),0.0,cos((float)i/60)};
 		//tt_gfx_set_light_direction(&light_direction);
-		if(i==100)
+		/*if(i==100)
 		{
 			printf("light: %i\n",tt_directional_light_new());
 			tt_vec3 light_direction={-1,0,0};
@@ -90,7 +97,7 @@ int main()
 			tt_directional_light_set_direction(6, &light_direction);
 			tt_directional_light_set_strength(6, 0.1);
 			tt_directional_light_set_color(6, &light_color);
-		}
+		}*/
 	}
 
 	tt_3d_texture_delete(&ship_tex);

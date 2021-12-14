@@ -165,8 +165,6 @@ tt_3d_object_use_custom_model(ship, ship_model);
 ```
 #### Textures
 
-##### In 3D
-
 Textures are an object that is very similarily used like "tt_3d_object"s. They are created and deleted and in between they can be used to cover 3D models. If no texture is specified for a 3D object then the object will get a pink default texture.
 
 ```c

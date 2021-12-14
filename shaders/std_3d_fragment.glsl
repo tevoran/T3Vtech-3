@@ -11,16 +11,22 @@ layout(std140, binding = 0) uniform dir_light
 	vec4 dir_light_strength[NUM_MAX_DIR_LIGHTS]; //light intensity
 };
 
+//input from the vertex shader
 in vec2 base_tex_coord;
 in float directional_light_angle[NUM_MAX_DIR_LIGHTS];
 
 
-uniform bool object_light_affected;
-
 uniform sampler2D base_tex;
+
+//lighting
 uniform bool gouraud_shading_toggle;
+uniform bool object_light_affected;
+	
+//ambient lighting
+uniform float amb_light_strength;
+uniform vec3 amb_light_color;
 
-
+//output
 out vec4 color;
 
 void main()
@@ -30,6 +36,11 @@ void main()
 	//lighting
 	if(object_light_affected)
 	{
+		//ambient lighting
+		vec3 amb_light = amb_light_strength * amb_light_color;
+		color = vec4(amb_light,1.0) * color;
+
+		//gouraud shading based lighting
 		if(gouraud_shading_toggle)
 		{
 			//directional lighting

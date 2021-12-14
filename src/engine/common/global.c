@@ -27,9 +27,9 @@ tt_node *tt_3d_list_entry_node=NULL; //start of the 3D object rendering list
 //lighting
 bool tt_gfx_gouraud_shading_active=true; //toggle if gouraud shading is active
 GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
-tt_vec3 tt_gfx_light_direction; //the current direction of the light
-tt_vec3 tt_gfx_light_direction_color; //the current color of the directional light
-float tt_gfx_light_direction_strength; //directional light strength
+	//ambient lighting
+	float tt_gfx_amb_light_strength=0.33; //the ambient light strength
+	tt_vec3 tt_gfx_amb_light_color={1.0,1.0,1.0}; //the ambient light color
 
 //primitives
 //Here are prepared primitives. They are already created after the initialization

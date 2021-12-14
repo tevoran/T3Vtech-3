@@ -6,6 +6,10 @@
 
 void tt_gfx_gouraud_shading(bool active);
 
+//ambient light
+void tt_ambient_light_set_strength(float strength);
+void tt_ambient_light_set_color(tt_vec3 *color);
+
 //directional light
 void tt_gfx_directional_light_setup();
 void tt_gfx_directional_light_cleanup();
