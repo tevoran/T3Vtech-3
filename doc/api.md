@@ -58,10 +58,14 @@ When active is true gouraud shading will activated and with false it will be dea
 
 ### Camera
 
-In 3D settings a camera is used as a point of view. It can be positioned anywhere in the world.
+In 3D settings a camera is used as a point of view. It can be positioned anywhere in the world. Additionally the camera can be rotated around any axis.
 
 ```c
 void tt_camera_set_position(tt_vec3 *position);
+```
+
+```c
+void tt_camera_rotate(tt_vec3 *rot_axis, float radians);
 ```
 
 
