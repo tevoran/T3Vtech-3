@@ -56,6 +56,15 @@ When active is true gouraud shading will activated and with false it will be dea
 
 ## 3D
 
+### Camera
+
+In 3D settings a camera is used as a point of view. It can be positioned anywhere in the world.
+
+```c
+void tt_camera_set_position(tt_vec3 *position);
+```
+
+
 ### 3D Objects
 
 A 3D object has the following life cycle. At first you need to create an empty 3D object which you have to destroy at the end of its life. While it is alive it is usually part of the rendering process, where it gets rendered each frame if it's visible. Also it is possible to modify it during its life cycle. This kind of modification is necessary to give the 3D object a specific shape or apply transformations like rotations to it.
