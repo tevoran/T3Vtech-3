@@ -73,36 +73,8 @@ void tt_3d_object_set_position(tt_3d_object *object, tt_vec3 *position)
 
 void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
 {
-	tt_vec4 q;
-	q.x=rot_axis->x * sin(radians/2);
-	q.y=rot_axis->y * sin(radians/2);
-	q.z=rot_axis->z * sin(radians/2);
-	q.w=cos(radians/2);
-	q=tt_math_vec4_normalize(q);
-
-	//the rotation matrix with the difference to the current rotation matrix
-	tt_mat4 rot_mat;
-	rot_mat.array[0][0]=1-2*(q.y*q.y+q.z*q.z);
-	rot_mat.array[0][1]=2*(q.x*q.y+q.z*q.w);
-	rot_mat.array[0][2]=2*(q.x*q.z-q.y*q.w);
-	rot_mat.array[0][3]=0;
-
-	rot_mat.array[1][0]=2*(q.x*q.y-q.w*q.z);
-	rot_mat.array[1][1]=1-2*(q.x*q.x+q.z*q.z);
-	rot_mat.array[1][2]=2*(q.y*q.z+q.x*q.w);
-	rot_mat.array[1][3]=0;
-
-	rot_mat.array[2][0]=2*(q.x*q.z+q.y*q.w);
-	rot_mat.array[2][1]=2*(q.y*q.z-q.x*q.w);
-	rot_mat.array[2][2]=1-2*(q.x*q.x+q.y*q.y);
-	rot_mat.array[2][3]=0;
-
-	rot_mat.array[3][0]=0;
-	rot_mat.array[3][1]=0;
-	rot_mat.array[3][2]=0;
-	rot_mat.array[3][3]=1;
-
-	object->rotation=tt_math_mat4_mul(&rot_mat, &object->rotation);
+	tt_mat4 rot_delta_mat=tt_math_mat4_make_quat_rot_mat(rot_axis, radians);
+	object->rotation=tt_math_mat4_mul(&rot_delta_mat, &object->rotation);
 }
 
 //setting object properties

@@ -2,7 +2,7 @@
 
 //global stuff
 //all global variables should only be in this file to avoid
-//the dangers associated with global variables
+//the dangers that are associated with global variables
 
 
 //general stuff
@@ -33,6 +33,7 @@ GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 
 //camera
 tt_mat4 tt_camera_position; //current camera position
+tt_mat4 tt_camera_rotation; //current camera rotation
 
 //primitives
 //Here are prepared primitives. They are already created after the initialization

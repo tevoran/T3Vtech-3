@@ -15,6 +15,7 @@ void tt_math_mat4_make_projection_matrix(
 	const float fov,
 	const float near_clipping_plane,
 	const float far_clipping_plane);
+tt_mat4 tt_math_mat4_make_quat_rot_mat(tt_vec3 *rot_axis, float radians);
 
 tt_mat4 tt_math_mat4_mul(tt_mat4 *a, tt_mat4 *b);
 

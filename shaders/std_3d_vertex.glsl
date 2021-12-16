@@ -23,6 +23,7 @@ uniform mat4 projection;
 
 //camera
 uniform mat4 cam_translation;
+uniform mat4 cam_rotation;
 
 //lighting
 uniform bool gouraud_shading_toggle;
@@ -39,7 +40,13 @@ void main()
 {
 	//basic transformations
 	vec4 pos = vec4 (pos_in, 1.0);
-	pos = projection * cam_translation * translation * scale * rotation * pos;
+	pos = projection 
+		* cam_rotation 
+		* cam_translation 
+		* translation 
+		* scale 
+		* rotation 
+		* pos;
 	vec4 normal_tmp = rotation * vec4(normal_in, 1.0);
 	vec3 normal=normalize(vec3(normal_tmp.xyz));
 
