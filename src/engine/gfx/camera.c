@@ -9,7 +9,7 @@ void tt_gfx_camera_setup()
 
 void tt_camera_set_position(tt_vec3 *position)
 {
-	tt_camera_position.array[3][0]=position->x;
-	tt_camera_position.array[3][1]=position->y;
-	tt_camera_position.array[3][2]=position->z;
+	tt_camera_position.array[3][0]=-position->x;
+	tt_camera_position.array[3][1]=-position->y;
+	tt_camera_position.array[3][2]=-position->z;
 }
