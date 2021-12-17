@@ -75,5 +75,36 @@ int tt_point_light_new(tt_vec3 *position, tt_vec3 *color)
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-	return i;
+	return ubo.num_active.x;
+}
+
+void tt_point_light_set_strength(int light_id, float strength)
+{
+	ubo.strength[light_id-1].x=strength;
+	ubo.strength[light_id-1].y=strength;
+	ubo.strength[light_id-1].z=strength;
+	ubo.strength[light_id-1].w=strength;
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void tt_point_light_set_color(int light_id, tt_vec3 *color)
+{
+	ubo.color[light_id-1].x=color->x; //r
+	ubo.color[light_id-1].y=color->y; //g
+	ubo.color[light_id-1].z=color->z; //b
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void tt_point_light_set_position(int light_id, tt_vec3 *position)
+{
+	ubo.location[light_id-1].x=position->x;
+	ubo.location[light_id-1].y=position->y;
+	ubo.location[light_id-1].z=position->z;
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }

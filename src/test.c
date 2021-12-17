@@ -32,15 +32,25 @@ int main()
 	tt_vec3 cam_rot_axis={1,0,0};
 	//tt_camera_rotate(&cam_rot_axis, -tt_PI/8);
 
-	tt_vec3 pos_point_light={0,0,30};
+	tt_vec3 pos_point_light={0,0,0};
 	tt_vec3 color_point_light={1,1,0};
 	tt_point_light_new(&pos_point_light, &color_point_light);
-	for(int i=0; i<500; i++)
+/*	pos_point_light.z=0;
+	pos_point_light.x=5;
+	color_point_light.x=0.7;
+	color_point_light.y=0.8;	
+	color_point_light.z=0.2;
+	tt_point_light_new(&pos_point_light, &color_point_light);
+*/
+	for(int i=0; i<1500; i++)
 	{
+		pos_point_light.z+=0.02;
+		tt_point_light_set_position(1, &pos_point_light);
 		//cam_pos.y+=0.01;
 		//tt_camera_set_position(&cam_pos);
 		//tt_camera_rotate(&cam_rot_axis, 0.004*sin((float)i/100));
 
+		//tt_point_light_set_strength(1, 1.5+1.5*sin((float)i/100));
 		tt_ambient_light_set_strength(0);
 		tt_vec3 amb_color={
 			sin((float)i/30),
