@@ -1,6 +1,7 @@
 #include <tt.h>
 
 #define DIR_LIGHT_BINDING 0
+#define POINT_LIGHT_BINDING 1
 
 //game settings
 extern uint32_t tt_res_x; //game resolution
@@ -20,6 +21,7 @@ extern tt_mat4 tt_camera_rotation; //current camera rotation
 extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
 extern GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
+extern GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
 
 //ambient lighting
 extern float tt_gfx_amb_light_strength; //the ambient light strength
@@ -65,6 +67,11 @@ void tt_gfx_3d_preparation()
 	GLuint dir_light=glGetUniformBlockIndex(tt_std_3d_shader, "dir_light");
 	glUniformBlockBinding(tt_std_3d_shader, dir_light, DIR_LIGHT_BINDING);
 	glBindBufferBase(GL_UNIFORM_BUFFER, DIR_LIGHT_BINDING, tt_gfx_ubo_dir_light);
+
+	//point light uniform buffer object
+	GLuint point_light=glGetUniformBlockIndex(tt_std_3d_shader, "point_light");
+	glUniformBlockBinding(tt_std_3d_shader, point_light, POINT_LIGHT_BINDING);
+	glBindBufferBase(GL_UNIFORM_BUFFER, POINT_LIGHT_BINDING, tt_gfx_ubo_point_light);
 
 	//ambient lighting
 	GLint amb_light_strength=glGetUniformLocation(tt_std_3d_shader, "amb_light_strength"); 

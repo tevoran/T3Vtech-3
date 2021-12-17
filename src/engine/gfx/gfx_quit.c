@@ -18,6 +18,7 @@ void tt_gfx_quit()
 {
 	//delete light UBOs
 	tt_gfx_directional_light_cleanup();
+	tt_gfx_point_light_cleanup();
 
 	printf("deleting default shaders...");
 		glDeleteProgram(tt_std_3d_shader);

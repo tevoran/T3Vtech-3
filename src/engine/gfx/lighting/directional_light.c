@@ -8,7 +8,7 @@ It is only active if gouraud shading is active.
 
 #define NUM_MAX_DIR_LIGHTS 8
 
-//usinng tt_vec4 because of the padding of the uniform buffer object
+//using tt_vec4 because of the padding of the uniform buffer object
 struct ubo_layout
 {
 	tt_vec4 num_active;
@@ -30,8 +30,6 @@ void tt_gfx_directional_light_setup()
 	glGenBuffers(1, &tt_gfx_ubo_dir_light);
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
 
-	//allocating 72 bytes which is the data occupied by the 8 possible light sources
-	//more information can be found in the std_3d_vertex shader
 	layout.num_active.x=0;
 	layout.num_active.y=0;
 	layout.num_active.z=0;

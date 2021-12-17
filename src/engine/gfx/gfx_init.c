@@ -67,6 +67,8 @@ bool tt_gfx_init()
 	//setting lighting defaults
 	tt_gfx_gouraud_shading_active=true; //activate gouraud shading
 	tt_gfx_directional_light_setup();
+	tt_gfx_point_light_setup();
+
 
 
 	return true;
