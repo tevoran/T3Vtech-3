@@ -1,7 +1,6 @@
--document lighting capabilities
--move rotation quaternion to math lib
--add primitives
-	-spheres
-	-cubes
--add shader objects
--2D stuff
+[ ] move rotation quaternion to math lib
+[ ] add primitives
+	[ ] spheres
+	[ ]cubes
+[ ] add shader objects
+[ ] 2D stuff
