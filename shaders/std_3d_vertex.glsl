@@ -43,8 +43,7 @@ uniform bool object_light_affected;
 
 //variables to fragment shader
 out vec2 base_tex_coord;
-out float directional_light_angle[NUM_MAX_DIR_LIGHTS];
-out float point_light_intensity[NUM_MAX_POINT_LIGHTS];
+out vec4 dir_light_result;
 out vec4 point_light_result;
 
 void main()
@@ -62,10 +61,16 @@ void main()
 	//lighting
 	if(object_light_affected)
 	{
+		//preparation
+		point_light_result=vec4(0.0);
+		dir_light_result=vec4(0.0);
+
 		//gouraud shading
 		if(gouraud_shading_toggle)
 		{
 			//directional light
+			float directional_light_angle[NUM_MAX_DIR_LIGHTS];
+
 			for(int i=0; i<dir_light_num_active.x; i++)
 			{
 				directional_light_angle[i]=dot(-dir_light_dir[i].xyz, normal);
@@ -73,19 +78,34 @@ void main()
 				{
 					directional_light_angle[i]=0;
 				}
+				vec4 tmp_color=vec4(dir_light_color[i].xyz * dir_light_strength[i].xyz, 1.0);
+				tmp_color=directional_light_angle[i] * tmp_color;
+				dir_light_result += tmp_color;
 			}
 
 			//point light
+			float point_light_intensity[NUM_MAX_POINT_LIGHTS];
+
 			for(int i=0; i<point_light_num_active.x; i++)
 			{
+				//getting the direction from the vertex
 				vec4 light_direction=point_light_location[i]-vertex_world_pos;
+
+				//determining intensity from light angle
 				point_light_intensity[i]=dot(light_direction.xyz, normal);
 				if(point_light_intensity[i]<0)
 				{
 					point_light_intensity[i]=0;
 				}
+
+				//taking distance into account
 				point_light_intensity[i]=point_light_intensity[i]/
 					(length(light_direction.xyz)*length(light_direction.xyz));
+
+				//doing the actual shading
+				vec4 tmp_color=vec4(point_light_color[i].xyz * point_light_strength[i].xyz, 1.0);
+				tmp_color=point_light_intensity[i] * tmp_color;
+				point_light_result+=tmp_color;
 			}
 
 		}

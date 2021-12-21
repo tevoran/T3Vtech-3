@@ -32,8 +32,11 @@ int main()
 	tt_vec3 cam_rot_axis={1,0,0};
 	//tt_camera_rotate(&cam_rot_axis, -tt_PI/8);
 
-	tt_vec3 pos_point_light={0,0,0};
+	tt_vec3 pos_point_light={0,0,20};
 	tt_vec3 color_point_light={1,1,0};
+	tt_point_light_new(&pos_point_light, &color_point_light);
+	pos_point_light.y=0;
+	pos_point_light.z=15;
 	tt_point_light_new(&pos_point_light, &color_point_light);
 /*	pos_point_light.z=0;
 	pos_point_light.x=5;
@@ -44,15 +47,19 @@ int main()
 */
 	for(int i=0; i<1500; i++)
 	{
-		pos_point_light.z=20;
-		tt_point_light_set_position(1, &pos_point_light);
-		tt_point_light_set_strength(1, 5.0+5.0*sin((float)i/120));
+		//pos_point_light.z=20;
+		//tt_point_light_set_position(1, &pos_point_light);
+		tt_point_light_set_strength(1, 30);
+			pos_point_light.x=40*sin((float)i/100);
+			pos_point_light.y=40*cos((float)i/100);
+		tt_point_light_set_position(2, &pos_point_light);
+		tt_point_light_set_strength(2, 75);
 		//cam_pos.y+=0.01;
 		//tt_camera_set_position(&cam_pos);
 		//tt_camera_rotate(&cam_rot_axis, 0.004*sin((float)i/100));
 
 		//tt_point_light_set_strength(1, 1.5+1.5*sin((float)i/100));
-		tt_ambient_light_set_strength(0);
+		tt_ambient_light_set_strength(0.0);
 		tt_vec3 amb_color={
 			sin((float)i/30),
 			sin((float)i/135),
@@ -64,14 +71,24 @@ int main()
 
 		//tt_vec3 light_direction={sin((float)i/60),0.0,cos((float)i/60)};
 		//tt_gfx_set_light_direction(&light_direction);
-		if(i==1000000)
+		if(i==10000)
 		{
 			printf("light: %i\n",tt_directional_light_new());
 			tt_vec3 light_direction={-1,0,0};
 			tt_vec3 light_color={0, 1, 0};
 			tt_directional_light_set_direction(1, &light_direction);
-			tt_directional_light_set_strength(1, 0.1);
+			tt_directional_light_set_strength(1, 1);
 			tt_directional_light_set_color(1, &light_color);
+		}
+
+		if(i==13000)
+		{
+			printf("light: %i\n",tt_directional_light_new());
+			tt_vec3 light_direction={0,0,1};
+			tt_vec3 light_color={0.9, 0.86, 0.5};
+			tt_directional_light_set_direction(2, &light_direction);
+			tt_directional_light_set_strength(2, 1);
+			tt_directional_light_set_color(2, &light_color);
 		}
 	}
 

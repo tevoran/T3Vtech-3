@@ -25,8 +25,7 @@ layout(std140, binding = 1) uniform point_light
 
 //input from the vertex shader
 in vec2 base_tex_coord;
-in float directional_light_angle[NUM_MAX_DIR_LIGHTS];
-in float point_light_intensity[NUM_MAX_POINT_LIGHTS];
+in vec4 dir_light_result;
 in vec4 point_light_result;
 
 
@@ -50,6 +49,9 @@ void main()
 	//lighting
 	if(object_light_affected)
 	{
+		//preparation
+		vec4 base_color=color;
+
 		//ambient lighting
 		vec3 amb_light = amb_light_strength * amb_light_color;
 		color = vec4(amb_light,1.0) * color;
@@ -58,21 +60,17 @@ void main()
 		if(gouraud_shading_toggle)
 		{
 			//directional lighting
-			vec4 tmp_color;
-			for(int i=0; i<dir_light_num_active.x; i++)
-			{
-				tmp_color=vec4(dir_light_color[i].xyz * dir_light_strength[i].xyz, 1.0);
-				tmp_color=directional_light_angle[i] * tmp_color;
-				color += tmp_color;
-			}
+//			vec4 tmp_color;
+//			for(int i=0; i<dir_light_num_active.x; i++)
+//			{
+//				tmp_color=vec4(dir_light_color[i].xyz * dir_light_strength[i].xyz, 1.0);
+//				tmp_color=directional_light_angle[i] * tmp_color;
+//				color += tmp_color;
+//			}
+			color+=base_color * dir_light_result;
 		
 			//point lights
-			for(int i=0; i<point_light_num_active.x; i++)
-			{
-				tmp_color=vec4(point_light_color[i].xyz * point_light_strength[i].xyz, 1.0);
-				tmp_color=point_light_intensity[i] * tmp_color;
-				color +=  tmp_color;
-			}
+			color+=base_color * point_light_result;
 
 		}		
 	}
