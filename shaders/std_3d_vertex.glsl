@@ -45,6 +45,7 @@ uniform bool object_light_affected;
 out vec2 base_tex_coord;
 out float directional_light_angle[NUM_MAX_DIR_LIGHTS];
 out float point_light_intensity[NUM_MAX_POINT_LIGHTS];
+out vec4 point_light_result;
 
 void main()
 {
@@ -83,8 +84,10 @@ void main()
 				{
 					point_light_intensity[i]=0;
 				}
-				point_light_intensity[i]=point_light_intensity[i]/length(light_direction.xyz);
+				point_light_intensity[i]=point_light_intensity[i]/
+					(length(light_direction.xyz)*length(light_direction.xyz));
 			}
+
 		}
 	}
 

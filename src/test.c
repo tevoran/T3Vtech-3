@@ -44,8 +44,9 @@ int main()
 */
 	for(int i=0; i<1500; i++)
 	{
-		pos_point_light.z+=0.02;
+		pos_point_light.z=20;
 		tt_point_light_set_position(1, &pos_point_light);
+		tt_point_light_set_strength(1, 5.0+5.0*sin((float)i/120));
 		//cam_pos.y+=0.01;
 		//tt_camera_set_position(&cam_pos);
 		//tt_camera_rotate(&cam_rot_axis, 0.004*sin((float)i/100));

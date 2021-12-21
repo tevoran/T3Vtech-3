@@ -27,6 +27,7 @@ layout(std140, binding = 1) uniform point_light
 in vec2 base_tex_coord;
 in float directional_light_angle[NUM_MAX_DIR_LIGHTS];
 in float point_light_intensity[NUM_MAX_POINT_LIGHTS];
+in vec4 point_light_result;
 
 
 uniform sampler2D base_tex;
