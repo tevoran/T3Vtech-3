@@ -1,6 +1,6 @@
 #version 450
 #define NUM_MAX_DIR_LIGHTS 8
-#define NUM_MAX_POINT_LIGHTS 16
+#define NUM_MAX_POINT_LIGHTS 128
 
 
 layout(location = 0) in vec3 pos_in;

@@ -1,6 +1,6 @@
 #include <tt.h>
 
-#define NUM_MAX_POINT_LIGHTS 16
+#define NUM_MAX_POINT_LIGHTS 128
 
 extern GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
 
