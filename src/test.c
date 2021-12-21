@@ -34,10 +34,12 @@ int main()
 
 	tt_vec3 pos_point_light={0,0,20};
 	tt_vec3 color_point_light={1,1,0};
-	tt_point_light_new(&pos_point_light, &color_point_light);
+	tt_point_light_new();
 	pos_point_light.y=0;
 	pos_point_light.z=15;
-	tt_point_light_new(&pos_point_light, &color_point_light);
+	tt_point_light_new();
+	tt_point_light_set_color(1, &color_point_light);
+	tt_point_light_set_color(2, &color_point_light);
 /*	pos_point_light.z=0;
 	pos_point_light.x=5;
 	color_point_light.x=0.7;
@@ -49,7 +51,7 @@ int main()
 	{
 		//pos_point_light.z=20;
 		//tt_point_light_set_position(1, &pos_point_light);
-		tt_point_light_set_strength(1, 30);
+		tt_point_light_set_strength(1, 40);
 			pos_point_light.x=40*sin((float)i/100);
 			pos_point_light.y=40*cos((float)i/100);
 		tt_point_light_set_position(2, &pos_point_light);

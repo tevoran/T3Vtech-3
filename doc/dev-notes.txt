@@ -4,6 +4,4 @@
 	-spheres
 	-cubes
 -add shader objects
--add point lights
--add ambient lighting
 -2D stuff

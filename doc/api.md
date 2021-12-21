@@ -256,3 +256,44 @@ void tt_directional_light_set_color(int light_id, tt_vec3 *color);
 ```
 
 The color values are stored in a tt_vec3 vector which is a struct containg the members x, y and z. X gets interpreted as r, y as g, z as b values. The individual color values have to be between 0.0f and 1.0f.
+
+#### Point Lights
+
+T3Vtech-3 allows currently up to 128 point lights at a time. They act like the directional lights in a stack like manner.
+It is possible to create a new point light with 
+
+```c
+int tt_point_light_new();
+```
+
+This adds a new point light at the end and returns the light_id as an integer. 
+
+One or more lights can be deleted by calling
+
+```c
+void tt_point_light_delete(int light_id);
+```
+
+This will delete all the point lights that have been created since the light that has the light_id. This can be used to delete all point lights by deleting the first one.
+
+##### Setting Parameters
+
+Point lights have several different parameters than can be changed. The intensity or strength of the point light can be set by calling
+
+```c
+void tt_point_light_set_strength(int light_id, float strength);
+```
+
+The color of the point light can be set by calling
+
+```c
+void tt_point_light_set_color(int light_id, tt_vec3 *color);
+```
+
+Colors are represented by a vector of three floats. Each basic color (red, green and blue) gets represented with a float between 0.0f and 1.0f.
+
+Since a point light has a location unlike other kinds of lighting, the position can be set by calling
+
+```c
+void tt_point_light_set_position(int light_id, tt_vec3 *position);
+```

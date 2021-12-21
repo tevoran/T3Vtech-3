@@ -51,25 +51,13 @@ void tt_gfx_point_light_cleanup()
 	glDeleteBuffers(1, &tt_gfx_ubo_point_light);
 }
 
-int tt_point_light_new(tt_vec3 *position, tt_vec3 *color)
+int tt_point_light_new()
 {
 	ubo.num_active.x++;
-	int i=(int)ubo.num_active.x-1;
 	if(ubo.num_active.x>NUM_MAX_POINT_LIGHTS)
 	{
 		ubo.num_active.x=NUM_MAX_POINT_LIGHTS;
 		return 0;
-	}
-	else
-	{
-
-		ubo.location[i].x=position->x;
-		ubo.location[i].y=position->y;
-		ubo.location[i].z=position->z;
-
-		ubo.color[i].x=color->x;
-		ubo.color[i].y=color->y;
-		ubo.color[i].z=color->z;
 	}
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
@@ -77,6 +65,22 @@ int tt_point_light_new(tt_vec3 *position, tt_vec3 *color)
 
 	return ubo.num_active.x;
 }
+
+void tt_point_light_delete(int light_id)
+{
+	ubo.num_active.x=light_id-1;
+	if(ubo.num_active.x<0)
+	{
+		ubo.num_active.x=0;
+		return 0;
+	}
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+	return ubo.num_active.x;
+}
+
 
 void tt_point_light_set_strength(int light_id, float strength)
 {
