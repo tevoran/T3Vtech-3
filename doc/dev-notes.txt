@@ -1,6 +1,10 @@
+# T3Vtech library
 [ ] move rotation quaternion to math lib
 [ ] add primitives
 	[ ] spheres
 	[ ]cubes
 [ ] add shader objects
 [ ] 2D stuff
+
+# TTMV (T3Vtech-3 Model Viewer)
+[ ] displaying a model via CLI

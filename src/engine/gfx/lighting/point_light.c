@@ -72,13 +72,11 @@ void tt_point_light_delete(int light_id)
 	if(ubo.num_active.x<0)
 	{
 		ubo.num_active.x=0;
-		return 0;
+		return ;
 	}
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
-	return ubo.num_active.x;
 }
 
 
