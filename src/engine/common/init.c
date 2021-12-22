@@ -1,5 +1,6 @@
 #include <tt.h>
 
+extern bool tt_quiet; //this activates/deactivates debug messages
 extern SDL_Window *tt_window;
 extern uint32_t tt_res_x;
 extern uint32_t tt_res_y;
@@ -12,10 +13,15 @@ bool tt_init(
 	const char *window_name,
 	const uint32_t res_x, 
 	const uint32_t res_y,
-	const bool fullscreen)
+	const bool fullscreen,
+	const bool quiet)
 {
-
-	printf("initialize T3Vtech-3 engine\n");
+	tt_quiet=quiet;
+	
+	if(!quiet)
+	{
+		printf("initialize T3Vtech-3 engine\n");
+	}
 	tt_res_x=res_x;
 	tt_res_y=res_y;
 
@@ -31,7 +37,10 @@ bool tt_init(
 	}
 	else
 	{
-		printf("SDL2 initialized\n");
+		if(!quiet)
+		{
+			printf("SDL2 initialized\n");
+		}
 	}
 	
 	//get current desktop resolution to avoid resolution errors
@@ -40,11 +49,14 @@ bool tt_init(
 	SDL_GetDesktopDisplayMode(0, &dm);
 	tt_desktop_res_x=dm.w;
 	tt_desktop_res_y=dm.h;
-	printf(
-		"desktop resolution is %ix%i at %iHz\n",
-		tt_desktop_res_x,
-		tt_desktop_res_y,
-		dm.refresh_rate);
+	if(!quiet)
+	{
+		printf(
+			"desktop resolution is %ix%i at %iHz\n",
+			tt_desktop_res_x,
+			tt_desktop_res_y,
+			dm.refresh_rate);		
+	}
 
 	if(fullscreen)
 	{
@@ -72,11 +84,14 @@ bool tt_init(
 	}
 	else
 	{
-		printf("SDL2 window created\n");
-		printf(
-			"game resolution is %ix%i\n",
-			tt_res_x,
-			tt_res_y);
+		if(!quiet)
+		{
+			printf("SDL2 window created\n");
+			printf(
+				"game resolution is %ix%i\n",
+				tt_res_x,
+				tt_res_y);
+		}
 	}
 
 	tt_glcontext=SDL_GL_CreateContext(tt_window);
@@ -87,7 +102,10 @@ bool tt_init(
 	}
 	else
 	{
-		printf("SDL2 OpenGL context created\n");
+		if(!quiet)
+		{
+			printf("SDL2 OpenGL context created\n");
+		}
 	}
 
 
@@ -98,11 +116,17 @@ bool tt_init(
 	}
 	else
 	{
-		printf("GLEW initialized\n");
+		if(!quiet)
+		{
+			printf("GLEW initialized\n");
+		}
 	}
 
 	//setting the desired OpenGL version
-	printf("using OpenGL 4.5\n");
+	if(!quiet)
+	{
+		printf("using OpenGL 4.5\n");
+	}
     SDL_GL_SetAttribute (SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute (SDL_GL_CONTEXT_MINOR_VERSION, 5);
 
@@ -111,7 +135,7 @@ bool tt_init(
 	//making sure tt_quit gets called when game is closed
 	atexit(tt_quit);
 
-	if(!tt_gfx_init())
+	if(!tt_gfx_init(quiet))
 	{
 		printf(
 			"[ERROR] couldn't set up the GFX functionalities of T3Vtech-3\n");
@@ -119,7 +143,10 @@ bool tt_init(
 	}
 	else
 	{
-		printf("GFX functionalities initialized\n");
+		if(!quiet)
+		{
+			printf("GFX functionalities initialized\n");
+		}
 	}
 
 	return true;

@@ -12,7 +12,7 @@ extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
 
 
 //returns true if successfull
-bool tt_gfx_init()
+bool tt_gfx_init(const bool quiet)
 {
 	//creating the standard shaders
 	tt_std_2d_shader=tt_gfx_create_shader(
@@ -21,7 +21,8 @@ bool tt_gfx_init()
 		NULL,
 		NULL,
 		NULL,
-		"shaders/std_2d_fragment.glsl");
+		"shaders/std_2d_fragment.glsl",
+		quiet);
 	if(tt_std_2d_shader==0)
 	{
 		printf("[ERROR] failed to create the standard 2d shader\n");
@@ -29,7 +30,10 @@ bool tt_gfx_init()
 	}
 	else
 	{
-		printf("successfully built the standard 2d shader\n");
+		if(!quiet)
+		{
+			printf("successfully built the standard 2d shader\n");
+		}
 	}
 
 	tt_std_3d_shader=tt_gfx_create_shader(
@@ -38,7 +42,8 @@ bool tt_gfx_init()
 		NULL,
 		NULL,
 		NULL,
-		"shaders/std_3d_fragment.glsl");
+		"shaders/std_3d_fragment.glsl",
+		quiet);
 	if(tt_std_3d_shader==0)
 	{
 		printf("[ERROR] failed to create the standard 3d shader\n");
@@ -46,7 +51,10 @@ bool tt_gfx_init()
 	}
 	else
 	{
-		printf("successfully built the standard 3d shader\n");
+		if(!quiet)
+		{
+			printf("successfully built the standard 3d shader\n");
+		}
 	}
 	
 	//preparing the primitives to be able to create them faster on the fly

@@ -14,18 +14,27 @@ extern GLuint tt_gfx_3d_quad_ibo;
 extern GLuint tt_gfx_3d_default_tex; 
 
 
-void tt_gfx_quit()
+void tt_gfx_quit(const bool quiet)
 {
 	//delete light UBOs
 	tt_gfx_directional_light_cleanup();
 	tt_gfx_point_light_cleanup();
 
-	printf("deleting default shaders...");
+	if(!quiet)
+	{
+		printf("deleting default shaders...");
+	}
 		glDeleteProgram(tt_std_3d_shader);
 		glDeleteProgram(tt_std_2d_shader);
-	printf("done\n");
+	if(!quiet)
+	{
+		printf("done\n");
+	}
 
-	printf("cleaning up prepared primitives...");
+	if(!quiet)
+	{
+		printf("cleaning up prepared primitives...");
+	}
 		//quad
 		glDeleteVertexArrays(1, &tt_gfx_3d_quad_vao);
 		glDeleteBuffers(1, &tt_gfx_3d_quad_vbo);
@@ -33,5 +42,8 @@ void tt_gfx_quit()
 
 		//default texture
 		glDeleteTextures(1, &tt_gfx_3d_default_tex);
-	printf("done\n");
+	if(!quiet)
+	{
+		printf("done\n");
+	}
 }

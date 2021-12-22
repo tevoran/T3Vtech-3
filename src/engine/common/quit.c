@@ -1,5 +1,6 @@
 #include <tt.h>
 
+extern bool tt_quiet; //this activates/deactivates debug messages
 extern SDL_Window *tt_window;
 extern uint32_t tt_desktop_res_x;
 extern uint32_t tt_desktop_res_y;
@@ -8,7 +9,7 @@ extern SDL_GLContext tt_glcontext;
 void tt_quit()
 {
 	//quitting the graphics system
-	tt_gfx_quit();
+	tt_gfx_quit(tt_quiet);
 
 	//resetting the window size to the desktop resolution to
 	//avoid strange resolution issues after closing the game
@@ -17,15 +18,33 @@ void tt_quit()
 		tt_desktop_res_x,
 		tt_desktop_res_y);
 
-	printf("destroying SDL2 OpenGL context...");
+	if(!tt_quiet)
+	{
+		printf("destroying SDL2 OpenGL context...");
+	}
 		SDL_GL_DeleteContext(tt_glcontext);
-	printf("done\n");
+	if(!tt_quiet)
+	{
+		printf("done\n");
+	}
 
-	printf("destroying SDL window...");
+	if(!tt_quiet)
+	{
+		printf("destroying SDL window...");
+	}
 		SDL_DestroyWindow(tt_window);
-	printf("done\n");
+	if(!tt_quiet)
+	{
+		printf("done\n");
+	}
 
-	printf("quitting SDL2...");
+	if(!tt_quiet)
+	{
+		printf("quitting SDL2...");
+	}
 		SDL_Quit();
-	printf("done\n");
+	if(!tt_quiet)
+	{
+		printf("done\n");
+	}
 }

@@ -17,8 +17,10 @@ bool tt_init(
 	const char *window_name,
 	const uint32_t res_x, 
 	const uint32_t res_y,
-	const bool fullscreen);
+	const bool fullscreen,
+	const bool quiet);
 ```
+The quiet toggle tells the engine if it should show non-error messages or not. Error messages are still visible in quiet mode.
 
 If you call other T3Vtech3 functions without initializing the engine first then the behaviour is undefined.
 

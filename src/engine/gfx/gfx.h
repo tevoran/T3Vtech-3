@@ -9,9 +9,9 @@
 #include "objects/3d/textures/textures.h"
 #include "objects/3d/objects/objects.h"
 
-bool tt_gfx_init(); //returns true if successfull
+bool tt_gfx_init(const bool quiet); //returns true if successfull
 
 //cleaning up what was initalized by the graphics system
-void tt_gfx_quit();
+void tt_gfx_quit(const bool quiet);
 
 #endif
