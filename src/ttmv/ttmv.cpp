@@ -2,15 +2,11 @@
 
 int main(int argc, char *argv[])
 {
-	ttmv::sys sys;
-	if(!(argc==3 || argc==2))
+	ttmv::sys sys(argc, argv);
+
+	for(int i=0; i<200; i++)
 	{
-		std::cout << "[ERROR] wrong amount of parameters set\n";
-		return 0;
-	}
-	for(int i=0; i<argc; i++)
-	{
-		std::cout << argv[i] << std::endl;
+		tt_new_frame();
 	}
 	return 0;
 }
