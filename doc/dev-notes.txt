@@ -6,7 +6,12 @@
 [ ] add shader objects
 [ ] 2D stuff
 [ ] document ambient lighting
+[ ] forcing the engine to stay at a certain framerate if possible
+[ ] input
+	[ ] mouse
+	[ ] keyboard
+	[ ] gamepad
 
 # TTMV (T3Vtech-3 Model Viewer)
 [X] displaying a model via CLI
-[ ] setting the distance for model according to its size
+[X] setting the distance for model according to its size
