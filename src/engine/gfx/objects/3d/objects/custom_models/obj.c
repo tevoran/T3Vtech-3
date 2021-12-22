@@ -11,11 +11,13 @@ bool tt_3d_object_custom_model_load_obj_file(
 	int *num_vertices,
 	int *num_indices,
 	GLfloat **vertex_data,
-	GLuint **index_data)
+	GLuint **index_data,
+	float *size_bounding_sphere)
 {
 	//outgoing variables
 	*num_indices=0;
 	*num_vertices=0;
+	*size_bounding_sphere=0;
 
 	//function intern variables
 	int num_pos=0;
@@ -114,6 +116,12 @@ bool tt_3d_object_custom_model_load_obj_file(
 				}
 
 				pos_array[i_pos]=tmp;
+				float tmp_length=tt_math_vec3_length(pos_array[i_pos]);
+				tmp_length*=2; //we need the diameter instead of the radius
+				if(*size_bounding_sphere < tmp_length)
+				{
+					*size_bounding_sphere=tmp_length;
+				}
 				i_pos++;
 			}
 

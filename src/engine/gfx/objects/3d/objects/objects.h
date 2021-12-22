@@ -22,6 +22,7 @@ struct tt_3d_object
 
 	//properties
 	GLuint texture;
+	float size_bounding_sphere; //the size of the bounding sphere
 
 	//lighting
 	bool lighting_affected;
@@ -48,5 +49,6 @@ void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
 void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture);
 void tt_3d_object_use_default_texture(tt_3d_object *object);
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
+float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object);
 
 #endif

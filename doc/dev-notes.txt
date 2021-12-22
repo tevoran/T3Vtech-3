@@ -5,6 +5,8 @@
 	[ ]cubes
 [ ] add shader objects
 [ ] 2D stuff
+[ ] document ambient lighting
 
 # TTMV (T3Vtech-3 Model Viewer)
-[ ] displaying a model via CLI
+[X] displaying a model via CLI
+[ ] setting the distance for model according to its size

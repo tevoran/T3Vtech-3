@@ -22,6 +22,10 @@ struct tt_vec4
 	float w;
 } typedef tt_vec4;
 
+//vec4
 tt_vec4 tt_math_vec4_normalize(tt_vec4 v);
+
+//vec3
+float tt_math_vec3_length(tt_vec3 v);
 
 #endif

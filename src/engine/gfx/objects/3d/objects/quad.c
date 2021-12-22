@@ -46,4 +46,5 @@ void tt_3d_object_make_quad(tt_3d_object *object)
 	object->vao=tt_gfx_3d_quad_vao;
 	object->vbo=tt_gfx_3d_quad_vbo;
 	object->ibo=tt_gfx_3d_quad_ibo;
+	object->size_bounding_sphere=1.0; //diameter is 1.0
 }

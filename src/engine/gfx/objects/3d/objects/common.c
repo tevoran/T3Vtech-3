@@ -27,7 +27,8 @@ tt_3d_object* tt_3d_object_new()
 	tt_math_mat4_make_identity_matrix(&new_object->rotation);
 
 	new_object->texture=tt_gfx_3d_default_tex;
-	new_object->lighting_affected=true; 
+	new_object->lighting_affected=true;
+	new_object->size_bounding_sphere=0;
 	return new_object;
 }
 
@@ -98,4 +99,10 @@ void tt_3d_object_use_default_texture(tt_3d_object *object)
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle)
 {
 	object->lighting_affected=toggle;
+}
+
+//getting object properties
+float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object)
+{
+	return object->size_bounding_sphere;
 }

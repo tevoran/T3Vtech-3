@@ -7,6 +7,7 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 	int num_indices;
 	GLfloat *vertex_data;
 	GLuint *index_data;
+	float size_bounding_sphere;
 
 	//deciding the file type
 	//OBJ
@@ -18,7 +19,8 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 			&num_verts,
 			&num_indices,
 			&vertex_data, 
-			&index_data))
+			&index_data,
+			&size_bounding_sphere))
 		{
 			return NULL;
 		}
@@ -32,6 +34,7 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 	tt_3d_custom_model *model=malloc(sizeof(tt_3d_custom_model));
 	model->num_verts=num_verts;
 	model->num_indices=num_indices;
+	model->size_bounding_sphere=size_bounding_sphere;
 
 	glGenVertexArrays(1, &model->vao);
 	glBindVertexArray(model->vao);

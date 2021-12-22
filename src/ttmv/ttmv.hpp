@@ -17,8 +17,12 @@ namespace ttmv
 		tt_3d_custom_model *custom_model=NULL;
 		tt_3d_texture *tex=NULL;
 
+		//settings
+		float rot_speed=0.02; //radians per frame
+
 	public:
 		sys(int argc, char *argv[]);
 		~sys();
+		void loop(int max_frames);
 	};
 }
