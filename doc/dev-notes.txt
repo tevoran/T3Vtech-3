@@ -1,5 +1,5 @@
 # T3Vtech library
-[ ] move rotation quaternion to math lib
+[X] move rotation quaternion to math lib
 [ ] add primitives
 	[ ] spheres
 	[ ]cubes

@@ -95,7 +95,7 @@ void tt_3d_object_delete(tt_3d_object **object);
 
 #### Enabling/Disabling Lighting Effects
 
-It can be toggled whether a 3D object is affected by light or not. This comes in handy if one wants to place a light bulb or something else that emits light. 
+It can be toggled whether a 3D object is affected by light or not. This comes in handy if one wants to place a light bulb or something else that emits light. By default 3D objects are affected by light.
 
 ```c
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
