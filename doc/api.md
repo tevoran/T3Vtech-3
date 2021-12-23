@@ -211,7 +211,13 @@ tt_3d_texture_delete(&tex);
 
 #### Ambient Light
 
-Ambient light is just a diffuse light that seems to come from everywhere equally. It has two 
+Ambient light is just a diffuse light that seems to come from everywhere equally. It has two functions to manipulate it.
+
+```c
+void tt_ambient_light_set_strength(float strength);
+void tt_ambient_light_set_color(tt_vec3 *color);
+```
+It is always on but if it is not desired to have ambient lighting enabled it is possible to set its strength to 0.0f.
 
 #### Directional Lights
 
