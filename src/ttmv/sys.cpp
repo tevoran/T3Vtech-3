@@ -8,6 +8,10 @@ ttmv::sys::sys(int argc, char *argv[])
 		//load only model
 		model=tt_3d_object_new();
 		custom_model=tt_3d_custom_model_load_file(argv[1]);
+		if(custom_model==NULL)
+		{
+			exit(EXIT_FAILURE);
+		}
 		tt_3d_object_use_custom_model(model, custom_model);
 		tt_vec3 pos=
 		{
@@ -16,7 +20,7 @@ ttmv::sys::sys(int argc, char *argv[])
 			tt_3d_object_get_bounding_sphere_size(model)
 		};
 		tt_3d_object_set_position(model, &pos);
-
+		
 		tt_ambient_light_set_strength(0.3);
 		int light=tt_directional_light_new();
 		tt_vec3 light_dir={-1,0,1};

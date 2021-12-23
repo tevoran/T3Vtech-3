@@ -29,6 +29,10 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 			printf("OBJ model from %s successfully loaded\n", path);
 		}
 	}
+	else
+	{
+		return NULL;
+	}
 
 	//creating the custom model
 	tt_3d_custom_model *model=malloc(sizeof(tt_3d_custom_model));
