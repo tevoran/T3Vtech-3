@@ -38,7 +38,7 @@ void tt_gfx_prepare_cube();
 
 //clean up functions
 void tt_gfx_cleanup_quad();
-
+void tt_gfx_cleanup_cube();
 
 //3D object related
 tt_3d_object* tt_3d_object_new();

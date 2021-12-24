@@ -155,6 +155,14 @@ A created 3D object can be converted into a quad by using the function tt_3d_obj
 void tt_3d_object_make_quad(tt_3d_object *object)
 ```
 
+#### Cubes
+
+A created 3D object can also become a cube. It is just necessary to use
+
+```c
+void tt_3d_object_make_cube(tt_3d_object *object);
+```
+
 #### Custom Models Loaded From Files
 
 Custom models are basically the content of a 3D model file (currently only OBJ is supported) that can be used as 3D objects. You can load a 3D model from a file with 

@@ -92,6 +92,13 @@ void tt_gfx_prepare_cube()
 		GL_STATIC_DRAW);
 }
 
+void tt_gfx_cleanup_cube()
+{
+	glDeleteVertexArrays(1, &tt_gfx_3d_cube_vao);
+	glDeleteBuffers(1, &tt_gfx_3d_cube_vbo);
+	glDeleteBuffers(1, &tt_gfx_3d_cube_ibo);
+}
+
 void tt_3d_object_make_cube(tt_3d_object *object)
 {
 	object->num_indices=36; //it is a quad, it has 6 vertices

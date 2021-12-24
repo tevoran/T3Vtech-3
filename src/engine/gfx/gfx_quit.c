@@ -18,6 +18,7 @@ void tt_gfx_quit(const bool quiet)
 {
 	//delete prepared primitives
 	tt_gfx_cleanup_quad();
+	tt_gfx_cleanup_cube();
 
 
 	//delete light UBOs
