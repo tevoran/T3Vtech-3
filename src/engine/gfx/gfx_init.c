@@ -59,6 +59,7 @@ bool tt_gfx_init(const bool quiet)
 	
 	//preparing the primitives to be able to create them faster on the fly
 	tt_gfx_prepare_quad();
+	tt_gfx_prepare_cube();
 	tt_gfx_3d_default_tex_init();
 
 	tt_gfx_camera_setup();
@@ -71,6 +72,7 @@ bool tt_gfx_init(const bool quiet)
 		tt_far_plane);
 
 	glDepthFunc(GL_LESS);
+	glDisable(GL_CULL_FACE);
 
 	//setting lighting defaults
 	tt_gfx_gouraud_shading_active=true; //activate gouraud shading

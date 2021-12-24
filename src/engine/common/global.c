@@ -52,3 +52,8 @@ GLuint tt_gfx_3d_default_tex;
 GLuint tt_gfx_3d_quad_vao;
 GLuint tt_gfx_3d_quad_vbo;
 GLuint tt_gfx_3d_quad_ibo;
+
+//cube
+GLuint tt_gfx_3d_cube_vao;
+GLuint tt_gfx_3d_cube_vbo;
+GLuint tt_gfx_3d_cube_ibo;

@@ -16,6 +16,10 @@ extern GLuint tt_gfx_3d_default_tex;
 
 void tt_gfx_quit(const bool quiet)
 {
+	//delete prepared primitives
+	tt_gfx_cleanup_quad();
+
+
 	//delete light UBOs
 	tt_gfx_directional_light_cleanup();
 	tt_gfx_point_light_cleanup();

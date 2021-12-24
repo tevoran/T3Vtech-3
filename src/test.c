@@ -4,63 +4,34 @@ int main()
 {
 	tt_init("T3Vtech3 test window", 1920, 1080, true, true);
 
-	float fov=0.5*tt_PI;
-	tt_vec3 pos={-10.0,0.0,20.0};
-	tt_vec3 scale={1,1,1};
-	tt_vec3 orientation={0.5,0.5,0.0};
-	tt_3d_object *ship=tt_3d_object_new();
-	tt_3d_object *ship_r=tt_3d_object_new();
 
-	tt_3d_object_set_position(ship, &pos);
-	pos.x=10;
-	tt_3d_object_set_position(ship_r, &pos);
+	tt_3d_object *cube=tt_3d_object_new();
+	tt_3d_object_make_cube(cube);
+	tt_vec3 cube_pos={0,0,4};
+	tt_3d_object_set_position(cube, &cube_pos);
 
-	tt_vec3 rot_axis={1,0,0};
-
-	tt_3d_custom_model *ship_model=tt_3d_custom_model_load_file("assets/models/ship/ship.obj");
-	tt_3d_texture *ship_tex=tt_3d_texture_new("assets/models/ship/ship_low.png", false);
-	tt_3d_object_use_texture(ship, ship_tex);
-	tt_3d_object_use_custom_model(ship, ship_model);
-	tt_3d_object_use_texture(ship_r, ship_tex);
-	tt_3d_object_use_custom_model(ship_r, ship_model);
-
-
-	tt_3d_object_rotate(ship, &rot_axis, -0.3*tt_PI);
-	tt_3d_object_rotate(ship_r, &rot_axis, -0.3*tt_PI);
-
-	tt_vec3 cam_pos={0,0,0};
-	tt_vec3 cam_rot_axis={1,0,0};
-	//tt_camera_rotate(&cam_rot_axis, -tt_PI/8);
+	tt_3d_texture *crate=tt_3d_texture_new("crate.jpg", true);
+	tt_3d_object_use_texture(cube, crate);
 
 	tt_vec3 pos_point_light={0,0,20};
-	tt_vec3 color_point_light={1,1,0};
+	tt_vec3 color_point_light={0.99,0.95,0.93};
 	tt_point_light_new();
 	pos_point_light.y=0;
 	pos_point_light.z=15;
 	tt_point_light_new();
 	tt_point_light_set_color(1, &color_point_light);
 	tt_point_light_set_color(2, &color_point_light);
-/*	pos_point_light.z=0;
-	pos_point_light.x=5;
-	color_point_light.x=0.7;
-	color_point_light.y=0.8;	
-	color_point_light.z=0.2;
-	tt_point_light_new(&pos_point_light, &color_point_light);
-*/
+
 	for(int i=0; i<1500; i++)
 	{
-		//pos_point_light.z=20;
-		//tt_point_light_set_position(1, &pos_point_light);
-		tt_point_light_set_strength(1, 40);
+		tt_vec3 rot_axis={1,1,0};
+		tt_3d_object_rotate(cube, &rot_axis, 0.02);
+		tt_point_light_set_strength(1, 5);
 			pos_point_light.x=40*sin((float)i/100);
 			pos_point_light.y=40*cos((float)i/100);
 		tt_point_light_set_position(2, &pos_point_light);
-		tt_point_light_set_strength(2, 75);
-		//cam_pos.y+=0.01;
-		//tt_camera_set_position(&cam_pos);
-		//tt_camera_rotate(&cam_rot_axis, 0.004*sin((float)i/100));
+		tt_point_light_set_strength(2, 15);
 
-		//tt_point_light_set_strength(1, 1.5+1.5*sin((float)i/100));
 		tt_ambient_light_set_strength(0.0);
 		tt_vec3 amb_color={
 			sin((float)i/30),
@@ -93,9 +64,6 @@ int main()
 			tt_directional_light_set_color(2, &light_color);
 		}
 	}
-
-	tt_3d_texture_delete(&ship_tex);
-	tt_3d_custom_model_delete(&ship_model);
 
 	return 0;
 }

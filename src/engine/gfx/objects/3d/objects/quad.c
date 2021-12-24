@@ -40,6 +40,13 @@ void tt_gfx_prepare_quad()
 		GL_STATIC_DRAW);
 }
 
+void tt_gfx_cleanup_quad()
+{
+	glDeleteVertexArrays(1, &tt_gfx_3d_quad_vao);
+	glDeleteBuffers(1, &tt_gfx_3d_quad_vbo);
+	glDeleteBuffers(1, &tt_gfx_3d_quad_ibo);
+}
+
 void tt_3d_object_make_quad(tt_3d_object *object)
 {
 	object->num_indices=6; //it is a quad, it has 6 vertices

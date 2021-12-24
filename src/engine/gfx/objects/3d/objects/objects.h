@@ -32,11 +32,18 @@ struct tt_3d_object
 #include "custom_models/custom_model.h"
 
 //preparation functions
+//they keep the data for the primitves already in memory, so they don't need to be created on the fly
 void tt_gfx_prepare_quad();
+void tt_gfx_prepare_cube();
+
+//clean up functions
+void tt_gfx_cleanup_quad();
+
 
 //3D object related
 tt_3d_object* tt_3d_object_new();
 void tt_3d_object_make_quad(tt_3d_object *object);
+void tt_3d_object_make_cube(tt_3d_object *object);
 void tt_3d_object_use_custom_model(tt_3d_object *object, tt_3d_custom_model *model);
 void tt_3d_object_delete(tt_3d_object **object);
 

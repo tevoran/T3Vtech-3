@@ -5,7 +5,7 @@
 	[ ]cubes
 [ ] add shader objects
 [ ] 2D stuff
-[ ] document ambient lighting
+[X] document ambient lighting
 [ ] forcing the engine to stay at a certain framerate if possible
 [ ] input
 	[ ] mouse
