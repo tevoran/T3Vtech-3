@@ -2,7 +2,7 @@
 [X] move rotation quaternion to math lib
 [ ] add primitives
 	[ ] spheres
-	[ ]cubes
+	[X]cubes
 [ ] add shader objects
 [ ] 2D stuff
 [X] document ambient lighting

@@ -14,6 +14,7 @@ bool tt_init(
 	const uint32_t res_x, 
 	const uint32_t res_y,
 	const bool fullscreen,
+	const int msaa,
 	const bool quiet)
 {
 	tt_quiet=quiet;
@@ -43,6 +44,18 @@ bool tt_init(
 		}
 	}
 	
+	//if antialiasing with msaa is requested
+	//then set SDL to what is necessary
+	if(msaa>1)
+	{
+		if(!quiet)
+		{
+			printf("activating %ix MSAA\n", msaa);
+		}
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaa);		
+	}
+
 	//get current desktop resolution to avoid resolution errors
 	//at the end of execution of the game
 	SDL_DisplayMode dm;
@@ -149,5 +162,10 @@ bool tt_init(
 		}
 	}
 
+	//activate MSAA, if requested
+	if(msaa>1)
+	{
+		glEnable(GL_MULTISAMPLE); 
+	}
 	return true;
 }

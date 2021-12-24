@@ -8,6 +8,7 @@ bool tt_init(
 	const uint32_t res_x, 
 	const uint32_t res_y,
 	const bool fullscreen,
+	const int msaa,
 	const bool quiet);
 
 #endif

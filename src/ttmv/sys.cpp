@@ -4,7 +4,7 @@ ttmv::sys::sys(int argc, char *argv[])
 {
 	if(argc==2 || argc==3)
 	{
-		tt_init("TTMV", 1366,768, false, true);
+		tt_init("TTMV", 1366,768, false, 4, true);
 		//load only model
 		model=tt_3d_object_new();
 		custom_model=tt_3d_custom_model_load_file(argv[1]);

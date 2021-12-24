@@ -18,8 +18,11 @@ bool tt_init(
 	const uint32_t res_x, 
 	const uint32_t res_y,
 	const bool fullscreen,
+	const int msaa,
 	const bool quiet);
 ```
+The msaa value is used for anti-aliasing. The engine currently uses MSAA for anti-aliasing. Typical values are 0 (no anti-aliasing), 2, 4 or 8. The higher the value the more expensive a frame becomes.
+
 The quiet toggle tells the engine if it should show non-error messages or not. Error messages are still visible in quiet mode.
 
 If you call other T3Vtech3 functions without initializing the engine first then the behaviour is undefined.

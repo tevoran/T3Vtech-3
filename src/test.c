@@ -2,16 +2,19 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, true, true);
+	tt_init("T3Vtech3 test window", 1920, 1080, true, 16, false);
 
 
 	tt_3d_object *cube=tt_3d_object_new();
 	tt_3d_object_make_cube(cube);
-	tt_vec3 cube_pos={0,0,4};
+	tt_vec3 cube_pos={0,0,2};
 	tt_3d_object_set_position(cube, &cube_pos);
 
-	tt_3d_texture *crate=tt_3d_texture_new("crate.jpg", true);
+	tt_3d_texture *crate=tt_3d_texture_new("crate.jpg", false);
 	tt_3d_object_use_texture(cube, crate);
+
+	tt_vec3 rot_axis={1,1,0};
+	tt_3d_object_rotate(cube, &rot_axis, 0.5*tt_PI);
 
 	tt_vec3 pos_point_light={0,0,20};
 	tt_vec3 color_point_light={0.99,0.95,0.93};
@@ -22,10 +25,15 @@ int main()
 	tt_point_light_set_color(1, &color_point_light);
 	tt_point_light_set_color(2, &color_point_light);
 
+	//glDisable(GL_MULTISAMPLE); 
+
 	for(int i=0; i<1500; i++)
 	{
-		tt_vec3 rot_axis={1,1,0};
-		tt_3d_object_rotate(cube, &rot_axis, 0.02);
+
+		if(i==700)
+		{
+			//glEnable(GL_MULTISAMPLE);
+		}
 		tt_point_light_set_strength(1, 5);
 			pos_point_light.x=40*sin((float)i/100);
 			pos_point_light.y=40*cos((float)i/100);
