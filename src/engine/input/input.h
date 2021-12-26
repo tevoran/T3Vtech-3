@@ -8,7 +8,10 @@ void tt_input_update();
 
 //mouse
 void tt_input_mouse_set_relative_mode(const bool toggle);
-void tt_input_mouse_update(SDL_Event event);
+void tt_input_mouse_update(const SDL_Event event);
 
+void tt_input_mouse_relative(
+	int *x_relative,
+	int *y_relative);
 
 #endif

@@ -7,7 +7,8 @@ int main(void)
 
 	for(int i=0; i<1000; i++)
 	{
-		sr.update();
+		player.update();
+		sr.update(player.side_angle, player.up_angle);
 	}
 	return 0;
 }
