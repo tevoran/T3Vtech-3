@@ -19,4 +19,15 @@ sr::world::world()
 	tt_vec3 sun_color={1.0, 0.98, 0.82};
 	tt_directional_light_set_color(sun, &sun_color);
 	tt_directional_light_set_strength(sun, 0.8);
+
+	//skybox
+	m_sky=tt_3d_object_new();
+	m_sky_model=tt_3d_custom_model_load_file("assets/shooting-range/sky.obj");
+	m_sky_tex=tt_3d_texture_new("assets/shooting-range/sky.png", true);
+
+	tt_3d_object_use_custom_model(m_sky, m_sky_model);
+	tt_3d_object_use_texture(m_sky, m_sky_tex);
+	scale.x=scale.y=scale.z=200;
+	tt_3d_object_scale(m_sky, &scale);
+	tt_3d_object_light_affected(m_sky, false);
 }
