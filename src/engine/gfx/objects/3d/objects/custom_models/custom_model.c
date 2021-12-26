@@ -36,6 +36,11 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 
 	//creating the custom model
 	tt_3d_custom_model *model=malloc(sizeof(tt_3d_custom_model));
+	if(!model)
+	{
+		printf("[ERROR] memory couldn't be allocated for a custom 3D model\n");
+		return NULL;
+	}
 	model->num_verts=num_verts;
 	model->num_indices=num_indices;
 	model->size_bounding_sphere=size_bounding_sphere;

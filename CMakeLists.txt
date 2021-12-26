@@ -46,3 +46,9 @@ file(GLOB_RECURSE "ttmv" SRC src/ttmv/*.cpp)
 include_directories(src/ttmv/)
 add_executable(TTMV ${ttmv})
 target_link_libraries(TTMV LINK_PRIVATE T3Vtech)
+
+#shooting range demo
+file(GLOB_RECURSE "shooting_range" SRC src/demo-shooting-range/*.cpp)
+include_directories(src/demo-shooting-range/)
+add_executable(shooting_range ${shooting_range})
+target_link_libraries(shooting_range LINK_PRIVATE T3Vtech)

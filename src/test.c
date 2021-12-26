@@ -13,8 +13,7 @@ int main()
 	tt_3d_texture *crate=tt_3d_texture_new("crate.jpg", false);
 	tt_3d_object_use_texture(cube, crate);
 
-	tt_vec3 rot_axis={1,1,0};
-	tt_3d_object_rotate(cube, &rot_axis, 0.5*tt_PI);
+
 
 	tt_vec3 pos_point_light={0,0,20};
 	tt_vec3 color_point_light={0.99,0.95,0.93};
@@ -29,6 +28,8 @@ int main()
 
 	for(int i=0; i<1500; i++)
 	{
+	tt_vec3 rot_axis={1,1,0};
+	tt_3d_object_rotate(cube, &rot_axis, 0.02);
 
 		if(i==700)
 		{
