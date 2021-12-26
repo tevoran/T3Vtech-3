@@ -26,6 +26,7 @@
 #include <common/new_frame.h>
 
 #include <gfx/gfx.h>
+#include <input/input.h>
 
 #ifdef __cplusplus
 	}

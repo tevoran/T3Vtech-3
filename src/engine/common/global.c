@@ -16,6 +16,7 @@ uint32_t tt_res_y; //game resolution
 uint32_t tt_desktop_res_x; //desktop resolution
 uint32_t tt_desktop_res_y; //desktop resolution
 SDL_GLContext tt_glcontext; //OpenGL context for SDL2
+SDL_Event tt_event; //SDL events
 
 //shaders
 GLuint tt_std_3d_shader; //the default shader program for all 3d objects
