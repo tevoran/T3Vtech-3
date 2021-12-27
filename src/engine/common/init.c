@@ -167,5 +167,9 @@ bool tt_init(
 	{
 		glEnable(GL_MULTISAMPLE); 
 	}
+
+	//preparing keyboard to avoid nullptr dereferencing
+	tt_input_keyboard_update();
+
 	return true;
 }

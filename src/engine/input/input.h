@@ -2,6 +2,7 @@
 #define TT_INPUT_H
 
 #include <tt.h>
+#include "keyboard_map.h"
 
 void tt_input_update();
 
@@ -13,5 +14,9 @@ void tt_input_mouse_update(const SDL_Event event);
 void tt_input_mouse_relative_motion(
 	int *x_relative,
 	int *y_relative);
+
+//keyboard
+void tt_input_keyboard_update();
+bool tt_input_keyboard_key_pressed(const unsigned char key);
 
 #endif
