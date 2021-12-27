@@ -411,6 +411,16 @@ It is also possible to use the SDL scancodes, as apparent in the text above. Alt
 
 T3Vtech-3 provides the possibility to get the system time with a nanosecond resolution. Although it is important to note that the actual time resolution may be smaller because of the system's implementation.
 
+tt_time_current_ns() will always give the current time stamp to the user.
+
 ```c
 long tt_time_current_ns();
 ```
+
+There are also two functions for the current frame time because many functions in a game depend on how much time has passed since the last frame. Therefore these two function will always return the time that it took for the last frame to be completed.
+
+```c
+long tt_time_current_frame_ns(); //returns ns resolution
+float tt_time_current_frame_s(); //returns a float with the fraction of a second
+```
+
