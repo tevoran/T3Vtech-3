@@ -6,10 +6,10 @@ project("T3Vtech-3")
 
 #DEBUGMODE
 #SET(CMAKE_CXX_FLAGS "-g -ggdb -fsanitize=address")
-SET(CMAKE_CXX_FLAGS "-g -Werror -Wall -Wextra")
+#SET(CMAKE_CXX_FLAGS "-g -Werror -Wall -Wextra")
 
 #PROFILERMODE
-#SET(CMAKE_CXX_FLAGS "-g -pg")
+SET(CMAKE_CXX_FLAGS "-g -pg")
 
 #SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 

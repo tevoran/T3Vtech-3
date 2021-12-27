@@ -24,6 +24,7 @@
 #include <common/quit.h>
 #include <common/list.h>
 #include <common/new_frame.h>
+#include <common/time.h>
 
 #include <gfx/gfx.h>
 #include <input/input.h>

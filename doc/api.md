@@ -340,3 +340,11 @@ void tt_input_mouse_relative_motion(
 	int *x_relative,
 	int *y_relative);
 ```
+
+## Time
+
+T3Vtech-3 provides the possibility to get the system time with a nanosecond resolution. Although it is important to note that the actual time resolution may be smaller because of the system's implementation.
+
+```c
+long tt_time_current_ns();
+```
