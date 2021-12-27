@@ -4,8 +4,8 @@ extern SDL_Window *tt_window;
 
 void tt_new_frame()
 {
-    //updating events
-    tt_input_update();
+    tt_input_update(); //updating events
+    tt_time_update(); //update the frame time
 
     tt_gfx_render();
     SDL_GL_SwapWindow(tt_window);
