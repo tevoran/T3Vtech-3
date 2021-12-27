@@ -3,6 +3,10 @@
 #include <tt.h>
 #include <shooting-range.hpp>
 
+#define WORLD_Z_BORDER 78.0
+#define WORLD_X_BORDER 107.0
+#define WORLD_GRAVITY 0.015
+
 namespace sr
 {
 	class world
