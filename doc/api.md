@@ -316,3 +316,27 @@ Since a point light has a location unlike other kinds of lighting, the position 
 ```c
 void tt_point_light_set_position(int light_id, tt_vec3 *position);
 ```
+
+## Handling of Input
+
+### Mouse
+
+The mouse can be used in two different modes. One is the absolute mode where the user of the engine can get the absolution mouse cursor coordinates. This can be useful for menus or RTS games. The other mode is the relative mode where the user gets relative mouse coordinates to the last frame. This is especially useful for FPS games.
+
+The relative mode can be toggled by calling 
+
+```c
+void tt_input_mouse_set_relative_mode(const bool toggle);
+```
+
+True will activate it and false will deactivate it. By default the engine is in absolute mode.
+
+#### Relative Mouse Coordinates
+
+When the relative mode is set then it is possible to get the relative mouse coordinates to the last frame. By calling
+
+```c
+void tt_input_mouse_relative_motion(
+	int *x_relative,
+	int *y_relative);
+```
