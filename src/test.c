@@ -10,7 +10,7 @@ int main()
 	tt_vec3 cube_pos={0,0,2};
 	tt_3d_object_set_position(cube, &cube_pos);
 
-	tt_3d_texture *crate=tt_3d_texture_new("crate.jpg", false);
+	tt_3d_texture *crate=tt_3d_texture_new("assets/smiley.png", false);
 	tt_3d_object_use_texture(cube, crate);
 
 
@@ -26,15 +26,20 @@ int main()
 
 	//glDisable(GL_MULTISAMPLE); 
 
-	for(int i=0; i<1500; i++)
+	int i=0;
+	while(!tt_input_keyboard_key_pressed(TT_KEY_ESC))
 	{
+	i++;
+	static long time=0;
+	static long time_new=0;
+
+	time_new=tt_time_current_ns();
+	printf("time: %fms\n", (float)(time_new-time)/1000000);
+	time=time_new;
+
 	tt_vec3 rot_axis={1,1,0};
 	tt_3d_object_rotate(cube, &rot_axis, 0.02);
 
-		if(i==700)
-		{
-			//glEnable(GL_MULTISAMPLE);
-		}
 		tt_point_light_set_strength(1, 5);
 			pos_point_light.x=40*sin((float)i/100);
 			pos_point_light.y=40*cos((float)i/100);

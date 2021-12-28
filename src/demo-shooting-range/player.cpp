@@ -1,7 +1,7 @@
 #include <player.hpp>
 #include <shooting-range.hpp>
 
-#define PLAYER_SPEED 0.11
+#define PLAYER_SPEED 6.6
 #define PLAYER_JUMP_SPEED 0.42
 #define PLAYER_HEIGHT 1.75
 
@@ -63,25 +63,26 @@ void sr::player::update()
 	}
 
 	//keyboard movement
+	float t_delta=tt_time_current_frame_s();
 	if(tt_input_keyboard_key_pressed(TT_KEY_W))
 	{
-		m_pos.z+=cos(side_angle) * PLAYER_SPEED;
-		m_pos.x+=sin(side_angle) * PLAYER_SPEED;
+		m_pos.z+=cos(side_angle) * PLAYER_SPEED * t_delta;
+		m_pos.x+=sin(side_angle) * PLAYER_SPEED * t_delta;
 	}
 	if(tt_input_keyboard_key_pressed(TT_KEY_S))
 	{
-		m_pos.z-=cos(side_angle) * PLAYER_SPEED;
-		m_pos.x-=sin(side_angle) * PLAYER_SPEED;
+		m_pos.z-=cos(side_angle) * PLAYER_SPEED * t_delta;
+		m_pos.x-=sin(side_angle) * PLAYER_SPEED * t_delta;
 	}
 	if(tt_input_keyboard_key_pressed(TT_KEY_D))
 	{
-		m_pos.z+=cos(side_angle + 0.5*tt_PI) * PLAYER_SPEED;
-		m_pos.x+=sin(side_angle + 0.5*tt_PI) * PLAYER_SPEED;
+		m_pos.z+=cos(side_angle + 0.5*tt_PI) * PLAYER_SPEED * t_delta;
+		m_pos.x+=sin(side_angle + 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 	}
 	if(tt_input_keyboard_key_pressed(TT_KEY_A))
 	{
-		m_pos.z+=cos(side_angle - 0.5*tt_PI) * PLAYER_SPEED;
-		m_pos.x+=sin(side_angle - 0.5*tt_PI) * PLAYER_SPEED;
+		m_pos.z+=cos(side_angle - 0.5*tt_PI) * PLAYER_SPEED * t_delta;
+		m_pos.x+=sin(side_angle - 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 	}
 
 	//jumping
@@ -95,7 +96,7 @@ void sr::player::update()
 	if(in_air)
 	{
 		m_pos.y+=y_vel;
-		y_vel-=WORLD_GRAVITY;
+		y_vel-=WORLD_GRAVITY * t_delta;
 	}
 	if(m_pos.y<PLAYER_HEIGHT)
 	{
