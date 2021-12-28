@@ -1,11 +1,17 @@
 #ifndef TT_MATH_MATRIX_H
 #define TT_MATH_MATRIX_H
 
+//mat3
+struct tt_mat3
+{
+	float array[3][3];
+} typedef tt_mat3;
+
+//mat4
 struct tt_mat4
 {
 	float array[4][4];
 } typedef tt_mat4;
-
 
 void tt_math_mat4_make_identity_matrix(tt_mat4 *mat);
 void tt_math_mat4_make_projection_matrix(
@@ -18,5 +24,7 @@ void tt_math_mat4_make_projection_matrix(
 tt_mat4 tt_math_mat4_make_quat_rot_mat(tt_vec3 *rot_axis, float radians);
 
 tt_mat4 tt_math_mat4_mul(tt_mat4 *a, tt_mat4 *b);
+
+tt_mat4 tt_math_mat4_transpose(tt_mat4 *a);
 
 #endif

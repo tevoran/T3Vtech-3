@@ -100,3 +100,16 @@ tt_mat4 tt_math_mat4_mul(tt_mat4 *a, tt_mat4 *b)
 	}
 	return out;
 }
+
+tt_mat4 tt_math_mat4_transpose(tt_mat4 *a)
+{
+	tt_mat4 out;
+	for(int iy=0; iy<4; iy++)
+	{
+		for(int ix=0; ix<4; ix++)
+		{
+			out.array[iy][ix]=a->array[ix][iy];
+		}
+	}
+	return out;
+}

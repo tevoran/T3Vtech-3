@@ -9,7 +9,7 @@ sr::sr::sr()
 		1920,
 		1080,
 		true,
-		8,
+		16,
 		true);
 
 	//creating the shooting range world
@@ -25,18 +25,8 @@ sr::sr::~sr()
 
 }
 
-void sr::sr::update(const float side_angle, const float up_angle)
+void sr::sr::update()
 {
-	//fps mouse movement
-	tt_vec3 rot_axis={1,0,0};
-	tt_camera_rotate(&rot_axis, up_angle);
-	rot_axis.x=0;
-	rot_axis.y=1;
-	tt_camera_rotate(&rot_axis, side_angle);
 	tt_new_frame();
-	tt_camera_rotate(&rot_axis, -side_angle);
-	rot_axis.x=1;
-	rot_axis.y=0;
-	tt_camera_rotate(&rot_axis, -up_angle);
 
 }

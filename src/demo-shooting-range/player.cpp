@@ -7,11 +7,44 @@
 
 sr::player::player()
 {
+	//load rocket launcher
+	m_rocket_launcher=tt_3d_object_new();
+	m_rocket_launcher_model=tt_3d_custom_model_load_file("assets/shooting-range/rocket_launcher.obj");
+	m_rocket_launcher_tex=tt_3d_texture_new("assets/shooting-range/rocket_launcher_tex.png", true);
+	tt_3d_object_use_custom_model(m_rocket_launcher, m_rocket_launcher_model);
+	tt_3d_object_use_texture(m_rocket_launcher, m_rocket_launcher_tex);
+
+	//set starting transformations
+	tt_vec3 rot_axis={1,0,0};
+	tt_3d_object_rotate(m_rocket_launcher, &rot_axis, 1.5*tt_PI);
+	tt_vec3 scale={0.3, 0.3, 0.3};
+	tt_3d_object_scale(m_rocket_launcher, &scale);
+
+
 	tt_camera_set_position(&m_pos);
 }
 
 void sr::player::update()
 {
+	//camera reset 
+	tt_vec3 rot_axis={0,1,0};
+	tt_camera_rotate(&rot_axis, -side_angle);
+
+	rot_axis.x=1;
+	rot_axis.y=0;
+	rot_axis.z=0;
+	tt_camera_rotate(&rot_axis, -up_angle);
+
+	rot_axis.x=1;
+	rot_axis.y=0;
+	rot_axis.z=0;
+	tt_3d_object_rotate(m_rocket_launcher, &rot_axis, -up_angle);
+
+	rot_axis.x=0;
+	rot_axis.y=0;
+	rot_axis.z=1;
+	tt_3d_object_rotate(m_rocket_launcher, &rot_axis, -side_angle);
+
 	//mouse movement
 	int mouse_x_rel=0;
 	int mouse_y_rel=0;
@@ -89,4 +122,41 @@ void sr::player::update()
 	}
 
 	tt_camera_set_position(&m_pos);
+
+	//rotate camera in a fps style
+	rot_axis.x=1;
+	rot_axis.y=0;
+	rot_axis.z=0;
+	tt_camera_rotate(&rot_axis, up_angle);
+
+	rot_axis.x=0;
+	rot_axis.y=1;
+	rot_axis.z=0;
+	tt_camera_rotate(&rot_axis, side_angle);
+
+	rot_axis.x=0;
+	rot_axis.y=0;
+	rot_axis.z=1;
+	tt_3d_object_rotate(m_rocket_launcher, &rot_axis, side_angle );
+
+	rot_axis.x=1;
+	rot_axis.y=0;
+	rot_axis.z=0;
+	tt_3d_object_rotate(m_rocket_launcher, &rot_axis, up_angle);
+
+	//update rocket launcher position
+	rot_axis.x=1;
+	rot_axis.y=0;
+	rot_axis.z=0;
+	tt_vec3 r_l_pos_abs = tt_math_vec3_rotate(&rot_axis, up_angle, &m_rocket_launcher_pos);
+	rot_axis.x=0;
+	rot_axis.y=1;
+	rot_axis.z=0;
+
+	r_l_pos_abs = tt_math_vec3_rotate(&rot_axis, side_angle, &r_l_pos_abs);
+	r_l_pos_abs = tt_math_vec3_add(&r_l_pos_abs, &m_pos);
+	std::cout << r_l_pos_abs.x << " " << r_l_pos_abs.y << " " << r_l_pos_abs.z << std::endl;
+	tt_3d_object_set_position(m_rocket_launcher, &r_l_pos_abs);
+
+
 }

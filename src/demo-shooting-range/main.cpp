@@ -8,7 +8,7 @@ int main(void)
 	while(!tt_input_keyboard_key_pressed(TT_KEY_ESC))
 	{
 		player.update();
-		sr.update(player.side_angle, player.up_angle);
+		sr.update();
 	}
 	return 0;
 }

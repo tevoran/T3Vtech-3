@@ -22,3 +22,4 @@ void tt_camera_rotate(tt_vec3 *rot_axis, float radians)
 	tt_mat4 rot_delta_mat=tt_math_mat4_make_quat_rot_mat(rot_axis, -radians);
 	tt_camera_rotation=tt_math_mat4_mul(&rot_delta_mat, &tt_camera_rotation);
 }
+

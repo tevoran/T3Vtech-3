@@ -13,7 +13,7 @@ namespace sr
 		world *m_range=NULL;
 
 	public:
-		void update(const float side_angle, const float up_angle);
+		void update();
 		sr();
 		~sr();
 	};
