@@ -20,6 +20,9 @@ sr::player::player()
 	tt_vec3 scale={0.3, 0.3, 0.3};
 	tt_3d_object_scale(m_rocket_launcher, &scale);
 
+	//prepare rockets
+	m_rocket_model=tt_3d_custom_model_load_file("assets/shooting-range/rocket.obj");
+	m_rocket_tex=tt_3d_texture_new("assets/shooting-range/rocket_tex.png", false);
 
 	tt_camera_set_position(&m_pos);
 }
@@ -35,6 +38,7 @@ void sr::player::update()
 	rot_axis.z=0;
 	tt_camera_rotate(&rot_axis, -up_angle);
 
+	//reset rocket launcher rotation
 	rot_axis.x=1;
 	rot_axis.y=0;
 	rot_axis.z=0;
@@ -135,6 +139,8 @@ void sr::player::update()
 	rot_axis.z=0;
 	tt_camera_rotate(&rot_axis, side_angle);
 
+
+	//rotate rocket launcher
 	rot_axis.x=0;
 	rot_axis.y=0;
 	rot_axis.z=1;
@@ -156,8 +162,43 @@ void sr::player::update()
 
 	r_l_pos_abs = tt_math_vec3_rotate(&rot_axis, side_angle, &r_l_pos_abs);
 	r_l_pos_abs = tt_math_vec3_add(&r_l_pos_abs, &m_pos);
-	std::cout << r_l_pos_abs.x << " " << r_l_pos_abs.y << " " << r_l_pos_abs.z << std::endl;
 	tt_3d_object_set_position(m_rocket_launcher, &r_l_pos_abs);
 
+	tt_vec3 view_dir=tt_camera_view_direction();
+	//std::cout << view_dir.x << " " << view_dir.y << " " << view_dir.z << std::endl;
 
+	//shoot rockets
+	static float rocket_delay=0;
+
+	if(tt_input_keyboard_key_pressed(TT_KEY_SPACE) && rocket_delay==0)
+	{
+		rocket_delay=1.0;
+		tt_vec3 view_dir=tt_camera_view_direction();
+
+		std::unique_ptr<rocket> tmp_rocket(new rocket(
+			m_rocket_model,
+			m_rocket_tex,
+			m_rocket_launcher,
+			m_pos,
+			view_dir));
+
+		m_rockets.emplace_back(std::move(tmp_rocket));
+	}
+	rocket_delay-=t_delta;
+	if(rocket_delay<0)
+	{
+		rocket_delay=0;
+	}
+
+	//std::cout << m_rockets.size() << std::endl;
+
+	//update all the rockets
+	for(int i=0; i<m_rockets.size(); i++)
+	{
+		if(!m_rockets[i]->update()) //if returns false then it is ready to be destroyed
+		{
+			//delete m_rockets[i];
+			m_rockets.erase(m_rockets.begin() + i);
+		}	
+	}
 }

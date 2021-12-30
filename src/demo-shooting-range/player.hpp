@@ -1,6 +1,9 @@
 #pragma once
 
 #include <shooting-range.hpp>
+#include <rocket.hpp>
+#include <vector>
+
 
 namespace sr
 {
@@ -15,6 +18,11 @@ namespace sr
 		tt_3d_custom_model *m_rocket_launcher_model=NULL;
 		tt_3d_texture *m_rocket_launcher_tex=NULL;
 		tt_vec3 m_rocket_launcher_pos={0.185, -0.003, 0.20}; //rocket launcher position relative to the camera
+
+		//rockets
+		tt_3d_custom_model *m_rocket_model=NULL;
+		tt_3d_texture *m_rocket_tex=NULL;
+		std::vector<std::unique_ptr<rocket>> m_rockets;
 
 	public:
 		//fps mouse movement

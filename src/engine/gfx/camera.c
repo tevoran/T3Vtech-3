@@ -23,3 +23,21 @@ void tt_camera_rotate(tt_vec3 *rot_axis, float radians)
 	tt_camera_rotation=tt_math_mat4_mul(&rot_delta_mat, &tt_camera_rotation);
 }
 
+tt_vec3 tt_camera_view_direction()
+{
+	tt_vec3 start_dir={0,0,1}; //along the z-axis
+	tt_mat4 tmp_mat;
+	tt_math_mat4_make_identity_matrix(&tmp_mat);
+	tmp_mat.array[0][3]=start_dir.x;
+	tmp_mat.array[1][3]=start_dir.y;
+	tmp_mat.array[2][3]=start_dir.z;
+
+	tmp_mat=tt_math_mat4_mul(&tt_camera_rotation, &tmp_mat);
+	tt_vec3 out=
+	{
+		tmp_mat.array[0][3],
+		tmp_mat.array[1][3],
+		tmp_mat.array[2][3],
+	};
+	return out;
+}

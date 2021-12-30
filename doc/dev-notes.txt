@@ -9,7 +9,7 @@
 [ ] forcing the engine to stay at a certain framerate if possible
 [ ] input
 	[ ] mouse
-	[ ] keyboard
+	[X] keyboard
 	[ ] gamepad
 
 # TTMV (T3Vtech-3 Model Viewer)
