@@ -24,6 +24,16 @@ sr::player::player()
 	m_rocket_model=tt_3d_custom_model_load_file("assets/shooting-range/rocket.obj");
 	m_rocket_tex=tt_3d_texture_new("assets/shooting-range/rocket_tex.png", false);
 
+	//prepare explosions
+	m_ex_model=tt_3d_custom_model_load_file("assets/shooting-range/explosion.obj");
+	m_ex[0]=tt_3d_texture_new("assets/shooting-range/ex_00.png", false);
+	m_ex[1]=tt_3d_texture_new("assets/shooting-range/ex_01.png", false);
+	m_ex[2]=tt_3d_texture_new("assets/shooting-range/ex_02.png", false);
+	m_ex[3]=tt_3d_texture_new("assets/shooting-range/ex_03.png", false);
+	m_ex[4]=tt_3d_texture_new("assets/shooting-range/ex_04.png", false);
+	m_ex[5]=tt_3d_texture_new("assets/shooting-range/ex_05.png", false);
+	m_ex[6]=tt_3d_texture_new("assets/shooting-range/ex_06.png", false);
+
 	tt_camera_set_position(&m_pos);
 }
 
@@ -178,6 +188,8 @@ void sr::player::update()
 		std::unique_ptr<rocket> tmp_rocket(new rocket(
 			m_rocket_model,
 			m_rocket_tex,
+			m_ex_model,
+			m_ex,
 			m_rocket_launcher,
 			m_pos,
 			view_dir));

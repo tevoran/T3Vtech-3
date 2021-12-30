@@ -29,6 +29,7 @@ tt_3d_object* tt_3d_object_new()
 	new_object->texture=tt_gfx_3d_default_tex;
 	new_object->lighting_affected=true;
 	new_object->size_bounding_sphere=0;
+	new_object->invisibility_toggle=false; //make visible by default
 	return new_object;
 }
 
@@ -105,6 +106,11 @@ void tt_3d_object_use_default_texture(tt_3d_object *object)
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle)
 {
 	object->lighting_affected=toggle;
+}
+
+void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle)
+{
+	object->invisibility_toggle=toggle;
 }
 
 //getting object properties

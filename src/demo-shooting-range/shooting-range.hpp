@@ -1,5 +1,7 @@
 #pragma once
 
+#define EX_STEPS 7
+
 #include <tt.h>
 #include <memory>
 #include <world.hpp>

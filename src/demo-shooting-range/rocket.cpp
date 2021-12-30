@@ -1,10 +1,13 @@
 #include <shooting-range.hpp>
 
-#define ROCKET_SPEED 0.2
+#define ROCKET_SPEED 15
+#define EX_SPEED 2
 
 sr::rocket::rocket(
 			tt_3d_custom_model *rocket_model,
 			tt_3d_texture *rocket_tex,
+			tt_3d_custom_model *ex_model,
+			tt_3d_texture *ex[EX_STEPS],
 			tt_3d_object *rocket_launcher,
 			tt_vec3& pos_start,
 			tt_vec3& dir)
@@ -28,12 +31,23 @@ sr::rocket::rocket(
 	m_dir.x=dir.x/length;
 	m_dir.y=dir.y/length;
 	m_dir.z=dir.z/length;
+
+	//prepare the explosions
+	m_ex_obj=tt_3d_object_new();
+	tt_3d_object_use_custom_model(m_ex_obj, ex_model);
+	tt_3d_object_light_affected(m_ex_obj, false);
+	tt_3d_object_make_invisible(m_ex_obj, true);
+	for(int i=0; i<EX_STEPS; i++)
+	{
+		m_ex[i]=ex[i];
+	}
 }
 
 sr::rocket::~rocket()
 {
 	//std::cout << "dod\n";
 	tt_3d_object_delete(&m_rocket);
+	tt_3d_object_delete(&m_ex_obj);
 }
 
 //true if rocket should still live
@@ -49,5 +63,66 @@ bool sr::rocket::update()
 	//std::cout << m_pos.x << " " << m_pos.y << " " << m_pos.z << std::endl;
 	tt_3d_object_set_position(m_rocket, &m_pos);
 
+	//if rockets leaves the space then explode
+	if(	(	(m_pos.x< -WORLD_X_BORDER || m_pos.x>WORLD_X_BORDER) ||
+			(m_pos.z< -WORLD_Z_BORDER || m_pos.z>WORLD_Z_BORDER) ||
+			(m_pos.y< 0 || m_pos.y>100)) &&
+		!m_exploded)
+	{
+		m_exploded=true;
+		tt_3d_object_make_invisible(m_rocket, true);
+		tt_3d_object_make_invisible(m_ex_obj, false);
+		tt_3d_object_set_position(m_ex_obj, &m_pos);
+	}
+
+	//showing the explosion
+	if(m_exploded)
+	{
+		m_scale.x += EX_SPEED * t_delta;
+		m_scale.y += EX_SPEED * t_delta;
+		m_scale.z += EX_SPEED * t_delta;
+		tt_3d_object_scale(m_ex_obj, &m_scale);
+
+		if(m_scale.y>0)
+		{
+			tt_3d_object_use_texture(m_ex_obj, m_ex[0]);
+		}
+
+		if(m_scale.y>0.5)
+		{
+			tt_3d_object_use_texture(m_ex_obj, m_ex[1]);
+		}
+
+		if(m_scale.y>1)
+		{
+			tt_3d_object_use_texture(m_ex_obj, m_ex[2]);
+		}
+
+		if(m_scale.y>1.5)
+		{
+			tt_3d_object_use_texture(m_ex_obj, m_ex[3]);
+		}
+
+		if(m_scale.y>2)
+		{
+			tt_3d_object_use_texture(m_ex_obj, m_ex[4]);
+		}
+
+		if(m_scale.y>2.5)
+		{
+			tt_3d_object_use_texture(m_ex_obj, m_ex[5]);
+		}
+
+		if(m_scale.y>3)
+		{
+			tt_3d_object_use_texture(m_ex_obj, m_ex[6]);
+			tt_3d_object_light_affected(m_ex_obj, true);
+		}
+
+		if(m_scale.y>6)
+		{
+			return false;
+		}
+	}
 	return true;
 }

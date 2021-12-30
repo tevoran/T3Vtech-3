@@ -22,7 +22,10 @@ namespace sr
 		//rockets
 		tt_3d_custom_model *m_rocket_model=NULL;
 		tt_3d_texture *m_rocket_tex=NULL;
+		tt_3d_custom_model *m_ex_model=NULL;
+		tt_3d_texture* m_ex[EX_STEPS];
 		std::vector<std::unique_ptr<rocket>> m_rockets;
+
 
 	public:
 		//fps mouse movement

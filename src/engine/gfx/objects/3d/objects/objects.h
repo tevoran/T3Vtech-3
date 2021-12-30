@@ -23,6 +23,7 @@ struct tt_3d_object
 	//properties
 	GLuint texture;
 	float size_bounding_sphere; //the size of the bounding sphere
+	bool invisibility_toggle;
 
 	//lighting
 	bool lighting_affected;
@@ -57,6 +58,7 @@ void tt_3d_object_rotate_like(tt_3d_object *object_target, tt_3d_object *object_
 void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture);
 void tt_3d_object_use_default_texture(tt_3d_object *object);
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
+void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle);
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object);
 
 #endif

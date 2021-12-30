@@ -20,45 +20,49 @@ void tt_gfx_render()
 
 		while(true)
 		{
-			//prepare uniforms
-			GLint translation=glGetUniformLocation(tt_std_3d_shader, "translation");
-			GLint scale=glGetUniformLocation(tt_std_3d_shader, "scale");
-			GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
-			GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
+			if(!current_object->invisibility_toggle) //if invisible there is no need to render
+			{
+				//prepare uniforms
+				GLint translation=glGetUniformLocation(tt_std_3d_shader, "translation");
+				GLint scale=glGetUniformLocation(tt_std_3d_shader, "scale");
+				GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
+				GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
 
-			//set uniforms
-			const GLfloat *mat4_uniform=(const GLfloat*)current_object->translation.array;
-			glUniformMatrix4fv(translation, 1, GL_FALSE, mat4_uniform);
+				//set uniforms
+				const GLfloat *mat4_uniform=(const GLfloat*)current_object->translation.array;
+				glUniformMatrix4fv(translation, 1, GL_FALSE, mat4_uniform);
 
-			mat4_uniform=(const GLfloat*)current_object->scale.array;
-			glUniformMatrix4fv(scale, 1, GL_FALSE, mat4_uniform);
-			
-			mat4_uniform=(const GLfloat*)current_object->rotation.array;
-			glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
+				mat4_uniform=(const GLfloat*)current_object->scale.array;
+				glUniformMatrix4fv(scale, 1, GL_FALSE, mat4_uniform);
+				
+				mat4_uniform=(const GLfloat*)current_object->rotation.array;
+				glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
 
-			glUniform1i(affected_by_light, current_object->lighting_affected);
+				glUniform1i(affected_by_light, current_object->lighting_affected);
 
-			//bind buffers
-			//glBindVertexArray(current_object->vao);
-			glBindBuffer(GL_ARRAY_BUFFER, current_object->vbo);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_object->ibo);
+				//bind buffers
+				//glBindVertexArray(current_object->vao);
+				glBindBuffer(GL_ARRAY_BUFFER, current_object->vbo);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_object->ibo);
 
-			//describe vertex data
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)0);
-			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
-			glEnableVertexAttribArray(1);
-			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(5*sizeof(GLfloat)));
-			glEnableVertexAttribArray(2);
+				//describe vertex data
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)0);
+				glEnableVertexAttribArray(0);
+				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
+				glEnableVertexAttribArray(1);
+				glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(5*sizeof(GLfloat)));
+				glEnableVertexAttribArray(2);
 
-			//use textures
-			glBindTexture(GL_TEXTURE_2D, current_object->texture);
-			
-			glDrawElements(
-				GL_TRIANGLES,
-				current_object->num_indices,
-				GL_UNSIGNED_INT,
-				NULL);
+				//use textures
+				glBindTexture(GL_TEXTURE_2D, current_object->texture);
+				
+				glDrawElements(
+					GL_TRIANGLES,
+					current_object->num_indices,
+					GL_UNSIGNED_INT,
+					NULL);
+					
+			}
 
 
 			//get to the next object to render
