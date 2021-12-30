@@ -150,6 +150,13 @@ tt_vec3 rot_axis={1,0,0};
 float rot_angle=0.5*tt_PI; //radians instead of degrees are used
 tt_3d_object_rotate(object, &rot_axis, rot_angle);
 ```
+
+In addition to a regular rotation, it is also possible to rotate a 3D object exactly like a previously rotated 3D model.
+
+```c
+void tt_3d_object_rotate_like(tt_3d_object *object_target, tt_3d_object *object_already_rotated);
+```
+
 #### Quads
 
 A created 3D object can be converted into a quad by using the function tt_3d_object_make_quad().

@@ -17,7 +17,7 @@ sr::rocket::rocket(
 	tt_3d_object_scale(m_rocket, &scale);
 	tt_vec3 rot_axis={1,0,0};
 	tt_3d_object_rotate(m_rocket, &rot_axis, 0.5 * tt_PI);
-	tt_3d_object_rotate_like(rocket_launcher, m_rocket);
+	tt_3d_object_rotate_like(m_rocket, rocket_launcher);
 	rot_axis.x=0;
 	rot_axis.y=1;
 	rot_axis.z=0;
