@@ -32,6 +32,10 @@ sr::rocket::rocket(
 	m_dir.y=dir.y/length;
 	m_dir.z=dir.z/length;
 
+	m_pos.x+=m_dir.x;
+	m_pos.y+=m_dir.y;
+	m_pos.z+=m_dir.z;
+
 	//prepare the explosions
 	m_ex_obj=tt_3d_object_new();
 	tt_3d_object_use_custom_model(m_ex_obj, ex_model);
@@ -66,7 +70,7 @@ bool sr::rocket::update()
 	//if rockets leaves the space then explode
 	if(	(	(m_pos.x< -WORLD_X_BORDER || m_pos.x>WORLD_X_BORDER) ||
 			(m_pos.z< -WORLD_Z_BORDER || m_pos.z>WORLD_Z_BORDER) ||
-			(m_pos.y< 0 || m_pos.y>100)) &&
+			(m_pos.y< 0.75 || m_pos.y>100)) &&
 		!m_exploded)
 	{
 		m_exploded=true;

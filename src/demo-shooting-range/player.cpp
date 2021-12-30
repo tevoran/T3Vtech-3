@@ -180,7 +180,7 @@ void sr::player::update()
 	//shoot rockets
 	static float rocket_delay=0;
 
-	if(tt_input_keyboard_key_pressed(TT_KEY_SPACE) && rocket_delay==0)
+	if(tt_input_mouse_button_down(TT_MOUSE_LEFT) && rocket_delay==0)
 	{
 		rocket_delay=1.0;
 		tt_vec3 view_dir=tt_camera_view_direction();
