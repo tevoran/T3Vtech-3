@@ -1,7 +1,7 @@
 #include <shooting-range.hpp>
 
-#define ROCKET_SPEED 15
-#define EX_SPEED 2
+#define ROCKET_SPEED 45
+#define EX_SPEED 10
 
 sr::rocket::rocket(
 			tt_3d_custom_model *rocket_model,

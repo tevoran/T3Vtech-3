@@ -12,8 +12,9 @@ bool mouse_motion_read=true; //if the current mouse motion is not read yet
 	//it can be read
 
 //mouse buttons
-#define SUPPORTET_BUTTONS 5
-unsigned char mouse_button[SUPPORTET_BUTTONS]; //SDL supports apparently only 5 mouse buttons
+#define SUPPORTED_BUTTONS 5
+bool mouse_button[SUPPORTED_BUTTONS]; //SDL supports apparently only 5 mouse buttons
+
 
 //set relative mode where only relative mouse motion gets captured
 void tt_input_mouse_set_relative_mode(const bool toggle)
@@ -30,6 +31,15 @@ void tt_input_mouse_set_relative_mode(const bool toggle)
 	}
 }
 
+void tt_input_mouse_button_reset()
+{
+	//reset mouse buttons to not pressed
+	for(int i=0; i<SUPPORTED_BUTTONS; i++)
+	{
+		mouse_button[i]=false;
+	}			
+}
+
 void tt_input_mouse_update(const SDL_Event event)
 {
 	if(event.type==SDL_MOUSEMOTION)
@@ -39,33 +49,42 @@ void tt_input_mouse_update(const SDL_Event event)
 		delta_y=event.motion.yrel;
 	}
 
-	if(event.type==SDL_MOUSEBUTTONDOWN)
+/*	printf("%i %i %i %i %i\n",
+		mouse_button[0],
+		mouse_button[1],
+		mouse_button[2],
+		mouse_button[3],
+		mouse_button[4]);
+*/	if(event.type==SDL_MOUSEBUTTONDOWN)
 	{
+		//printf("A");
 		switch(event.button.button)
 		{
 			case SDL_BUTTON_LEFT:
 			{
-				mouse_button[TT_MOUSE_LEFT]=1;
+		//printf("B");
+				mouse_button[TT_MOUSE_LEFT]=true;
 				break;
 			}
 			case SDL_BUTTON_MIDDLE:
 			{
-				mouse_button[TT_MOUSE_MIDDLE]=1;
+				mouse_button[TT_MOUSE_MIDDLE]=true;
 				break;
 			}
 			case SDL_BUTTON_RIGHT:
 			{
-				mouse_button[TT_MOUSE_RIGHT]=1;
+		//printf("C");
+				mouse_button[TT_MOUSE_RIGHT]=true;
 				break;
 			}
 			case SDL_BUTTON_X1:
 			{
-				mouse_button[TT_MOUSE_X1]=1;
+				mouse_button[TT_MOUSE_X1]=true;
 				break;
 			}
 			case SDL_BUTTON_X2:
 			{
-				mouse_button[TT_MOUSE_X2]=1;
+				mouse_button[TT_MOUSE_X2]=true;
 				break;
 			}
 			default:
@@ -73,14 +92,6 @@ void tt_input_mouse_update(const SDL_Event event)
 
 			}
 		}
-	}
-	else
-	{
-		//reset mouse buttons to not pressed
-		for(int i=0; i<SUPPORTET_BUTTONS; i++)
-		{
-			mouse_button[i]=0;
-		}		
 	}
 }
 

@@ -182,7 +182,7 @@ void sr::player::update()
 
 	if(tt_input_mouse_button_down(TT_MOUSE_LEFT) && rocket_delay==0)
 	{
-		rocket_delay=1.0;
+		rocket_delay=0.0;
 		tt_vec3 view_dir=tt_camera_view_direction();
 
 		std::unique_ptr<rocket> tmp_rocket(new rocket(
