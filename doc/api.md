@@ -73,6 +73,13 @@ void tt_camera_set_position(tt_vec3 *position);
 void tt_camera_rotate(tt_vec3 *rot_axis, float radians);
 ```
 
+#### Getting the Current Viewing Direction
+
+If necessary it is possible to get the current viewing direction of the camera by calling
+
+```c
+tt_vec3 tt_camera_view_direction();
+```
 
 ### 3D Objects
 
