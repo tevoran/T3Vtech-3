@@ -111,6 +111,18 @@ It can be toggled whether a 3D object is affected by light or not. This comes in
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
 ```
 
+#### Making a 3D Object visible/invisible
+
+3D objects can be toggled to be visible or invisible. This is helpful if you already prepared an object but you need display it later.
+
+```c
+void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle);
+```
+
+By default a 3D object is visible.
+
+True makes it invisible and false makes it visible.
+
 #### Usage of a Texture
 
 To use a texture to cover a 3D object it needs to be created first by calling tt_3d_texture_new() and is available until the call the of tt_3d_texture_delete(). In between the texture is usable on as many models as desired. And if no texture is specified then the pink default texture will be used.
