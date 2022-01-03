@@ -17,6 +17,7 @@ void tt_input_mouse_relative_motion(
 	int *x_relative,
 	int *y_relative);
 bool tt_input_mouse_button_down(const unsigned char button);
+void tt_input_mouse_location(int *x, int *y);
 
 //keyboard
 void tt_input_keyboard_update();

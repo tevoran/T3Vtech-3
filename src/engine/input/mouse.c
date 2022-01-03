@@ -11,6 +11,10 @@ int delta_y=0; //the mouse movement relative to last frame
 bool mouse_motion_read=true; //if the current mouse motion is not read yet
 	//it can be read
 
+//absolute mouse mode
+int mouse_x=0;
+int mouse_y=0;
+
 //mouse buttons
 #define SUPPORTED_BUTTONS 5
 bool mouse_button[SUPPORTED_BUTTONS]; //SDL supports apparently only 5 mouse buttons
@@ -107,4 +111,18 @@ void tt_input_mouse_relative_motion(
 bool tt_input_mouse_button_down(const unsigned char button)
 {
 	return mouse_button[button];
+}
+
+void tt_input_mouse_location(int *x, int *y)
+{
+	if(mouse_relative_mode_toggle)
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		SDL_GetMouseState(x, y);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
+	else
+	{
+		SDL_GetMouseState(x, y);
+	}
 }

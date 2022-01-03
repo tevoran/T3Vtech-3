@@ -7,7 +7,6 @@ int main(void)
 
 	while(!tt_input_keyboard_key_pressed(TT_KEY_ESC))
 	{
-		//std::cout << tt_input_mouse_button_down(TT_MOUSE_RIGHT);
 		player.update();
 		sr.update();
 	}

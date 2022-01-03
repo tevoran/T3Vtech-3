@@ -367,6 +367,14 @@ void tt_input_mouse_relative_motion(
 	int *y_relative);
 ```
 
+#### Absolute Mouse Coordinates
+
+It is also possible to get the absolute mouse location inside the window of the game. It is strongly recommended to not use the relative mode when getting the absolute mouse location. It is still possible to use it but the OS cursor may appear randomly.
+
+```c
+void tt_input_mouse_location(int *x, int *y);
+```
+
 ### Keyboard
 
 The keyboard is a very important method for game input. There it is possible to check if a certain key is currently pressed.

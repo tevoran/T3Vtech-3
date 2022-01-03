@@ -8,7 +8,7 @@
 [X] document ambient lighting
 [ ] forcing the engine to stay at a certain framerate if possible
 [ ] input
-	[ ] mouse
+	[X] mouse
 	[X] keyboard
 	[ ] gamepad
 
