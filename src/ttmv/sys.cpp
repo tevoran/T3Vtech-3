@@ -54,7 +54,7 @@ ttmv::sys::~sys()
 void ttmv::sys::loop(int max_frames)
 {
 	tt_vec3 rot_axis={0.2, 1, 0.05};
-	for(int i=0; i<max_frames; i++)
+	while(!tt_input_keyboard_key_pressed(TT_KEY_ESC))
 	{
 		tt_3d_object_rotate(model, &rot_axis, rot_speed);
 		tt_new_frame();
