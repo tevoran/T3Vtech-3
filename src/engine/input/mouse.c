@@ -49,20 +49,12 @@ void tt_input_mouse_update(const SDL_Event event)
 		delta_y=event.motion.yrel;
 	}
 
-/*	printf("%i %i %i %i %i\n",
-		mouse_button[0],
-		mouse_button[1],
-		mouse_button[2],
-		mouse_button[3],
-		mouse_button[4]);
-*/	if(event.type==SDL_MOUSEBUTTONDOWN)
+	if(event.type==SDL_MOUSEBUTTONDOWN)
 	{
-		//printf("A");
 		switch(event.button.button)
 		{
 			case SDL_BUTTON_LEFT:
 			{
-		//printf("B");
 				mouse_button[TT_MOUSE_LEFT]=true;
 				break;
 			}
@@ -73,7 +65,6 @@ void tt_input_mouse_update(const SDL_Event event)
 			}
 			case SDL_BUTTON_RIGHT:
 			{
-		//printf("C");
 				mouse_button[TT_MOUSE_RIGHT]=true;
 				break;
 			}
@@ -89,7 +80,6 @@ void tt_input_mouse_update(const SDL_Event event)
 			}
 			default:
 			{
-
 			}
 		}
 	}
