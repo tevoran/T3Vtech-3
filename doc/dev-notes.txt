@@ -11,9 +11,13 @@
 	[X] mouse
 	[X] keyboard
 	[ ] gamepad
+[ ] light IDs rework to remove the stack necessity
 
 # TTMV (T3Vtech-3 Model Viewer)
 [X] displaying a model via CLI
 [X] setting the distance for model according to its size
 
 # demo (shooting range)
+[ ] gamepad
+
+# TTLE (level editor)

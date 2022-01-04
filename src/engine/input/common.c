@@ -10,5 +10,6 @@ void tt_input_update()
 	{
 		tt_input_mouse_update(tt_event);
 		tt_input_keyboard_update();
+		tt_input_controller_update(tt_event);
 	}
 }

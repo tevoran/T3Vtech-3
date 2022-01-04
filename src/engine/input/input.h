@@ -23,4 +23,9 @@ void tt_input_mouse_location(int *x, int *y);
 void tt_input_keyboard_update();
 bool tt_input_keyboard_key_pressed(const unsigned char key);
 
+//controller
+void tt_input_controller_add_new(SDL_Event event);
+
+void tt_input_controller_update(SDL_Event event);
+
 #endif

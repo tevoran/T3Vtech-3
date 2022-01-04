@@ -2,7 +2,7 @@
 
 int main()
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, true, 16, false);
+	tt_init("T3Vtech3 test window", 1366, 720, false, 16, false);
 
 
 	tt_3d_object *cube=tt_3d_object_new();
@@ -32,10 +32,6 @@ int main()
 	i++;
 	static long time=0;
 	static long time_new=0;
-
-	time_new=tt_time_current_ns();
-	printf("time: %fms\n", (float)(time_new-time)/1000000);
-	time=time_new;
 
 	tt_vec3 rot_axis={1,1,0};
 	tt_3d_object_rotate(cube, &rot_axis, 0.02);

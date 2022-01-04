@@ -31,7 +31,8 @@ bool tt_init(
 		SDL_INIT_TIMER |
 		SDL_INIT_AUDIO |
 		SDL_INIT_VIDEO |
-		SDL_INIT_EVENTS))
+		SDL_INIT_EVENTS|
+		SDL_INIT_GAMECONTROLLER))
 	{
 		printf("[ERROR] couldn't initialize SDL2\n");
 		return false;
