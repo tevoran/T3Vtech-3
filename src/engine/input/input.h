@@ -4,6 +4,7 @@
 #include <tt.h>
 #include "keyboard_map.h"
 #include "mouse_map.h"
+#include "controller_map.h"
 
 void tt_input_update();
 
@@ -24,8 +25,11 @@ void tt_input_keyboard_update();
 bool tt_input_keyboard_key_pressed(const unsigned char key);
 
 //controller
+int tt_input_controller_count();
 void tt_input_controller_add_new(SDL_Event event);
 
 void tt_input_controller_update(SDL_Event event);
+void tt_input_controller_button_update(SDL_Event event);
+
 
 #endif
