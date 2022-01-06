@@ -1,6 +1,6 @@
 #include <tt.h>
 
-#define NUM_BUTTONS_SUPPORTED_SDL 15
+#define NUM_BUTTONS_SUPPORTED_SDL 16
 
 extern bool tt_quiet; //this activates/deactivates debug messages
 
@@ -10,8 +10,9 @@ struct controller
 	SDL_GameController *controller;
 	SDL_Joystick *joy;
 	SDL_JoystickID id;
+	SDL_JoystickGUID guid;
 
-	bool button[NUM_BUTTONS_SUPPORTED_SDL];
+	bool button_press[NUM_BUTTONS_SUPPORTED_SDL];
 } typedef controller;
 
 //controllers
@@ -26,16 +27,19 @@ void tt_input_controller_update(SDL_Event event)
 		case SDL_CONTROLLERDEVICEADDED:
 		{
 			tt_input_controller_add_new(event);
+			break;
 		}
 
 		case SDL_CONTROLLERBUTTONDOWN:
 		{
 			tt_input_controller_button_update(event);
+			break;
 		}
 
 		case SDL_CONTROLLERAXISMOTION:
 		{
 			//printf("AXIS\n");
+			break;
 		}
 	}
 
@@ -84,11 +88,18 @@ void tt_input_controller_add_new(SDL_Event event)
 		new_controller->controller=tmp_controller;
 		new_controller->joy=tmp_joy;
 		new_controller->id=tmp_id;
+		new_controller->guid=SDL_JoystickGetGUID(tmp_joy);
+
+		char guid_str[1024];
+		SDL_JoystickGetGUIDString(new_controller->guid, guid_str, sizeof(guid_str));
+		printf("GUID_STR: %s\n", guid_str);
+
+		printf("MAPPING: %s\n", SDL_GameControllerMapping(tmp_controller));
 
 		//reset keys
 		for(int i=0; i<NUM_BUTTONS_SUPPORTED_SDL; i++)
 		{
-			new_controller->button[i]=false;
+			new_controller->button_press[i]=false;
 		}
 
 	}
@@ -115,11 +126,56 @@ void tt_input_controller_button_update(SDL_Event event)
 		{
 			//the -1 is necessary because we don't save the button invalid value of SDL
 			// https://wiki.libsdl.org/SDL_GameControllerButton
-			c_active->button[event.cbutton.button-1]=true;
+			c_active->button_press[event.cbutton.button-1]=true;
 			break;
 		}
 
 		//going to the next controller
 		node=tt_list_next_node(node);
+	}
+}
+
+void tt_input_controller_button_reset()
+{
+	//resetting all button arrays
+	tt_node *node=c_list_start;
+	while(node)
+	{
+		controller *c_active=node->data;
+		for(int i=0; i<NUM_BUTTONS_SUPPORTED_SDL; i++)
+		{
+			c_active->button_press[i]=false;
+		}
+
+		node=tt_list_next_node(node);
+	}
+}
+
+bool tt_input_controller_button_press(const unsigned char button)
+{
+	if(c_list_start)
+	{
+		tt_node *node=c_list_start;
+		controller *c_active=node->data;
+		return c_active->button_press[button-1];
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void tt_input_controller_add_mappings()
+{
+	int ret=0;
+	ret=SDL_GameControllerAddMappingsFromFile("settings/controllermappings.txt");
+	if(!tt_quiet)
+	{
+		printf("%i mappings added\n", ret);
+	}
+	if(ret==-1)
+	{
+		printf("[ERROR] controller mappings couldn't be added\n");
+		printf("SDL2 error message: %s\n", SDL_GetError());
 	}
 }

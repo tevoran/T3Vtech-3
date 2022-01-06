@@ -25,11 +25,15 @@ void tt_input_keyboard_update();
 bool tt_input_keyboard_key_pressed(const unsigned char key);
 
 //controller
+void tt_input_controller_button_reset();
 int tt_input_controller_count();
 void tt_input_controller_add_new(SDL_Event event);
 
 void tt_input_controller_update(SDL_Event event);
 void tt_input_controller_button_update(SDL_Event event);
 
+void tt_input_controller_add_mappings();
+
+bool tt_input_controller_button_press(const unsigned char button);
 
 #endif

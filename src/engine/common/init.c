@@ -171,6 +171,7 @@ bool tt_init(
 
 	//preparing keyboard to avoid nullptr dereferencing
 	tt_input_keyboard_update();
+	tt_input_controller_add_mappings();
 
 	return true;
 }

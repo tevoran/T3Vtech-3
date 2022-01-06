@@ -78,22 +78,26 @@ void sr::player::update()
 
 	//keyboard movement
 	float t_delta=tt_time_current_frame_s();
-	if(tt_input_keyboard_key_pressed(TT_KEY_W))
+	if(	tt_input_keyboard_key_pressed(TT_KEY_W) ||
+		tt_input_controller_button_press(TT_CTL_UP))
 	{
 		m_pos.z+=cos(side_angle) * PLAYER_SPEED * t_delta;
 		m_pos.x+=sin(side_angle) * PLAYER_SPEED * t_delta;
 	}
-	if(tt_input_keyboard_key_pressed(TT_KEY_S))
+	if(	tt_input_keyboard_key_pressed(TT_KEY_S) ||
+		tt_input_controller_button_press(TT_CTL_DOWN))
 	{
 		m_pos.z-=cos(side_angle) * PLAYER_SPEED * t_delta;
 		m_pos.x-=sin(side_angle) * PLAYER_SPEED * t_delta;
 	}
-	if(tt_input_keyboard_key_pressed(TT_KEY_D))
+	if(	tt_input_keyboard_key_pressed(TT_KEY_D) ||
+		tt_input_controller_button_press(TT_CTL_RIGHT))
 	{
 		m_pos.z+=cos(side_angle + 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 		m_pos.x+=sin(side_angle + 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 	}
-	if(tt_input_keyboard_key_pressed(TT_KEY_A))
+	if(	tt_input_keyboard_key_pressed(TT_KEY_A) ||
+		tt_input_controller_button_press(TT_CTL_LEFT))
 	{
 		m_pos.z+=cos(side_angle - 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 		m_pos.x+=sin(side_angle - 0.5*tt_PI) * PLAYER_SPEED * t_delta;

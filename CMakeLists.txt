@@ -40,6 +40,8 @@ add_executable(test ${test})
 target_link_libraries(test LINK_PRIVATE T3Vtech)
 file(COPY shaders DESTINATION .)
 file(COPY assets DESTINATION .)
+file(COPY settings DESTINATION .)
+
 
 #creating TTMV (T3Vtech-3 model viewer)
 file(GLOB_RECURSE "ttmv" SRC src/ttmv/*.cpp)

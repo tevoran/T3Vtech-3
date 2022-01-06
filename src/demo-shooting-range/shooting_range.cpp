@@ -10,7 +10,7 @@ sr::sr::sr()
 		1080,
 		true,
 		16,
-		true);
+		false);
 
 	//creating the shooting range world
 	m_range=new world;
