@@ -29,6 +29,12 @@ int main()
 	int i=0;
 	while(!tt_input_keyboard_key_pressed(TT_KEY_ESC))
 	{
+
+	if(tt_input_controller_button_press(TT_CTL_X))
+	{
+		printf("X\n");
+	}
+
 	i++;
 	static long time=0;
 	static long time_new=0;

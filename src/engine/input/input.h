@@ -30,10 +30,12 @@ int tt_input_controller_count();
 void tt_input_controller_add_new(SDL_Event event);
 
 void tt_input_controller_update(SDL_Event event);
-void tt_input_controller_button_update(SDL_Event event);
+void tt_input_controller_button_down_update(SDL_Event event);
+void tt_input_controller_button_up_update(SDL_Event event);
 
 void tt_input_controller_add_mappings();
 
 bool tt_input_controller_button_press(const unsigned char button);
+bool tt_input_controller_button_down(const unsigned char button);
 
 #endif

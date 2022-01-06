@@ -13,6 +13,7 @@ struct controller
 	SDL_JoystickGUID guid;
 
 	bool button_press[NUM_BUTTONS_SUPPORTED_SDL];
+	bool button_down[NUM_BUTTONS_SUPPORTED_SDL];
 } typedef controller;
 
 //controllers
@@ -32,8 +33,13 @@ void tt_input_controller_update(SDL_Event event)
 
 		case SDL_CONTROLLERBUTTONDOWN:
 		{
-			tt_input_controller_button_update(event);
+			tt_input_controller_button_down_update(event);
 			break;
+		}
+
+		case SDL_CONTROLLERBUTTONUP:
+		{
+			tt_input_controller_button_up_update(event);
 		}
 
 		case SDL_CONTROLLERAXISMOTION:
@@ -100,6 +106,7 @@ void tt_input_controller_add_new(SDL_Event event)
 		for(int i=0; i<NUM_BUTTONS_SUPPORTED_SDL; i++)
 		{
 			new_controller->button_press[i]=false;
+			new_controller->button_down[i]=false;
 		}
 
 	}
@@ -114,7 +121,7 @@ void tt_input_controller_add_new(SDL_Event event)
 	}
 }
 
-void tt_input_controller_button_update(SDL_Event event)
+void tt_input_controller_button_down_update(SDL_Event event)
 {
 	//looking for the right controller
 	tt_node *node=c_list_start;
@@ -127,6 +134,28 @@ void tt_input_controller_button_update(SDL_Event event)
 			//the -1 is necessary because we don't save the button invalid value of SDL
 			// https://wiki.libsdl.org/SDL_GameControllerButton
 			c_active->button_press[event.cbutton.button-1]=true;
+			c_active->button_down[event.cbutton.button-1]=true;
+			break;
+		}
+
+		//going to the next controller
+		node=tt_list_next_node(node);
+	}
+}
+
+void tt_input_controller_button_up_update(SDL_Event event)
+{
+	//looking for the right controller
+	tt_node *node=c_list_start;
+	while(node)
+	{
+		controller *c_active=node->data;
+		//getting the right combination of event and controller
+		if(c_active && (event.cbutton.which==c_active->id))
+		{
+			//the -1 is necessary because we don't save the button invalid value of SDL
+			// https://wiki.libsdl.org/SDL_GameControllerButton
+			c_active->button_down[event.cbutton.button-1]=false;
 			break;
 		}
 
@@ -151,6 +180,7 @@ void tt_input_controller_button_reset()
 	}
 }
 
+//a single button press
 bool tt_input_controller_button_press(const unsigned char button)
 {
 	if(c_list_start)
@@ -158,6 +188,21 @@ bool tt_input_controller_button_press(const unsigned char button)
 		tt_node *node=c_list_start;
 		controller *c_active=node->data;
 		return c_active->button_press[button-1];
+	}
+	else
+	{
+		return false;
+	}
+}
+
+//button can be down continuosly
+bool tt_input_controller_button_down(const unsigned char button)
+{
+	if(c_list_start)
+	{
+		tt_node *node=c_list_start;
+		controller *c_active=node->data;
+		return c_active->button_down[button-1];
 	}
 	else
 	{
