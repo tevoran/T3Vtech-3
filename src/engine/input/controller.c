@@ -1,6 +1,7 @@
 #include <tt.h>
 
 #define NUM_BUTTONS_SUPPORTED_SDL 16
+#define AXIS_MAX 32768
 
 extern bool tt_quiet; //this activates/deactivates debug messages
 
@@ -14,6 +15,12 @@ struct controller
 
 	bool button_press[NUM_BUTTONS_SUPPORTED_SDL];
 	bool button_down[NUM_BUTTONS_SUPPORTED_SDL];
+
+	float l_stick_x;
+	float l_stick_y;
+	float r_stick_x;
+	float r_stick_y;
+
 } typedef controller;
 
 //controllers
@@ -44,8 +51,7 @@ void tt_input_controller_update(SDL_Event event)
 
 		case SDL_CONTROLLERAXISMOTION:
 		{
-			//printf("AXIS\n");
-			break;
+			tt_input_controller_axis_update(event);
 		}
 	}
 
@@ -164,6 +170,45 @@ void tt_input_controller_button_up_update(SDL_Event event)
 	}
 }
 
+void tt_input_controller_axis_update(SDL_Event event)
+{
+	//looking for the right controller
+	tt_node *node=c_list_start;
+	while(node)
+	{
+		controller *c_active=node->data;
+
+		//the affected controller
+		if(c_active && (event.caxis.which==c_active->id))
+		{
+			//setting the axis values
+			if(event.caxis.axis==SDL_CONTROLLER_AXIS_LEFTX)
+			{
+				signed int value=event.caxis.value;
+				c_active->l_stick_x=(float)value/AXIS_MAX;
+			}
+			if(event.caxis.axis==SDL_CONTROLLER_AXIS_LEFTY)
+			{
+				signed int value=event.caxis.value;
+				c_active->l_stick_y=(float)value/AXIS_MAX;
+			}
+			if(event.caxis.axis==SDL_CONTROLLER_AXIS_RIGHTX)
+			{
+				signed int value=event.caxis.value;
+				c_active->r_stick_x=(float)value/AXIS_MAX;
+			}
+			if(event.caxis.axis==SDL_CONTROLLER_AXIS_RIGHTY)
+			{
+				signed int value=event.caxis.value;
+				c_active->r_stick_y=(float)value/AXIS_MAX;
+			}
+		}
+
+		//next controller
+		node=tt_list_next_node(node);
+	}
+}
+
 void tt_input_controller_button_reset()
 {
 	//resetting all button arrays
@@ -208,6 +253,34 @@ bool tt_input_controller_button_down(const unsigned char button)
 	{
 		return false;
 	}
+}
+
+void tt_input_controller_axis_state(
+	float *l_stick_x_out,
+	float *l_stick_y_out,
+	float *r_stick_x_out,
+	float *r_stick_y_out)
+{
+	if(c_list_start)
+	{
+		tt_node *node=c_list_start;
+		controller *c_active=node->data;
+		
+		*l_stick_x_out=c_active->l_stick_x;
+		*l_stick_y_out=c_active->l_stick_y;
+
+		*r_stick_x_out=c_active->r_stick_x;
+		*r_stick_y_out=c_active->r_stick_y;		
+	}
+	else
+	{
+		*l_stick_x_out=0;
+		*l_stick_y_out=0;
+
+		*r_stick_x_out=0;
+		*r_stick_y_out=0;			
+	}
+
 }
 
 void tt_input_controller_add_mappings()

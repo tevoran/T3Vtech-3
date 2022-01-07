@@ -59,6 +59,19 @@ void sr::player::update()
 	rot_axis.z=1;
 	tt_3d_object_rotate(m_rocket_launcher, &rot_axis, -side_angle);
 
+	//controller axis movement
+	float l_stick_x=0;
+	float l_stick_y=0;
+	float r_stick_x=0;
+	float r_stick_y=0;
+	tt_input_controller_axis_state(
+		&l_stick_x,
+		&l_stick_y,
+		&r_stick_x,
+		&r_stick_y);
+	side_angle+=0.02*r_stick_x;
+	up_angle+=0.02*r_stick_y;
+
 	//mouse movement
 	int mouse_x_rel=0;
 	int mouse_y_rel=0;
@@ -76,7 +89,7 @@ void sr::player::update()
 		up_angle=-0.5*tt_PI;
 	}
 
-	//keyboard movement
+	//moving around with keys/buttons
 	float t_delta=tt_time_current_frame_s();
 	if(	tt_input_keyboard_key_pressed(TT_KEY_W) ||
 		tt_input_controller_button_down(TT_CTL_UP))
@@ -103,6 +116,14 @@ void sr::player::update()
 		m_pos.x+=sin(side_angle - 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 	}
 
+	//moving around with analog sticks
+	//forward
+	m_pos.z-=cos(side_angle) * PLAYER_SPEED * t_delta * l_stick_y;
+	m_pos.x-=sin(side_angle) * PLAYER_SPEED * t_delta * l_stick_y;
+
+	//sidewards
+	m_pos.z-=cos(side_angle - 0.5 * tt_PI) * PLAYER_SPEED * t_delta * l_stick_x;
+	m_pos.x-=sin(side_angle - 0.5 * tt_PI) * PLAYER_SPEED * t_delta * l_stick_x;
 
 	//jumping
 	static bool in_air=false;

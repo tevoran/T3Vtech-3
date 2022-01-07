@@ -32,10 +32,16 @@ void tt_input_controller_add_new(SDL_Event event);
 void tt_input_controller_update(SDL_Event event);
 void tt_input_controller_button_down_update(SDL_Event event);
 void tt_input_controller_button_up_update(SDL_Event event);
+void tt_input_controller_axis_update(SDL_Event event);
 
 void tt_input_controller_add_mappings();
 
 bool tt_input_controller_button_press(const unsigned char button);
 bool tt_input_controller_button_down(const unsigned char button);
+void tt_input_controller_axis_state(
+	float *l_stick_x_out,
+	float *l_stick_y_out,
+	float *r_stick_x_out,
+	float *r_stick_y_out);
 
 #endif
