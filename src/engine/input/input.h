@@ -28,7 +28,7 @@ bool tt_input_keyboard_key_pressed(const unsigned char key);
 void tt_input_controller_button_reset();
 int tt_input_controller_count();
 void tt_input_controller_add_new(SDL_Event event);
-
+void tt_input_controller_removed(SDL_Event event);
 void tt_input_controller_update(SDL_Event event);
 void tt_input_controller_button_down_update(SDL_Event event);
 void tt_input_controller_button_up_update(SDL_Event event);

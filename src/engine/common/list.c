@@ -80,7 +80,7 @@ void tt_list_remove_node(tt_node **current_node)
 	{
 		node=NULL;
 		free(*current_node);
-		*current_node=NULL;
+		(*current_node)=NULL;
 		return;
 	}
 

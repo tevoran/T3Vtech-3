@@ -24,7 +24,7 @@ struct controller
 } typedef controller;
 
 //controllers
-tt_node *c_list_start; //the begin of the list for the controllers
+tt_node *c_list_start=NULL; //the begin of the list for the controllers
 
 
 
@@ -32,12 +32,6 @@ void tt_input_controller_update(SDL_Event event)
 {
 	switch(event.type)
 	{
-		case SDL_CONTROLLERDEVICEADDED:
-		{
-			tt_input_controller_add_new(event);
-			break;
-		}
-
 		case SDL_CONTROLLERBUTTONDOWN:
 		{
 			tt_input_controller_button_down_update(event);
@@ -47,11 +41,25 @@ void tt_input_controller_update(SDL_Event event)
 		case SDL_CONTROLLERBUTTONUP:
 		{
 			tt_input_controller_button_up_update(event);
+			break;
 		}
 
 		case SDL_CONTROLLERAXISMOTION:
 		{
 			tt_input_controller_axis_update(event);
+			break;
+		}
+
+		case SDL_CONTROLLERDEVICEADDED:
+		{
+			tt_input_controller_add_new(event);
+			break;
+		}
+
+		case SDL_CONTROLLERDEVICEREMOVED:
+		{
+			tt_input_controller_removed(event);
+			break;
 		}
 	}
 
@@ -86,7 +94,10 @@ void tt_input_controller_add_new(SDL_Event event)
 		}
 		SDL_Joystick *tmp_joy= SDL_GameControllerGetJoystick(tmp_controller);
 		int tmp_id=SDL_JoystickInstanceID(tmp_joy);
-		printf("tmp_id %i\n", tmp_id); 
+		if(!tt_quiet)
+		{
+			printf("tmp_id %i\n", tmp_id); 			
+		}
 
 		//saving data into the list
 		controller *new_controller=malloc(sizeof(controller));
@@ -114,6 +125,12 @@ void tt_input_controller_add_new(SDL_Event event)
 			new_controller->button_press[i]=false;
 			new_controller->button_down[i]=false;
 		}
+		//reset axes
+		new_controller->l_stick_x=0;
+		new_controller->l_stick_y=0;
+		new_controller->r_stick_x=0;
+		new_controller->r_stick_y=0;
+
 
 	}
 	else
@@ -126,6 +143,37 @@ void tt_input_controller_add_new(SDL_Event event)
 		printf("current number of controller: %i\n", tt_input_controller_count());
 	}
 }
+
+void tt_input_controller_removed(SDL_Event event)
+{
+	tt_node *node=c_list_start;
+
+	while(node)
+	{
+		controller *c_active=node->data;
+		if(c_active && (c_active->id==event.cdevice.which))
+		{
+			bool is_beginning=false;
+			if(node==c_list_start)
+			{
+				is_beginning=true;
+			}
+			//remove the controller
+			free(c_active);
+			tt_list_remove_node(&node);
+
+			if(is_beginning)
+			{
+				c_list_start=node;
+			}
+			break;
+		}
+
+		//next controller
+		node=tt_list_next_node(node);
+	}
+}
+
 
 void tt_input_controller_button_down_update(SDL_Event event)
 {
