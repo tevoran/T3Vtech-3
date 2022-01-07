@@ -2,7 +2,7 @@
 #include <shooting-range.hpp>
 
 #define PLAYER_SPEED 6.6
-#define PLAYER_JUMP_SPEED 0.42
+#define PLAYER_JUMP_SPEED 0.3
 #define PLAYER_HEIGHT 1.75
 
 sr::player::player()
@@ -187,7 +187,9 @@ void sr::player::update()
 	//shoot rockets
 	static float rocket_delay=0;
 
-	if(tt_input_mouse_button_down(TT_MOUSE_LEFT) && rocket_delay==0)
+	if((tt_input_mouse_button_down(TT_MOUSE_LEFT) ||
+		tt_input_controller_button_press(TT_CTL_RSHOULDER))
+		&& rocket_delay==0)
 	{
 		rocket_delay=0.0;
 		tt_vec3 view_dir=tt_camera_view_direction();
