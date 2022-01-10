@@ -11,6 +11,7 @@ A detailed description of the API can be found [here](doc/api.md)
 
 Currently the engine has the following features:
 
+
 -3D rendering
 	- lighting with gouraud shading
 		-point lights
@@ -26,7 +27,7 @@ Currently the engine has the following features:
 		-translation
 		-rotation
 		-setting field of view
-
+-antialiasing
 -input
 	-mouse
 	-keyboard
