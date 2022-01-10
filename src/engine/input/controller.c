@@ -2,7 +2,7 @@
 
 #define NUM_BUTTONS_SUPPORTED_SDL 16
 #define AXIS_MAX 32768
-#define CTL_AXIS_THRESHOLD 0.05
+#define CTL_AXIS_THRESHOLD 0.05 //mininum axis movement until it is registered
 
 extern bool tt_quiet; //this activates/deactivates debug messages
 
@@ -293,13 +293,24 @@ void tt_input_controller_button_reset()
 }
 
 //a single button press
-bool tt_input_controller_button_press(const unsigned char button)
+bool tt_input_controller_button_press(const int ctl_number, const unsigned char button)
 {
+	int i_ctl=0;
 	if(c_list_start)
 	{
 		tt_node *node=c_list_start;
-		controller *c_active=node->data;
-		return c_active->button_press[button-1];
+		while(node)
+		{
+			i_ctl++;
+			controller *c_active=node->data;
+			if(i_ctl==ctl_number)
+			{
+				return c_active->button_press[button-1];
+			}
+
+			//next controller
+			node=tt_list_next_node(node);			
+		}
 	}
 	else
 	{
@@ -308,13 +319,24 @@ bool tt_input_controller_button_press(const unsigned char button)
 }
 
 //button can be down continuosly
-bool tt_input_controller_button_down(const unsigned char button)
+bool tt_input_controller_button_down(const int ctl_number, const unsigned char button)
 {
+	int i_ctl=0;
 	if(c_list_start)
 	{
 		tt_node *node=c_list_start;
-		controller *c_active=node->data;
-		return c_active->button_down[button-1];
+		while(node)
+		{
+			i_ctl++;
+			controller *c_active=node->data;
+			if(i_ctl==ctl_number)
+			{
+				return c_active->button_down[button-1];
+			}
+
+			//next controller
+			node=tt_list_next_node(node);
+		}
 	}
 	else
 	{
@@ -323,21 +345,34 @@ bool tt_input_controller_button_down(const unsigned char button)
 }
 
 void tt_input_controller_axis_state(
+	const int ctl_number, 
 	float *l_stick_x_out,
 	float *l_stick_y_out,
 	float *r_stick_x_out,
 	float *r_stick_y_out)
 {
+	int i_ctl=0;
 	if(c_list_start)
 	{
 		tt_node *node=c_list_start;
-		controller *c_active=node->data;
-		
-		*l_stick_x_out=c_active->l_stick_x;
-		*l_stick_y_out=c_active->l_stick_y;
+		while(node)
+		{
+			i_ctl++;
+			controller *c_active=node->data;
+			
+			if(i_ctl==ctl_number)
+			{
+				*l_stick_x_out=c_active->l_stick_x;
+				*l_stick_y_out=c_active->l_stick_y;
 
-		*r_stick_x_out=c_active->r_stick_x;
-		*r_stick_y_out=c_active->r_stick_y;		
+				*r_stick_x_out=c_active->r_stick_x;
+				*r_stick_y_out=c_active->r_stick_y;
+				return;			
+			}
+
+			//next controller
+			node=tt_list_next_node(node);
+		}
 	}
 	else
 	{

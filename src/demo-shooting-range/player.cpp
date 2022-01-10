@@ -5,6 +5,8 @@
 #define PLAYER_JUMP_SPEED 0.3
 #define PLAYER_HEIGHT 1.75
 
+#define CTL_NUM 1
+
 sr::player::player()
 {
 	//load rocket launcher
@@ -65,6 +67,7 @@ void sr::player::update()
 	float r_stick_x=0;
 	float r_stick_y=0;
 	tt_input_controller_axis_state(
+		CTL_NUM,
 		&l_stick_x,
 		&l_stick_y,
 		&r_stick_x,
@@ -92,25 +95,25 @@ void sr::player::update()
 	//moving around with keys/buttons
 	float t_delta=tt_time_current_frame_s();
 	if(	tt_input_keyboard_key_pressed(TT_KEY_W) ||
-		tt_input_controller_button_down(TT_CTL_UP))
+		tt_input_controller_button_down(CTL_NUM, TT_CTL_UP))
 	{
 		m_pos.z+=cos(side_angle) * PLAYER_SPEED * t_delta;
 		m_pos.x+=sin(side_angle) * PLAYER_SPEED * t_delta;
 	}
 	if(	tt_input_keyboard_key_pressed(TT_KEY_S) ||
-		tt_input_controller_button_down(TT_CTL_DOWN))
+		tt_input_controller_button_down(CTL_NUM, TT_CTL_DOWN))
 	{
 		m_pos.z-=cos(side_angle) * PLAYER_SPEED * t_delta;
 		m_pos.x-=sin(side_angle) * PLAYER_SPEED * t_delta;
 	}
 	if(	tt_input_keyboard_key_pressed(TT_KEY_D) ||
-		tt_input_controller_button_down(TT_CTL_RIGHT))
+		tt_input_controller_button_down(CTL_NUM, TT_CTL_RIGHT))
 	{
 		m_pos.z+=cos(side_angle + 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 		m_pos.x+=sin(side_angle + 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 	}
 	if(	tt_input_keyboard_key_pressed(TT_KEY_A) ||
-		tt_input_controller_button_down(TT_CTL_LEFT))
+		tt_input_controller_button_down(CTL_NUM, TT_CTL_LEFT))
 	{
 		m_pos.z+=cos(side_angle - 0.5*tt_PI) * PLAYER_SPEED * t_delta;
 		m_pos.x+=sin(side_angle - 0.5*tt_PI) * PLAYER_SPEED * t_delta;
@@ -129,7 +132,7 @@ void sr::player::update()
 	static bool in_air=false;
 	static float y_vel=0;
 	if(	(tt_input_keyboard_key_pressed(TT_KEY_SPACE) ||
-		tt_input_controller_button_down(TT_CTL_A) )
+		tt_input_controller_button_down(CTL_NUM, TT_CTL_A) )
 		&& in_air==false)
 	{
 		in_air=true;
@@ -209,7 +212,7 @@ void sr::player::update()
 	static float rocket_delay=0;
 
 	if((tt_input_mouse_button_down(TT_MOUSE_LEFT) ||
-		tt_input_controller_button_press(TT_CTL_RSHOULDER))
+		tt_input_controller_button_press(CTL_NUM, TT_CTL_RSHOULDER))
 		&& rocket_delay==0)
 	{
 		rocket_delay=0.0;

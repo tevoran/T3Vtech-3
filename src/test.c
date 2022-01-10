@@ -30,7 +30,7 @@ int main()
 	while(!tt_input_keyboard_key_pressed(TT_KEY_ESC))
 	{
 
-	if(tt_input_controller_button_press(TT_CTL_X))
+	if(tt_input_controller_button_press(1, TT_CTL_X))
 	{
 		printf("X\n");
 	}
