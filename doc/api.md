@@ -441,6 +441,9 @@ The most important keys are
 
 It is also possible to use the SDL scancodes, as apparent in the text above. Although it is recommend to use the T3Vtech-3 defines, since they are shorter.
 
+
+### Gamepads/Controllers
+
 ## Time
 
 T3Vtech-3 provides the possibility to get the system time with a nanosecond resolution. Although it is important to note that the actual time resolution may be smaller because of the system's implementation.
