@@ -444,6 +444,59 @@ It is also possible to use the SDL scancodes, as apparent in the text above. Alt
 
 ### Gamepads/Controllers
 
+A lot of different controllers can be used thanks to SDL2. There is also no limit on how many controllers you can use with the engine. The controllers will be automatically registered by the engine when they are plugged in.
+
+It is just necessary to know the number of the controller. This means player 1 has controller 1 and player 2 has controller 2 and so on.
+If controller 1 is plugged out then controller 2 will become controller 1. The highest controller number is always the number of controllers plugged in.
+
+#### Getting Button Presses
+
+There are two different modes for button input. One is checking for a single button press. While the other one checks if a button is still pushed down. The first button press mode will just register that hit once.
+
+The two functions will return true if the desired button is pressed/pushed down and false if not.
+
+```c
+bool tt_input_controller_button_press(const int ctl_number, const unsigned char button);
+bool tt_input_controller_button_down(const int ctl_number, const unsigned char button);
+```
+
+The button keys are
+
+```c
+#define TT_CTL_A SDL_CONTROLLER_BUTTON_A
+#define TT_CTL_B SDL_CONTROLLER_BUTTON_B
+#define TT_CTL_X SDL_CONTROLLER_BUTTON_X
+#define TT_CTL_Y SDL_CONTROLLER_BUTTON_Y
+#define TT_CTL_BACK SDL_CONTROLLER_BUTTON_BACK
+#define TT_CTL_GUIDE SDL_CONTROLLER_BUTTON_GUIDE
+#define TT_CTL_START SDL_CONTROLLER_BUTTON_START
+#define TT_CTL_LSTICK SDL_CONTROLLER_BUTTON_LEFTSTICK
+#define TT_CTL_RSTICK SDL_CONTROLLER_BUTTON_RIGHTSTICK
+#define TT_CTL_LSHOULDER SDL_CONTROLLER_BUTTON_LEFTSHOULDER
+#define TT_CTL_RSHOULDER SDL_CONTROLLER_BUTTON_RIGHTSHOULDER
+#define TT_CTL_UP SDL_CONTROLLER_BUTTON_DPAD_UP
+#define TT_CTL_DOWN SDL_CONTROLLER_BUTTON_DPAD_DOWN
+#define TT_CTL_LEFT SDL_CONTROLLER_BUTTON_DPAD_LEFT
+#define TT_CTL_RIGHT SDL_CONTROLLER_BUTTON_DPAD_RIGHT
+```
+
+They are oriented towards an XBox controller. So they might vary if you use a controller with a different set of buttons.
+
+#### Getting the Axes States
+
+Many controllers don't just have buttons but axes as well. It is possible to get the current state of the controller's axes by calling
+
+```c
+void tt_input_controller_axis_state(
+	const int ctl_number, 
+	float *l_stick_x_out,
+	float *l_stick_y_out,
+	float *r_stick_x_out,
+	float *r_stick_y_out);
+```
+
+The values for each stick's axes are between -1.0f and 1.0f with 0.0f being the mid.
+
 ## Time
 
 T3Vtech-3 provides the possibility to get the system time with a nanosecond resolution. Although it is important to note that the actual time resolution may be smaller because of the system's implementation.
