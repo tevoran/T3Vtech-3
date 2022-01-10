@@ -2,6 +2,7 @@
 
 #define NUM_BUTTONS_SUPPORTED_SDL 16
 #define AXIS_MAX 32768
+#define CTL_AXIS_THRESHOLD 0.05
 
 extern bool tt_quiet; //this activates/deactivates debug messages
 
@@ -252,6 +253,24 @@ void tt_input_controller_axis_update(SDL_Event event)
 			}
 		}
 
+		//if axis movement is below a thresholed then set it to zero
+		//some controllers are not properly calibrated (anymore)
+		if(tt_math_f_abs(c_active->l_stick_x) < CTL_AXIS_THRESHOLD)
+		{
+			c_active->l_stick_x=0;
+		}
+		if(tt_math_f_abs(c_active->l_stick_y) < CTL_AXIS_THRESHOLD)
+		{
+			c_active->l_stick_y=0;
+		}
+		if(tt_math_f_abs(c_active->r_stick_x) < CTL_AXIS_THRESHOLD)
+		{
+			c_active->r_stick_x=0;
+		}
+		if(tt_math_f_abs(c_active->r_stick_y) < CTL_AXIS_THRESHOLD)
+		{
+			c_active->r_stick_y=0;
+		}
 		//next controller
 		node=tt_list_next_node(node);
 	}

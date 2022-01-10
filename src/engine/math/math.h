@@ -5,5 +5,6 @@
 
 #include "vector.h"
 #include "matrix.h"
+#include "float.h"
 
 #endif
