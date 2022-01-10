@@ -8,16 +8,16 @@
 [X] document ambient lighting
 [ ] forcing the engine to stay at a certain framerate if possible
 [ ] input
-	[X] mouse
-	[X] keyboard
-	[ ] gamepad
+	[ ] mouse press/pushed down
+	[ ] keyboard press/pushed down
 [ ] light IDs rework to remove the stack necessity
+[ ] adding Lua support // https://www.lua.org/pil/24.html
 
 # TTMV (T3Vtech-3 Model Viewer)
 [X] displaying a model via CLI
 [X] setting the distance for model according to its size
 
 # demo (shooting range)
-[ ] gamepad
+[X] gamepad
 
 # TTLE (level editor)
