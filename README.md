@@ -3,7 +3,34 @@
 ![alt explosion_in_engine](screenshots/explosion.png "explosion_in_engine")
 
 
-A 3D game engine in C.
+T3Vtech-3 is a 3D game engine that offers a C API to be easily usable in C and C++. 
+
+A detailed description of the API can be found [Link here](doc/api.md)
+
+## Features
+
+Currently the engine has the following features:
+
+-3D rendering
+	- lighting with gouraud shading
+		-point lights
+		-ambient lighting
+		-directional lights
+	- OBJ model loading
+	- textures from BMP, JPG, PNG
+	- transformations
+		-translations
+		-scaling
+		-rotation with quaternions
+	- camera system
+		-translation
+		-rotation
+		-setting field of view
+
+-input
+	-mouse
+	-keyboard
+	-gamepads
 
 ## Dependencies
 
