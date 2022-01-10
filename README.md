@@ -5,7 +5,7 @@
 
 T3Vtech-3 is a 3D game engine that offers a C API to be easily usable in C and C++. 
 
-A detailed description of the API can be found [Link here](doc/api.md)
+A detailed description of the API can be found [here](doc/api.md)
 
 ## Features
 
