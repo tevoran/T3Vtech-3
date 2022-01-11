@@ -375,6 +375,24 @@ It is also possible to get the absolute mouse location inside the window of the 
 void tt_input_mouse_location(int *x, int *y);
 ```
 
+#### Mouse Buttons
+
+There are two methods of getting information about mouse button presses. The two methods are presses which are registered only once and checks if a button is pushed down continuously. 
+
+```c
+bool tt_input_mouse_button_press(const unsigned char button); //single mouse click
+bool tt_input_mouse_button_down(const unsigned char button); //continuously pushing down a mouse button
+```
+
+The key map for mouse buttons is a follow
+```c
+#define TT_MOUSE_LEFT 0
+#define TT_MOUSE_MIDDLE 1
+#define TT_MOUSE_RIGHT 2
+#define TT_MOUSE_X1 3
+#define TT_MOUSE_X2 4
+```
+
 ### Keyboard
 
 The keyboard is a very important method for game input. It is possible to check if a certain key is currently pressed in this this very frame (a key press is only registered once) or pushed down for a longer period of time.

@@ -211,7 +211,7 @@ void sr::player::update()
 	//shoot rockets
 	static float rocket_delay=0;
 
-	if((tt_input_mouse_button_down(TT_MOUSE_LEFT) ||
+	if((tt_input_mouse_button_press(TT_MOUSE_LEFT) ||
 		tt_input_controller_button_press(CTL_NUM, TT_CTL_RSHOULDER))
 		&& rocket_delay==0)
 	{

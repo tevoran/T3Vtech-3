@@ -169,8 +169,10 @@ bool tt_init(
 		glEnable(GL_MULTISAMPLE); 
 	}
 
+	//initializing input devices
 	//preparing keyboard to avoid nullptr dereferencing
 	tt_input_keyboard_update();
+	tt_input_mouse_init();
 	tt_input_controller_add_mappings();
 
 	return true;

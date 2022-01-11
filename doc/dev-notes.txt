@@ -8,7 +8,7 @@
 [X] document ambient lighting
 [ ] forcing the engine to stay at a certain framerate if possible
 [ ] input
-	[ ] mouse press/pushed down
+	[X] mouse press/pushed down
 	[X] keyboard press/pushed down
 [ ] light IDs rework to remove the stack necessity
 [ ] adding Lua support // https://www.lua.org/pil/24.html
