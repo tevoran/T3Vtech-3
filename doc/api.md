@@ -377,13 +377,13 @@ void tt_input_mouse_location(int *x, int *y);
 
 ### Keyboard
 
-The keyboard is a very important method for game input. There it is possible to check if a certain key is currently pressed.
+The keyboard is a very important method for game input. It is possible to check if a certain key is currently pressed in this this very frame (a key press is only registered once) or pushed down for a longer period of time.
 
 ```c
-bool tt_input_keyboard_key_pressed(const unsigned char key);
+bool tt_input_keyboard_key_down(const unsigned char key); //longer period
 ```
 
-tt_input_keyboard_key_pressed() returns true if the desired key is currently pressed in the current frame. 
+tt_input_keyboard_key_down() returns true if the desired key is currently pushed in the current frame. 
 
 The key value are defines like TT_KEY_ESC for the escape key.
 
@@ -441,6 +441,11 @@ The most important keys are
 
 It is also possible to use the SDL scancodes, as apparent in the text above. Although it is recommend to use the T3Vtech-3 defines, since they are shorter.
 
+Like mentioned above it can be registered if there is a key press, which is only registered for a single frame.
+
+```c
+bool tt_input_keyboard_key_press(const unsigned char key);
+```
 
 ### Gamepads/Controllers
 

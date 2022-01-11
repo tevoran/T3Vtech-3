@@ -22,7 +22,9 @@ void tt_input_mouse_location(int *x, int *y);
 
 //keyboard
 void tt_input_keyboard_update();
-bool tt_input_keyboard_key_pressed(const unsigned char key);
+void tt_input_keyboard_press_update(SDL_Event event);
+bool tt_input_keyboard_key_down(const unsigned char key);
+bool tt_input_keyboard_key_press(const unsigned char key);
 
 //controller
 void tt_input_controller_button_reset();

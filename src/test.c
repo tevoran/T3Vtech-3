@@ -27,7 +27,7 @@ int main()
 	//glDisable(GL_MULTISAMPLE); 
 
 	int i=0;
-	while(!tt_input_keyboard_key_pressed(TT_KEY_ESC))
+	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
 
 	if(tt_input_controller_button_press(1, TT_CTL_X))
