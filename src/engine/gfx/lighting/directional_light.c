@@ -17,9 +17,6 @@ struct ubo_layout
 	tt_vec4 strength[NUM_MAX_DIR_LIGHTS];
 }typedef ubo_layout;
 
-extern tt_vec3 tt_gfx_light_direction; //the current direction of the light
-extern tt_vec3 tt_gfx_light_direction_color; //the current color of the directional light
-extern float tt_gfx_light_direction_strength; //directional light strength
 
 extern GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 
@@ -66,7 +63,7 @@ void tt_gfx_directional_light_cleanup()
 
 //max number of directional lights is currently 8
 //the same value can be found in the std_3d_vertex shader
-int tt_directional_light_new()
+tt_dir_light tt_directional_light_new()
 {
 	layout.num_active.x++;
 	if(layout.num_active.x>NUM_MAX_DIR_LIGHTS)
@@ -80,7 +77,7 @@ int tt_directional_light_new()
 	return layout.num_active.x;
 }
 
-void tt_directional_light_delete(int light_id)
+void tt_directional_light_delete(tt_dir_light light_id)
 {
 	layout.num_active.x=light_id-1;
 	if(layout.num_active.x<=0)
@@ -92,7 +89,7 @@ void tt_directional_light_delete(int light_id)
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void tt_directional_light_set_direction(int light_id, tt_vec3 *direction)
+void tt_directional_light_set_direction(tt_dir_light light_id, tt_vec3 *direction)
 {
 	layout.direction[light_id-1].x=direction->x;
 	layout.direction[light_id-1].y=direction->y;
@@ -102,7 +99,7 @@ void tt_directional_light_set_direction(int light_id, tt_vec3 *direction)
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void tt_directional_light_set_strength(int light_id, float strength)
+void tt_directional_light_set_strength(tt_dir_light light_id, float strength)
 {
 	layout.strength[light_id-1].x=strength;
 	layout.strength[light_id-1].y=strength;
@@ -113,7 +110,7 @@ void tt_directional_light_set_strength(int light_id, float strength)
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void tt_directional_light_set_color(int light_id, tt_vec3 *color)
+void tt_directional_light_set_color(tt_dir_light light_id, tt_vec3 *color)
 {
 	layout.color[light_id-1].x=color->x;
 	layout.color[light_id-1].y=color->y;

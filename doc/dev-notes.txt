@@ -7,7 +7,7 @@
 [ ] 2D stuff
 [X] document ambient lighting
 [ ] forcing the engine to stay at a certain framerate if possible
-[ ] input
+[X] input
 	[X] mouse press/pushed down
 	[X] keyboard press/pushed down
 [ ] light IDs rework to remove the stack necessity
