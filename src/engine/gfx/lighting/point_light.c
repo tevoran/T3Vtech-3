@@ -51,7 +51,7 @@ void tt_gfx_point_light_setup()
 
 	for(int i=0; i<NUM_MAX_POINT_LIGHTS; i++)
 	{
-		remap[i]=NO_LIGHT;
+		remap[i]=TT_NO_LIGHT;
 	}
 }
 
@@ -66,15 +66,15 @@ tt_point_light tt_point_light_new()
 	if(ubo.num_active.x>NUM_MAX_POINT_LIGHTS)
 	{
 		ubo.num_active.x=NUM_MAX_POINT_LIGHTS;
-		return 0;
+		return TT_NO_LIGHT;
 	}
 
-	int out=NO_LIGHT;
+	int out=TT_NO_LIGHT;
 	for(int i=0; i<NUM_MAX_POINT_LIGHTS; i++)
 	{
 			printf("remap[%i]= %i\n", i, remap[i]);
 
-		if(remap[i]==NO_LIGHT)
+		if(remap[i]==TT_NO_LIGHT)
 		{
 			remap[i]=ubo.num_active.x;
 			printf("remap[%i]= %i\n", i, remap[i]);
@@ -93,11 +93,16 @@ tt_point_light tt_point_light_new()
 
 void tt_point_light_delete(tt_point_light light_id)
 {
+	if(light_id==TT_NO_LIGHT)
+	{
+		return;
+	}
+
 	ubo.num_active.x--;
 	if(ubo.num_active.x<0)
 	{
 		ubo.num_active.x=0;
-		return ;
+		return;
 	}
 
 	int gpu_id=remap[light_id]-1;
@@ -128,7 +133,7 @@ void tt_point_light_delete(tt_point_light light_id)
 	ubo.strength[i].w=1.0;
 
 	remap[i]=remap[light_id];
-	remap[light_id]=NO_LIGHT;
+	remap[light_id]=TT_NO_LIGHT;
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
@@ -138,6 +143,11 @@ void tt_point_light_delete(tt_point_light light_id)
 
 void tt_point_light_set_strength(tt_point_light light_id, float strength)
 {
+	if(light_id==TT_NO_LIGHT)
+	{
+		return; 
+	}
+
 	int gpu_id=remap[light_id];
 	if(!gpu_id)
 	{
@@ -155,6 +165,11 @@ void tt_point_light_set_strength(tt_point_light light_id, float strength)
 
 void tt_point_light_set_color(tt_point_light light_id, tt_vec3 *color)
 {
+	if(light_id==TT_NO_LIGHT)
+	{
+		return; 
+	}
+
 	int gpu_id=remap[light_id];
 	if(!gpu_id)
 	{
@@ -171,6 +186,11 @@ void tt_point_light_set_color(tt_point_light light_id, tt_vec3 *color)
 
 void tt_point_light_set_position(tt_point_light light_id, tt_vec3 *position)
 {
+	if(light_id==TT_NO_LIGHT)
+	{
+		return; 
+	}
+
 	int gpu_id=remap[light_id];
 	if(!gpu_id)
 	{

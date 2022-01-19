@@ -1,7 +1,7 @@
 #ifndef TT_GFX_LIGHTING_H
 #define TT_GFX_LIGHTING_H
 
-#define NO_LIGHT 0xFFFFFFFF
+#define TT_NO_LIGHT 0xFFFFFFFF
 
 #include <tt.h>
 
