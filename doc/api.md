@@ -81,6 +81,31 @@ If necessary it is possible to get the current viewing direction of the camera b
 tt_vec3 tt_camera_view_direction();
 ```
 
+An example of setting up a FPS camera.
+
+```c
+//while initializing the engine/level/...
+tt_input_mouse_set_relative_mode(true);
+
+//inside the main loop
+static float roll_radians=0;
+static float pitch_radians=0;
+int dx, dy;
+float time=tt_time_current_frame_s();
+tt_input_mouse_relative_motion(&dx, &dy);
+roll_radians+=(float)dy * time * 0.02;
+pitch_radians+=(float)dx * time * 0.02;
+tt_camera_fps(roll_radians, pitch_radians);
+```
+
+#### Using a FPS Camera
+
+T3Vtech-3 natively supports FPS style cameras. It is simply necessary to give the engine the current pitch and roll in radians. Usually you want to get these by using the mouse input and adding up the pitch and roll in static float variables.
+
+```c
+void tt_camera_fps(float roll_radians, float pitch_radians);
+```
+
 ### 3D Objects
 
 A 3D object has the following life cycle. At first you need to create an empty 3D object which you have to destroy at the end of its life. While it is alive it is usually part of the rendering process, where it gets rendered each frame if it's visible. Also it is possible to modify it during its life cycle. This kind of modification is necessary to give the 3D object a specific shape or apply transformations like rotations to it.
