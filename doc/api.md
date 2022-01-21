@@ -263,13 +263,13 @@ A directional light is a light that is similar to the sun. It appears to be infi
 A new directional light can be created by calling 
 
 ```c
-int tt_directional_light_new();
+tt_dir_light tt_directional_light_new();
 ```
 
 The function returns a light_id. It is used to change attributes of that particular directional light. It is also used to delete light sources.
 
 ```c
-void tt_directional_light_delete(int light_id);
+void tt_directional_light_delete(tt_dir_light light_id);
 ```
 
 It is important to note that the directional light sources are ordered in a stack like manner. Your most important light should be the first one that you create. If you delete your latest light then only this one gets deleted. But if you delete your second latest light then the latest AND the second latest light will be deleted.
@@ -281,7 +281,7 @@ It is possible to change the individual lights parameters. These parameters are 
 The direction is set by calling
 
 ```c
-void tt_directional_light_set_direction(int light_id, tt_vec3 *direction);
+void tt_directional_light_set_direction(tt_dir_light light_id, tt_vec3 *direction);
 ```
 
 The light_id is the return value of a light created by tt_directional_light_new(). And direction is a tt_vec3 vector. The struct contains x, y and z members.
@@ -289,7 +289,7 @@ The light_id is the return value of a light created by tt_directional_light_new(
 The strength is changed by calling
 
 ```c
-void tt_directional_light_set_strength(int light_id, float strength);
+void tt_directional_light_set_strength(tt_dir_light light_id, float strength);
 ```
 
 The strength is a floating point value. In most cases you want to have the value between 0.0f and 1.0f while 0.0f is basically a light that affects nothing.
@@ -297,7 +297,7 @@ The strength is a floating point value. In most cases you want to have the value
 The last changeable property of a directional light is the color.
 
 ```c
-void tt_directional_light_set_color(int light_id, tt_vec3 *color);
+void tt_directional_light_set_color(tt_dir_light light_id, tt_vec3 *color);
 ```
 
 The color values are stored in a tt_vec3 vector which is a struct containg the members x, y and z. X gets interpreted as r, y as g, z as b values. The individual color values have to be between 0.0f and 1.0f.
@@ -308,7 +308,7 @@ T3Vtech-3 allows currently up to 128 point lights at a time. They act like the d
 It is possible to create a new point light with 
 
 ```c
-int tt_point_light_new();
+tt_point_light tt_point_light_new();
 ```
 
 This adds a new point light at the end and returns the light_id as an integer. 
@@ -316,7 +316,7 @@ This adds a new point light at the end and returns the light_id as an integer.
 One or more lights can be deleted by calling
 
 ```c
-void tt_point_light_delete(int light_id);
+void tt_point_light_delete(tt_point_light light_id);
 ```
 
 This will delete all the point lights that have been created since the light that has the light_id. This can be used to delete all point lights by deleting the first one.
@@ -326,13 +326,13 @@ This will delete all the point lights that have been created since the light tha
 Point lights have several different parameters than can be changed. The intensity or strength of the point light can be set by calling
 
 ```c
-void tt_point_light_set_strength(int light_id, float strength);
+void tt_point_light_set_strength(tt_point_light light_id, float strength);
 ```
 
 The color of the point light can be set by calling
 
 ```c
-void tt_point_light_set_color(int light_id, tt_vec3 *color);
+void tt_point_light_set_color(tt_point_light light_id, tt_vec3 *color);
 ```
 
 Colors are represented by a vector of three floats. Each basic color (red, green and blue) gets represented with a float between 0.0f and 1.0f.
@@ -340,7 +340,7 @@ Colors are represented by a vector of three floats. Each basic color (red, green
 Since a point light has a location unlike other kinds of lighting, the position can be set by calling
 
 ```c
-void tt_point_light_set_position(int light_id, tt_vec3 *position);
+void tt_point_light_set_position(tt_point_light light_id, tt_vec3 *position);
 ```
 
 ## Handling of Input

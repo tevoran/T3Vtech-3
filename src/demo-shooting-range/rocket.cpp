@@ -49,7 +49,6 @@ sr::rocket::rocket(
 
 sr::rocket::~rocket()
 {
-	//std::cout << "dod\n";
 	tt_3d_object_delete(&m_rocket);
 	tt_3d_object_delete(&m_ex_obj);
 }

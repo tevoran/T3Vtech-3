@@ -13,6 +13,7 @@ namespace sr
 		tt_vec3 m_pos;
 		tt_vec3 m_dir;
 
+		//explosion effects
 		bool m_exploded=false;
 		tt_vec3 m_scale={0.0,0.0,0.0};
 	public:
