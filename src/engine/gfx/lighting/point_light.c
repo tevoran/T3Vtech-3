@@ -72,12 +72,9 @@ tt_point_light tt_point_light_new()
 	int out=TT_NO_LIGHT;
 	for(int i=0; i<NUM_MAX_POINT_LIGHTS; i++)
 	{
-			printf("remap[%i]= %i\n", i, remap[i]);
-
 		if(remap[i]==TT_NO_LIGHT)
 		{
 			remap[i]=ubo.num_active.x;
-			printf("remap[%i]= %i\n", i, remap[i]);
 			out=i;
 			break;
 		}

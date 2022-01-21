@@ -22,6 +22,8 @@ extern GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional lig
 
 ubo_layout layout;
 
+tt_dir_light dir_light_remap[NUM_MAX_DIR_LIGHTS];
+
 void tt_gfx_directional_light_setup()
 {
 	glGenBuffers(1, &tt_gfx_ubo_dir_light);
@@ -43,7 +45,7 @@ void tt_gfx_directional_light_setup()
 		layout.color[i].x=1; //red
 		layout.color[i].y=1; //green
 		layout.color[i].z=1; //blue
-		layout.direction[i].w=0;
+		layout.color[i].w=0;
 	}
 	for(int i=0; i<NUM_MAX_DIR_LIGHTS; i++)
 	{
@@ -54,6 +56,11 @@ void tt_gfx_directional_light_setup()
 	}
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+	for(int i=0; i<NUM_MAX_DIR_LIGHTS; i++)
+	{
+		dir_light_remap[i]=TT_NO_LIGHT;
+	}
 }
 
 void tt_gfx_directional_light_cleanup()
@@ -71,19 +78,69 @@ tt_dir_light tt_directional_light_new()
 		layout.num_active.x=NUM_MAX_DIR_LIGHTS;
 	}
 
+	tt_dir_light out=TT_NO_LIGHT;
+	for(int i=0; i<NUM_MAX_DIR_LIGHTS; i++)
+	{
+		if(dir_light_remap[i]==TT_NO_LIGHT)
+		{
+			dir_light_remap[i]=layout.num_active.x;
+			out=i;
+			break;
+		}
+	}
+
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);	
-	return layout.num_active.x;
+	return out;
 }
 
 void tt_directional_light_delete(tt_dir_light light_id)
 {
-	layout.num_active.x=light_id-1;
+	if(light_id==TT_NO_LIGHT)
+	{
+		return;
+	}
+
+	layout.num_active.x--;
 	if(layout.num_active.x<=0)
 	{
 		layout.num_active.x=0;
 	}
+
+	int gpu_id=dir_light_remap[light_id]-1;
+
+	//move last entry to the deleted entry
+	int i=layout.num_active.x;
+
+	layout.direction[gpu_id].x=layout.direction[i].x;
+	layout.direction[gpu_id].y=layout.direction[i].y;
+	layout.direction[gpu_id].z=layout.direction[i].z;
+	layout.direction[gpu_id].w=layout.direction[i].w;
+	layout.color[gpu_id].x=layout.color[i].x;
+	layout.color[gpu_id].y=layout.color[i].y;
+	layout.color[gpu_id].z=layout.color[i].z;
+	layout.strength[gpu_id].x=layout.strength[i].x;
+	layout.strength[gpu_id].y=layout.strength[i].y;
+	layout.strength[gpu_id].z=layout.strength[i].z;
+	layout.strength[gpu_id].w=layout.strength[i].w;
+
+	//delete last entry
+	layout.direction[i].x=0;
+	layout.direction[i].y=0;
+	layout.direction[i].z=1.0;
+	layout.direction[i].w=0;	
+	layout.color[i].x=1.0;
+	layout.color[i].y=1.0;
+	layout.color[i].z=1.0;
+	layout.strength[i].x=1.0;
+	layout.strength[i].y=1.0;
+	layout.strength[i].z=1.0;
+	layout.strength[i].w=1.0;
+
+	dir_light_remap[i]=dir_light_remap[light_id];
+	dir_light_remap[light_id]=TT_NO_LIGHT;
+
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -91,9 +148,20 @@ void tt_directional_light_delete(tt_dir_light light_id)
 
 void tt_directional_light_set_direction(tt_dir_light light_id, tt_vec3 *direction)
 {
-	layout.direction[light_id-1].x=direction->x;
-	layout.direction[light_id-1].y=direction->y;
-	layout.direction[light_id-1].z=direction->z;
+	if(light_id==TT_NO_LIGHT)
+	{
+		return;
+	}
+
+	int gpu_id=dir_light_remap[light_id];
+	if(!gpu_id)
+	{
+		return;
+	}
+	gpu_id--;
+	layout.direction[gpu_id].x=direction->x;
+	layout.direction[gpu_id].y=direction->y;
+	layout.direction[gpu_id].z=direction->z;
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -101,10 +169,21 @@ void tt_directional_light_set_direction(tt_dir_light light_id, tt_vec3 *directio
 
 void tt_directional_light_set_strength(tt_dir_light light_id, float strength)
 {
-	layout.strength[light_id-1].x=strength;
-	layout.strength[light_id-1].y=strength;
-	layout.strength[light_id-1].z=strength;
-	layout.strength[light_id-1].w=strength;
+	if(light_id==TT_NO_LIGHT)
+	{
+		return;
+	}
+
+	int gpu_id=dir_light_remap[light_id];
+	if(!gpu_id)
+	{
+		return;
+	}
+	gpu_id--;
+	layout.strength[gpu_id].x=strength;
+	layout.strength[gpu_id].y=strength;
+	layout.strength[gpu_id].z=strength;
+	layout.strength[gpu_id].w=strength;
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
@@ -112,9 +191,20 @@ void tt_directional_light_set_strength(tt_dir_light light_id, float strength)
 
 void tt_directional_light_set_color(tt_dir_light light_id, tt_vec3 *color)
 {
-	layout.color[light_id-1].x=color->x;
-	layout.color[light_id-1].y=color->y;
-	layout.color[light_id-1].z=color->z;
+	if(light_id==TT_NO_LIGHT)
+	{
+		return;
+	}
+
+	int gpu_id=dir_light_remap[light_id];
+	if(!gpu_id)
+	{
+		return;
+	}
+	gpu_id--;
+	layout.color[gpu_id].x=color->x;
+	layout.color[gpu_id].y=color->y;
+	layout.color[gpu_id].z=color->z;
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);

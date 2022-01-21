@@ -18,7 +18,7 @@ namespace ttmv
 		tt_3d_texture *tex=NULL;
 
 		//settings
-		float rot_speed=0.02; //radians per frame
+		float rot_speed=0.003; //radians per frame
 
 	public:
 		sys(int argc, char *argv[]);

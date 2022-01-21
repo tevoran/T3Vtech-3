@@ -15,63 +15,43 @@ int main()
 
 
 
-	tt_vec3 pos_point_light={0,0,0};
-	tt_vec3 color_point_light={1.0,0.0,0.0};
-	tt_point_light l1=tt_point_light_new();
-	tt_point_light l2=tt_point_light_new();
-	tt_point_light l3=tt_point_light_new();
-	tt_point_light_set_color(l1, &color_point_light);
-	color_point_light.x=0;
-	color_point_light.y=1.0;
-	tt_point_light_set_color(l2, &color_point_light);
-	color_point_light.y=0;
-	color_point_light.z=1.0;
-	tt_point_light_set_color(l3, &color_point_light);
+	tt_vec3 dir_light_dir={-1,0,0};
+	tt_vec3 color_dir_light={1.0,0.0,0.0};
+	tt_dir_light l1=tt_directional_light_new();
+	tt_directional_light_set_color(l1, &color_dir_light);
+	tt_directional_light_set_strength(l1, 1);
+	tt_directional_light_set_direction(l1, &dir_light_dir);
 
-	tt_point_light_set_strength(l1, 40);
-	tt_point_light_set_strength(l2, 40);
-	tt_point_light_set_strength(l3, 40);
+	tt_dir_light l2=tt_directional_light_new();
+	tt_vec3 dir_light_dir_2={1,0,0};
+	tt_vec3 color_dir_light_2={0.0,0.0,1.0};
+	tt_directional_light_set_color(l2, &color_dir_light_2);
+	tt_directional_light_set_strength(l2, 1);
+	tt_directional_light_set_direction(l2, &dir_light_dir_2);
+
+	tt_dir_light l3=tt_directional_light_new();
+	tt_vec3 dir_light_dir_3={0,-1,0};
+	tt_vec3 color_dir_light_3={0.0,1.0,0.0};
+	tt_directional_light_set_color(l3, &color_dir_light_3);
+	tt_directional_light_set_strength(l3, 1);
+	tt_directional_light_set_direction(l3, &dir_light_dir_3);
 
 	int i=0;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
 	i++;
-	static long time=0;
-	static long time_new=0;
 
 	tt_vec3 rot_axis={1,1,0};
 	if(tt_input_mouse_button_down(TT_MOUSE_LEFT))
 	{
-		tt_3d_object_rotate(cube, &rot_axis, 0.02);
+		tt_3d_object_rotate(cube, &rot_axis, 0.01);
 	}
 
-		tt_point_light_delete(l1);
-		l1=tt_point_light_new();
-		printf("%i %i %i\n", l1, l2, l3);
-		color_point_light.x=1.0;
-		color_point_light.y=0.0;
-		color_point_light.z=0.0;
-		tt_point_light_set_color(l1, &color_point_light);
-			pos_point_light.y=0;
-			pos_point_light.x=40*sin((float)i/100 + 0.0*tt_PI);
-			pos_point_light.z=40*cos((float)i/100 + 0.0*tt_PI);
-		tt_point_light_set_position(l1, &pos_point_light);
-		tt_point_light_set_strength(l1, 40);
-			pos_point_light.y=0;
-			pos_point_light.x=40*sin((float)i/100 + 1.0*tt_PI);
-			pos_point_light.z=40*cos((float)i/100 + 1.0*tt_PI);
-		tt_point_light_set_position(l2, &pos_point_light);
-			pos_point_light.y=0;
-			pos_point_light.x=40*sin((float)i/100 + 1.5*tt_PI);
-			pos_point_light.z=40*cos((float)i/100 + 1.5*tt_PI);
-		tt_point_light_set_position(l3, &pos_point_light);
-
-		tt_ambient_light_set_strength(0.0);
-		tt_vec3 amb_color={
-			sin((float)i/30),
-			sin((float)i/135),
-			sin((float)i/354)};
-		tt_ambient_light_set_color(&amb_color);
+		tt_directional_light_delete(l2);
+		l2=tt_directional_light_new();
+		tt_directional_light_set_color(l2, &color_dir_light_2);
+		tt_directional_light_set_strength(l2, 1);
+		tt_directional_light_set_direction(l2, &dir_light_dir_2);
 
 		tt_new_frame();
 	}
