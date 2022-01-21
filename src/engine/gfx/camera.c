@@ -41,3 +41,13 @@ tt_vec3 tt_camera_view_direction()
 	};
 	return out;
 }
+
+void tt_camera_fps(float roll_radians, float pitch_radians)
+{
+	tt_math_mat4_make_identity_matrix(&tt_camera_rotation);
+	tt_vec3 rot_axis={0,1,0};
+	tt_camera_rotate(&rot_axis, pitch_radians);
+	rot_axis.y=0;
+	rot_axis.x=1;
+	tt_camera_rotate(&rot_axis, roll_radians);
+}

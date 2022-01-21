@@ -36,10 +36,24 @@ int main()
 	tt_directional_light_set_strength(l3, 1);
 	tt_directional_light_set_direction(l3, &dir_light_dir_3);
 
+	//fps cam test
+	tt_input_mouse_set_relative_mode(true);
+
 	int i=0;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
 	i++;
+
+	//fps cam test
+	static float roll_radians=0;
+	static float pitch_radians=0;
+
+	int dx, dy;
+	float time=tt_time_current_frame_s();
+	tt_input_mouse_relative_motion(&dx, &dy);
+	roll_radians+=(float)dy * time * 0.02;
+	pitch_radians+=(float)dx * time * 0.02;
+	tt_camera_fps(roll_radians, pitch_radians);
 
 	tt_vec3 rot_axis={1,1,0};
 	if(tt_input_mouse_button_down(TT_MOUSE_LEFT))
