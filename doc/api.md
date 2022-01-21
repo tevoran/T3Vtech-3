@@ -81,6 +81,14 @@ If necessary it is possible to get the current viewing direction of the camera b
 tt_vec3 tt_camera_view_direction();
 ```
 
+#### Using a FPS Camera
+
+T3Vtech-3 natively supports FPS style cameras. It is simply necessary to give the engine the current pitch and roll in radians. Usually you want to get these by using the mouse input and adding up the pitch and roll in static float variables.
+
+```c
+void tt_camera_fps(float roll_radians, float pitch_radians);
+```
+
 An example of setting up a FPS camera.
 
 ```c
@@ -96,14 +104,6 @@ tt_input_mouse_relative_motion(&dx, &dy);
 roll_radians+=(float)dy * time * 0.02;
 pitch_radians+=(float)dx * time * 0.02;
 tt_camera_fps(roll_radians, pitch_radians);
-```
-
-#### Using a FPS Camera
-
-T3Vtech-3 natively supports FPS style cameras. It is simply necessary to give the engine the current pitch and roll in radians. Usually you want to get these by using the mouse input and adding up the pitch and roll in static float variables.
-
-```c
-void tt_camera_fps(float roll_radians, float pitch_radians);
 ```
 
 ### 3D Objects
