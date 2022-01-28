@@ -58,3 +58,9 @@ GLuint tt_gfx_3d_quad_ibo;
 GLuint tt_gfx_3d_cube_vao;
 GLuint tt_gfx_3d_cube_vbo;
 GLuint tt_gfx_3d_cube_ibo;
+
+//2D
+//sprite
+GLuint tt_gfx_2d_sprite_vao;
+GLuint tt_gfx_2d_sprite_vbo;
+GLuint tt_gfx_2d_sprite_ibo;

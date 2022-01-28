@@ -39,6 +39,12 @@ int main()
 	//fps cam test
 	tt_input_mouse_set_relative_mode(true);
 
+	//sprite test
+	tt_2d_object *sprite=tt_2d_object_new();
+	tt_2d_object_make_sprite(sprite);
+
+
+
 	int i=0;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{

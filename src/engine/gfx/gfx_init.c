@@ -60,6 +60,7 @@ bool tt_gfx_init(const bool quiet)
 	//preparing the primitives to be able to create them faster on the fly
 	tt_gfx_prepare_quad();
 	tt_gfx_prepare_cube();
+	tt_gfx_prepare_sprite();
 	tt_gfx_3d_default_tex_init();
 
 	tt_gfx_camera_setup();

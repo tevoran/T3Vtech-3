@@ -8,6 +8,7 @@
 #include "lighting/lighting.h"
 #include "objects/3d/textures/textures.h"
 #include "objects/3d/objects/objects.h"
+#include "objects/2d/objects/objects.h"
 
 bool tt_gfx_init(const bool quiet); //returns true if successfull
 

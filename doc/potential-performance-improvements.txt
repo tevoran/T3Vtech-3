@@ -1,0 +1,5 @@
+Renderer:
+	-reworking VAOs (only once per mesh and not once per mesh and frame)
+
+Memory:
+	-own engine memory allocator
