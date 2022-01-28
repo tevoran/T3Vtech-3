@@ -1,5 +1,6 @@
 Renderer:
 	-reworking VAOs (only once per mesh and not once per mesh and frame)
-
+	-2D renderer should be faster with a single linked list instead of the current double linked list
+	
 Memory:
 	-own engine memory allocator

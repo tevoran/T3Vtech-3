@@ -10,7 +10,7 @@
 [X] input
 	[X] mouse press/pushed down
 	[X] keyboard press/pushed down
-[ ] light IDs rework to remove the stack necessity
+[X] light IDs rework to remove the stack necessity
 [ ] adding Lua support // https://www.lua.org/pil/24.html
 
 # TTMV (T3Vtech-3 Model Viewer)

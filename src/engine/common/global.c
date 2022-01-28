@@ -22,6 +22,10 @@ SDL_Event tt_event; //SDL events
 GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 
+//2D renderer stuff
+tt_node *tt_2d_list_entry_node=NULL;
+tt_node *tt_2d_list_last_entry=NULL;
+
 //3D renderer stuff
 float tt_near_plane=0.1; //near clipping plane
 float tt_far_plane=1000; //far clipping plane
