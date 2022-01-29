@@ -12,6 +12,7 @@ struct tt_2d_object
 
 	//transformations
 	tt_vec2 translation;
+	tt_vec2 scale;
 
 	//properties
 	GLuint texture;
@@ -26,6 +27,7 @@ void tt_2d_object_clear_render_list();
 tt_2d_object* tt_2d_object_new();
 void tt_2d_object_render(tt_2d_object *object);
 void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position);
+void tt_2d_object_scale(tt_2d_object *object, tt_vec2 *scale);
 
 //sprite
 void tt_2d_object_make_sprite(tt_2d_object *object);

@@ -5,12 +5,15 @@ layout(location = 1) in vec2 tex_coord;
 
 //uniforms
 uniform vec2 translation;
+uniform vec2 scale;
 
 out vec2 base_tex_coord;
 
 void main()
 {
-	vec2 pos_tmp = pos + translation;
+	//transformations
+	vec2 pos_tmp = pos * scale;
+	pos_tmp = pos_tmp + translation;
 
 	//outgoing variables
 	gl_Position = vec4(pos_tmp, 1.0, 1.0);

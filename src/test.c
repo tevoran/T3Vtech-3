@@ -45,6 +45,11 @@ int main()
 
 	tt_vec2 sprite_pos={0.0,0.0};
 
+	tt_2d_object *sprite2=tt_2d_object_new();
+	tt_2d_object_make_sprite(sprite2);
+	tt_vec2 sprite_scale={0.1,0.1};
+	tt_2d_object_scale(sprite2, &sprite_scale);
+
 	int i=0;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
@@ -53,6 +58,7 @@ int main()
 	//sprite test
 	sprite_pos.x=0.5*sin((float)i/200);
 	tt_2d_object_set_position(sprite, &sprite_pos);
+	tt_2d_object_render(sprite2);
 	tt_2d_object_render(sprite);
 
 	//fps cam test

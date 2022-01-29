@@ -24,8 +24,10 @@ tt_2d_object* tt_2d_object_new()
 	new_object->num_indices=0;
 
 	//transformations
-	new_object->translation.x=0;
-	new_object->translation.y=0;
+	new_object->translation.x=0.0;
+	new_object->translation.y=0.0;
+	new_object->scale.x=1.0;
+	new_object->scale.y=1.0;
 
 	//properties
 	new_object->texture=tt_gfx_2d_default_tex;
@@ -63,4 +65,9 @@ void tt_2d_object_clear_render_list()
 void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position)
 {
 	object->translation=*position;
+}
+
+void tt_2d_object_scale(tt_2d_object *object, tt_vec2 *scale)
+{
+	object->scale=*scale;
 }
