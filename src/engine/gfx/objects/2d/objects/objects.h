@@ -13,6 +13,9 @@ struct tt_2d_object
 	//transformations
 	tt_vec2 translation;
 
+	//properties
+	GLuint texture;
+
 } typedef tt_2d_object;
 
 //engine internal functions

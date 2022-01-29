@@ -2,7 +2,7 @@
 
 extern GLuint tt_gfx_3d_default_tex; //default texture
 
-GLubyte default_tex[]=
+GLubyte default_tex_3d[]=
 {
 	255, 0, 255
 };
@@ -15,7 +15,7 @@ void tt_gfx_3d_default_tex_init()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, default_tex);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, default_tex_3d);
 }
 
 tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering)

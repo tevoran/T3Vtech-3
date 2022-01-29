@@ -105,10 +105,10 @@ void tt_gfx_render()
 				glEnableVertexAttribArray(0);
 				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4*sizeof(GLfloat), (void*)(2*sizeof(GLfloat)));
 				glEnableVertexAttribArray(1);
-
+				
 				//use textures
 				//glBindTexture(GL_TEXTURE_2D, current_2d_object->texture);
-				
+
 				glDrawElements(
 					GL_TRIANGLES,
 					current_2d_object->num_indices,

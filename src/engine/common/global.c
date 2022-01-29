@@ -49,6 +49,10 @@ tt_mat4 tt_camera_rotation; //current camera rotation
 //Here are prepared primitives. They are already created after the initialization
 //and will be used when "creating" primitives to save time.
 
+//2D
+GLuint tt_gfx_2d_default_tex; //default texture
+
+
 //3D
 //default texture
 GLuint tt_gfx_3d_default_tex;

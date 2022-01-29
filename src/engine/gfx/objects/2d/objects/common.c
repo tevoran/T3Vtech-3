@@ -1,8 +1,11 @@
 #include <tt.h>
 
+//prepared OpenGL IDs for a sprite
 extern GLuint tt_gfx_2d_sprite_vao;
 extern GLuint tt_gfx_2d_sprite_vbo;
 extern GLuint tt_gfx_2d_sprite_ibo;
+
+extern GLuint tt_gfx_2d_default_tex; //default texture
 
 //render list
 //used once per frame
@@ -23,6 +26,9 @@ tt_2d_object* tt_2d_object_new()
 	//transformations
 	new_object->translation.x=0;
 	new_object->translation.y=0;
+
+	//properties
+	new_object->texture=tt_gfx_2d_default_tex;
 
 	return new_object;
 }
