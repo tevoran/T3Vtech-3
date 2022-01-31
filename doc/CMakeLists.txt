@@ -41,4 +41,5 @@ target_link_libraries(res-racer LINK_PRIVATE "${GL}")
 #copy engine shaders
 file(COPY vendor/T3Vtech-3/shaders DESTINATION .) #the engine shaders need to be copied
 #file(COPY assets DESTINATION .) #where are your assets?
-file(COPY settings DESTINATION .) #a directory for engine settings that needs to be copied
+file(COPY vendor/T3Vtech-3/settings DESTINATION .)
+ #a directory for engine settings that needs to be copied
