@@ -28,7 +28,7 @@ find_library(GL GL)
 include_directories(src/) #where are your own headers?
 include_directories(vendor/T3Vtech-3/src/engine/) #the engine headers
 include_directories(vendor/T3Vtech-3/vendor/stb/) #an engine dependency
-file(GLOB_RECURSE "engine" SRC vendor/T3Vtech-3/src/*.c) #the engine source files
+file(GLOB_RECURSE "engine" SRC vendor/T3Vtech-3/src/engine/*.c) #the engine source files
 file(GLOB_RECURSE "game" SRC src/*.cpp) #where are your game source files
 add_executable(res-racer ${engine} ${game}) #use the name of your game instead of res-racer
 
