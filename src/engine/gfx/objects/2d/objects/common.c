@@ -28,6 +28,7 @@ tt_2d_object* tt_2d_object_new()
 	new_object->translation.y=0.0;
 	new_object->scale.x=1.0;
 	new_object->scale.y=1.0;
+	tt_math_mat2_make_identity_matrix(&new_object->rotation);
 
 	//properties
 	new_object->texture=tt_gfx_2d_default_tex;
@@ -70,4 +71,12 @@ void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position)
 void tt_2d_object_scale(tt_2d_object *object, tt_vec2 *scale)
 {
 	object->scale=*scale;
+}
+
+void tt_2d_object_rotate(tt_2d_object *object, float radians)
+{
+	object->rotation.array[0][0]=cos(radians);
+	object->rotation.array[0][1]=-sin(radians);
+	object->rotation.array[1][0]=sin(radians);
+	object->rotation.array[1][1]=cos(radians);
 }

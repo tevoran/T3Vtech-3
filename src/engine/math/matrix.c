@@ -1,5 +1,16 @@
 #include <tt.h>
 
+//mat2
+void tt_math_mat2_make_identity_matrix(tt_mat2 *mat)
+{
+	mat->array[0][0]=1.0;
+	mat->array[0][1]=0.0;
+	mat->array[1][0]=0.0;
+	mat->array[1][1]=1.0;
+}
+
+//mat4
+
 float id_mat4[4][4]={
 	1.0, 0.0, 0.0, 0.0,
 	0.0, 1.0, 0.0, 0.0,

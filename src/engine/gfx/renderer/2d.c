@@ -1,5 +1,8 @@
 #include <tt.h>
 
+extern uint32_t tt_res_x; //game resolution
+extern uint32_t tt_res_y; //game resolution
+
 extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 
 //this is the beginning of the 2D object rendering list
@@ -14,6 +17,8 @@ void tt_gfx_2d_preparation()
 
 void tt_gfx_2d_render()
 {
+	float aspect_val=(float)tt_res_y/(float)tt_res_x;
+
 	tt_2d_object *current_2d_object=NULL;
 	if(tt_2d_list_entry_node)
 	{
@@ -26,11 +31,17 @@ void tt_gfx_2d_render()
 				i++;
 				//get uniforms
 				GLint translation=glGetUniformLocation(tt_std_2d_shader, "translation");
+				GLint rotation=glGetUniformLocation(tt_std_2d_shader, "rotation");
 				GLint scale=glGetUniformLocation(tt_std_2d_shader, "scale");
+				GLint aspect=glGetUniformLocation(tt_std_2d_shader, "aspect");
 
 				//set uniforms
 				glUniform2f(translation, current_2d_object->translation.x, current_2d_object->translation.y);
 				glUniform2f(scale, current_2d_object->scale.x, current_2d_object->scale.y);
+				glUniform1f(aspect, aspect_val);
+		
+				const GLfloat *rot_ptr=(GLfloat*)&current_2d_object->rotation;
+				glUniformMatrix2fv(rotation, 1, false, rot_ptr);
 
 				//bind buffers
 				//glBindVertexArray(current_object->vao);

@@ -1,6 +1,5 @@
 #include <tt.h>
 
-
 extern GLuint tt_gfx_2d_sprite_vao;
 extern GLuint tt_gfx_2d_sprite_vbo;
 extern GLuint tt_gfx_2d_sprite_ibo;

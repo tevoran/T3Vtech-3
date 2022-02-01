@@ -1,6 +1,12 @@
 #ifndef TT_MATH_MATRIX_H
 #define TT_MATH_MATRIX_H
 
+//mat2
+struct tt_mat2
+{
+	float array[2][2];
+} typedef tt_mat2;
+
 //mat3
 struct tt_mat3
 {
@@ -13,6 +19,10 @@ struct tt_mat4
 	float array[4][4];
 } typedef tt_mat4;
 
+//mat2 functions
+void tt_math_mat2_make_identity_matrix(tt_mat2 *mat);
+
+//mat4 functions
 void tt_math_mat4_make_identity_matrix(tt_mat4 *mat);
 void tt_math_mat4_make_projection_matrix(
 	tt_mat4 *mat,
