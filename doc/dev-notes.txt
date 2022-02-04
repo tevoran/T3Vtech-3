@@ -12,6 +12,8 @@
 	[X] keyboard press/pushed down
 [X] light IDs rework to remove the stack necessity
 [ ] adding Lua support // https://www.lua.org/pil/24.html
+[ ] making just a single default texture for both 2D and 3D
+
 
 # TTMV (T3Vtech-3 Model Viewer)
 [X] displaying a model via CLI

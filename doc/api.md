@@ -131,6 +131,19 @@ Unlike 3D objects 2D objects are not rendered automatically in T3Vtech-3. They a
 void tt_2d_object_render(tt_2d_object *object);
 ```
 
+#### 2D Textures
+
+When a sprite is created one usually doesn't want to simply display the pink default texture. To create a new 2D texture, that can be used for many different 2D objects if desired, call 
+
+```c
+tt_2d_texture* tt_2d_texture_new(const char *path, const bool bilinear_filtering);
+```
+Unlike 3D textures T3Vtech-3's 2D textures support transparency. When it needs to be used with a 2D object then it is just necessary to call
+
+```c
+void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture);
+```
+
 ### 3D Objects
 
 A 3D object has the following life cycle. At first you need to create an empty 3D object which you have to destroy at the end of its life. While it is alive it is usually part of the rendering process, where it gets rendered each frame if it's visible. Also it is possible to modify it during its life cycle. This kind of modification is necessary to give the 3D object a specific shape or apply transformations like rotations to it.
