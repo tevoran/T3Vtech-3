@@ -407,6 +407,17 @@ tt_2d_texture* tt_2d_texture_new(const char *path, const bool bilinear_filtering
 ```
 Unlike 3D textures T3Vtech-3's 2D textures support transparency. 
 
+It is also possible to create 2D textures from arbitrary data as well. If you have an array of pixel data in the RGBA and unsigned char format then you can call the function
+
+```c
+tt_2d_texture* tt_2d_texture_new_from_RGBA(
+	void *image_data, 
+	const int res_x,
+	const int res_y,
+	const bool bilinear_filtering);
+```
+
+instead. The handling of the texture won't be any different, no matter the it was created. 
 
 ##### Usage of 2D Textures
 
