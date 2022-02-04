@@ -133,16 +133,33 @@ void tt_2d_object_render(tt_2d_object *object);
 
 #### 2D Textures
 
+##### Creation of 2D Textures
+
 When a sprite is created one usually doesn't want to simply display the pink default texture. To create a new 2D texture, that can be used for many different 2D objects if desired, call 
 
 ```c
 tt_2d_texture* tt_2d_texture_new(const char *path, const bool bilinear_filtering);
 ```
-Unlike 3D textures T3Vtech-3's 2D textures support transparency. When it needs to be used with a 2D object then it is just necessary to call
+Unlike 3D textures T3Vtech-3's 2D textures support transparency. 
+
+
+##### Usage of 2D Textures
+
+When it needs to be used with a 2D object then it is just necessary to call
 
 ```c
 void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture);
 ```
+
+##### Deletion of 2D Textures
+
+If a 2D texture is not used anymore then it can be deleted by calling
+
+```c
+void tt_2d_texture_delete(tt_2d_texture **texture);
+```
+
+In the case that there is not active 2D texture assigned to a sprite then the default texture will be assigned in the next rendering of the sprite.
 
 ### 3D Objects
 
