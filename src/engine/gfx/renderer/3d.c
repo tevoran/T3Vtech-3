@@ -47,6 +47,7 @@ void tt_gfx_3d_preparation()
 {
 	glUseProgram(tt_std_3d_shader);
 	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 
 	//setting the perspective projection matrix
 	GLint projection_mat=glGetUniformLocation(tt_std_3d_shader, "projection");

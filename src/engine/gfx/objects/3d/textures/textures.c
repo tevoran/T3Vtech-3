@@ -42,7 +42,7 @@ tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering
 	unsigned char *image_data=stbi_load(path, &x, &y, &n, 0);
 	if(image_data)
 	{
-		printf("image successfully loaded as a texture from %s\n", path);
+		printf("image successfully loaded as a 3D texture from %s\n", path);
 		printf("texture resolution is %ix%i\n", x, y);
 	}
 	else

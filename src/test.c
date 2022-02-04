@@ -42,6 +42,9 @@ int main()
 	//sprite test
 	tt_2d_object *sprite=tt_2d_object_new();
 	tt_2d_object_make_sprite(sprite);
+	tt_2d_texture *sprite_tex=tt_2d_texture_new("assets/smiley_RGBA.png", false);
+	tt_2d_object_use_texture(sprite, sprite_tex);
+
 
 	tt_vec2 sprite_pos={0.0,0.0};
 

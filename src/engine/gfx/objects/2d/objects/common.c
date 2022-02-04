@@ -80,3 +80,15 @@ void tt_2d_object_rotate(tt_2d_object *object, float radians)
 	object->rotation.array[1][0]=sin(radians);
 	object->rotation.array[1][1]=cos(radians);
 }
+
+void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture)
+{
+	if(texture) //use texture only if it exists
+	{
+		object->texture=texture->texture;
+	}
+	else //use default texture
+	{
+		object->texture=tt_gfx_2d_default_tex;
+	}
+}
