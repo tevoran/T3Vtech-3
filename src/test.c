@@ -40,9 +40,22 @@ int main()
 	tt_input_mouse_set_relative_mode(true);
 
 	//sprite test
+	unsigned char test_tex[]=
+	{
+		0, 0, 0, 255,	 	0, 255, 0, 255,		0, 0, 0, 255,
+		0, 255, 0, 255,		0, 0, 0, 255,		0, 255, 0, 255,
+		0, 0, 0, 255,		0, 0, 0, 255,		0, 0, 0, 255,
+	};
+
 	tt_2d_object *sprite=tt_2d_object_new();
 	tt_2d_object_make_sprite(sprite);
-	tt_2d_texture *sprite_tex=tt_2d_texture_new("assets/smiley_RGBA.png", false);
+//	tt_2d_texture *sprite_tex=tt_2d_texture_new("assets/smiley_RGBA.png", false);
+	tt_2d_texture* sprite_tex=tt_2d_texture_new_from_RGBA(
+		test_tex, 
+		3,
+		3,
+		false);
+
 	tt_2d_object_use_texture(sprite, sprite_tex);
 
 
@@ -52,7 +65,6 @@ int main()
 	tt_2d_object_make_sprite(sprite2);
 	tt_vec2 sprite_scale={0.3,0.3};
 	tt_2d_object_scale(sprite2, &sprite_scale);
-
 
 	float angle=0.0;
 	int i=0;

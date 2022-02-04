@@ -13,6 +13,11 @@ void tt_gfx_2d_default_tex_init();
 
 //functions
 tt_2d_texture* tt_2d_texture_new(const char *path, const bool bilinear_filtering);
+tt_2d_texture* tt_2d_texture_new_from_RGBA(
+	void *image_data, 
+	const int res_x,
+	const int res_y,
+	const bool bilinear_filtering);
 void tt_2d_texture_delete(tt_2d_texture **texture);
 
 #endif
