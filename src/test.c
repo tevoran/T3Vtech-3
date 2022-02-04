@@ -53,6 +53,7 @@ int main()
 	tt_vec2 sprite_scale={0.3,0.3};
 	tt_2d_object_scale(sprite2, &sprite_scale);
 
+
 	float angle=0.0;
 	int i=0;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))

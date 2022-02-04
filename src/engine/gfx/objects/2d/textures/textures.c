@@ -85,3 +85,10 @@ tt_2d_texture* tt_2d_texture_new(const char *path, const bool bilinear_filtering
 	free(image_flip);
 	return new_texture;
 }
+
+void tt_2d_texture_delete(tt_2d_texture **texture)
+{
+	glDeleteTextures(1, &(*texture)->texture);
+	free((*texture));
+	*texture=NULL; //marking the texture as deleted
+}

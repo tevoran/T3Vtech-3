@@ -4,6 +4,7 @@ extern uint32_t tt_res_x; //game resolution
 extern uint32_t tt_res_y; //game resolution
 
 extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
+extern GLuint tt_gfx_2d_default_tex; //default texture
 
 //this is the beginning of the 2D object rendering list
 extern tt_node *tt_2d_list_entry_node;
@@ -58,6 +59,11 @@ void tt_gfx_2d_render()
 				glEnableVertexAttribArray(1);
 				
 				//use textures
+				//if no texture is used assign the default texture
+				if(!glIsTexture(current_2d_object->texture))
+				{
+					current_2d_object->texture=tt_gfx_2d_default_tex;
+				}
 				glBindTexture(GL_TEXTURE_2D, current_2d_object->texture);
 
 				glDrawElements(
