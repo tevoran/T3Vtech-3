@@ -1,6 +1,7 @@
 Renderer:
 	-reworking VAOs (only once per mesh and not once per mesh and frame)
 	-2D renderer should be faster with a single linked list instead of the current double linked list
-	
+	-ordering things in the 2D and 3D render to have a better performance (shader, textures, uniforms should be the priority)
+
 Memory:
 	-own engine memory allocator
