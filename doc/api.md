@@ -105,61 +105,6 @@ roll_radians+=(float)dy * time * 0.02;
 pitch_radians+=(float)dx * time * 0.02;
 tt_camera_fps(roll_radians, pitch_radians);
 ```
-### 2D Objects
-
-A 2D object has the following life cycle. It needs to be created first. After its initial creation you need to tell the engine what kind of object you want to make it. When this is done you can start to render it in your game's main loop. At the end of its usage it is very wise to delete the object.
-
-#### Creation of a 2D Object
-
-To create a 2D object simply call
-
-```c
-tt_2d_object* tt_2d_object_new();
-```
-
-In most cases you want to make your 2D object a sprite. To do so, simply call
-
-```c
-void tt_2d_object_make_sprite(tt_2d_object *object);
-```
-
-#### Rendering of a 2D Object
-
-Unlike 3D objects 2D objects are not rendered automatically in T3Vtech-3. They are not rendered automatically because the engine can not know in which order the engine's user wants them to be rendered. There the responsibility is given to the user. A 2D object can be issued to be rendered for a frame by calling
-
-```c
-void tt_2d_object_render(tt_2d_object *object);
-```
-
-#### 2D Textures
-
-##### Creation of 2D Textures
-
-When a sprite is created one usually doesn't want to simply display the pink default texture. To create a new 2D texture, that can be used for many different 2D objects if desired, call 
-
-```c
-tt_2d_texture* tt_2d_texture_new(const char *path, const bool bilinear_filtering);
-```
-Unlike 3D textures T3Vtech-3's 2D textures support transparency. 
-
-
-##### Usage of 2D Textures
-
-When it needs to be used with a 2D object then it is just necessary to call
-
-```c
-void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture);
-```
-
-##### Deletion of 2D Textures
-
-If a 2D texture is not used anymore then it can be deleted by calling
-
-```c
-void tt_2d_texture_delete(tt_2d_texture **texture);
-```
-
-In the case that there is not active 2D texture assigned to a sprite then the default texture will be assigned in the next rendering of the sprite.
 
 ### 3D Objects
 
@@ -422,6 +367,64 @@ Since a point light has a location unlike other kinds of lighting, the position 
 ```c
 void tt_point_light_set_position(tt_point_light light_id, tt_vec3 *position);
 ```
+
+## 2D
+
+### 2D Objects
+
+A 2D object has the following life cycle. It needs to be created first. After its initial creation you need to tell the engine what kind of object you want to make it. When this is done you can start to render it in your game's main loop. At the end of its usage it is very wise to delete the object.
+
+#### Creation of a 2D Object
+
+To create a 2D object simply call
+
+```c
+tt_2d_object* tt_2d_object_new();
+```
+
+In most cases you want to make your 2D object a sprite. To do so, simply call
+
+```c
+void tt_2d_object_make_sprite(tt_2d_object *object);
+```
+
+#### Rendering of a 2D Object
+
+Unlike 3D objects 2D objects are not rendered automatically in T3Vtech-3. They are not rendered automatically because the engine can not know in which order the engine's user wants them to be rendered. There the responsibility is given to the user. A 2D object can be issued to be rendered for a frame by calling
+
+```c
+void tt_2d_object_render(tt_2d_object *object);
+```
+
+#### 2D Textures
+
+##### Creation of 2D Textures
+
+When a sprite is created one usually doesn't want to simply display the pink default texture. To create a new 2D texture, that can be used for many different 2D objects if desired, call 
+
+```c
+tt_2d_texture* tt_2d_texture_new(const char *path, const bool bilinear_filtering);
+```
+Unlike 3D textures T3Vtech-3's 2D textures support transparency. 
+
+
+##### Usage of 2D Textures
+
+When it needs to be used with a 2D object then it is just necessary to call
+
+```c
+void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture);
+```
+
+##### Deletion of 2D Textures
+
+If a 2D texture is not used anymore then it can be deleted by calling
+
+```c
+void tt_2d_texture_delete(tt_2d_texture **texture);
+```
+
+In the case that there is not active 2D texture assigned to a sprite then the default texture will be assigned in the next rendering of the sprite.
 
 ## Handling of Input
 
