@@ -31,7 +31,7 @@ target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2}")
 target_link_libraries(T3Vtech LINK_PRIVATE "${GLEW}")
 target_link_libraries(T3Vtech LINK_PRIVATE "${GL}")
 target_link_libraries(T3Vtech LINK_PRIVATE m)
-#target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_ttf}")
+target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_ttf}")
 #target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_mixer}")
 
 #creating library test

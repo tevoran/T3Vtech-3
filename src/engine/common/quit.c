@@ -40,6 +40,16 @@ void tt_quit()
 
 	if(!tt_quiet)
 	{
+		printf("quitting SDL2_ttf...");
+	}
+		TTF_Quit();
+	if(!tt_quiet)
+	{
+		printf("done\n");
+	}	
+
+	if(!tt_quiet)
+	{
 		printf("quitting SDL2...");
 	}
 		SDL_Quit();

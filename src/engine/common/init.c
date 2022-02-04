@@ -146,6 +146,19 @@ bool tt_init(
 
 	SDL_DisableScreenSaver();
 
+	if(TTF_Init()!=0)
+	{
+		printf("[ERROR] SDL2_ttf couldn't be initialized\n");
+		printf("error message: %s\n", TTF_GetError());
+	}
+	else
+	{
+		if(!quiet)
+		{
+			printf("SDL2_ttf initialized\n");
+		}
+	}
+
 	//making sure tt_quit gets called when game is closed
 	atexit(tt_quit);
 
