@@ -44,8 +44,6 @@ tt_vec3 tt_camera_view_direction()
 
 void tt_camera_fps(float pitch_radians, float yaw_radians)
 {
-
-
 	tt_math_mat4_make_identity_matrix(&tt_camera_rotation);
 	tt_vec3 rot_axis={1,0,0};
 	tt_camera_rotate(&rot_axis, pitch_radians);
