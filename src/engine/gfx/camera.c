@@ -44,10 +44,12 @@ tt_vec3 tt_camera_view_direction()
 
 void tt_camera_fps(float pitch_radians, float yaw_radians)
 {
+
+
 	tt_math_mat4_make_identity_matrix(&tt_camera_rotation);
-	tt_vec3 rot_axis={0,1,0};
-	tt_camera_rotate(&rot_axis, yaw_radians);
-	rot_axis.y=0;
-	rot_axis.x=1;
+	tt_vec3 rot_axis={1,0,0};
 	tt_camera_rotate(&rot_axis, pitch_radians);
+	rot_axis.y=1;
+	rot_axis.x=0;
+	tt_camera_rotate(&rot_axis, yaw_radians);
 }
