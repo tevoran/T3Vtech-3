@@ -39,6 +39,9 @@ int main()
 	//fps cam test
 	tt_input_mouse_set_relative_mode(true);
 
+	//text test
+	tt_font *font=tt_font_open("assets/fonts/OpenSans-Regular.ttf", 20);
+
 	//sprite test
 	unsigned char test_tex[]=
 	{
@@ -49,7 +52,6 @@ int main()
 
 	tt_2d_object *sprite=tt_2d_object_new();
 	tt_2d_object_make_sprite(sprite);
-//	tt_2d_texture *sprite_tex=tt_2d_texture_new("assets/smiley_RGBA.png", false);
 	tt_2d_texture* sprite_tex=tt_2d_texture_new_from_RGBA(
 		test_tex, 
 		3,
@@ -105,6 +107,8 @@ int main()
 
 		tt_new_frame();
 	}
+
+	tt_font_delete(&font);
 
 	return 0;
 }
