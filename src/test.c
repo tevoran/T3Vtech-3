@@ -40,8 +40,9 @@ int main()
 	tt_input_mouse_set_relative_mode(true);
 
 	//text test
-	tt_font *font=tt_font_open("assets/fonts/OpenSans-Regular.ttf", 20);
+	tt_font *font=tt_font_open("assets/fonts/OpenSans-Regular.ttf", 100);
 	tt_2d_object *text_obj=tt_2d_object_new();
+	//tt_2d_object_make_sprite(text_obj);
 	tt_2d_object_make_text(text_obj,font,"poopy text");
 
 	//sprite test
@@ -60,8 +61,10 @@ int main()
 		3,
 		false);
 
+	//tt_2d_object_use_texture(text_obj, sprite_tex);
+
 	tt_2d_object_use_texture(sprite, sprite_tex);
-	tt_2d_object_delete(&sprite);
+	//tt_2d_object_delete(&sprite);
 
 	tt_vec2 sprite_pos={0.0,0.0};
 
@@ -69,6 +72,7 @@ int main()
 	tt_2d_object_make_sprite(sprite2);
 	tt_vec2 sprite_scale={0.3,0.3};
 	tt_2d_object_scale(sprite2, &sprite_scale);
+
 
 	float angle=0.0;
 	int i=0;
@@ -83,6 +87,8 @@ int main()
 	tt_2d_object_render(sprite2);
 	tt_2d_object_render(sprite);
 	tt_2d_object_rotate(sprite2, angle);
+	tt_2d_object_render(text_obj);
+
 
 	//fps cam test
 	static float roll_radians=0;
