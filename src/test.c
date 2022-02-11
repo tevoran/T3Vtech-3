@@ -41,6 +41,8 @@ int main()
 
 	//text test
 	tt_font *font=tt_font_open("assets/fonts/OpenSans-Regular.ttf", 20);
+	tt_2d_object *text_obj=tt_2d_object_new();
+	tt_2d_object_make_text(text_obj,font,"poopy text");
 
 	//sprite test
 	unsigned char test_tex[]=
@@ -59,7 +61,7 @@ int main()
 		false);
 
 	tt_2d_object_use_texture(sprite, sprite_tex);
-
+	tt_2d_object_delete(&sprite);
 
 	tt_vec2 sprite_pos={0.0,0.0};
 

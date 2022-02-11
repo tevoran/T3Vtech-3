@@ -32,14 +32,42 @@ tt_2d_object* tt_2d_object_new()
 
 	//properties
 	new_object->texture=tt_gfx_2d_default_tex;
+	new_object->is_text_object=false;
 
 	return new_object;
+}
+
+//the function uses a pointer pointer so that the deleted object pointer can
+//be set to NULL. This is done to reduce possible segfaults by accidentally
+//deleting the same object twice.
+void tt_2d_object_delete(tt_2d_object **object)
+{
+	//if this object has already been deleted then just quit
+	if(*object==NULL)
+	{
+		return; 
+	}
+
+	//delete the text texture if the object is a text object
+	if((*object)->is_text_object)
+	{
+		glDeleteTextures(1, &(*object)->texture);
+	}
+
+	free(*object);
+	*object=NULL; //mark object as deleted
 }
 
 //get the desired object into the 2D render list
 //the object's adress get passed into the data section of tt_node
 void tt_2d_object_render(tt_2d_object *object)
 {
+	//if the object is already deleted then simply return
+	if(!object)
+	{
+		return;
+	}
+
 	tt_2d_list_last_entry=tt_list_new_node(tt_2d_list_last_entry);
 	if(!tt_2d_list_last_entry)
 	{
@@ -65,16 +93,34 @@ void tt_2d_object_clear_render_list()
 
 void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position)
 {
+	//if the object is already deleted then simply return
+	if(!object)
+	{
+		return;
+	}
+
 	object->translation=*position;
 }
 
 void tt_2d_object_scale(tt_2d_object *object, tt_vec2 *scale)
 {
+	//if the object is already deleted then simply return
+	if(!object)
+	{
+		return;
+	}
+
 	object->scale=*scale;
 }
 
 void tt_2d_object_rotate(tt_2d_object *object, float radians)
 {
+	//if the object is already deleted then simply return
+	if(!object)
+	{
+		return;
+	}
+
 	object->rotation.array[0][0]=cos(radians);
 	object->rotation.array[0][1]=-sin(radians);
 	object->rotation.array[1][0]=sin(radians);
@@ -83,6 +129,12 @@ void tt_2d_object_rotate(tt_2d_object *object, float radians)
 
 void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture)
 {
+	//if the object is already deleted then simply return
+	if(!object)
+	{
+		return;
+	}
+	
 	if(texture) //use texture only if it exists
 	{
 		object->texture=texture->texture;

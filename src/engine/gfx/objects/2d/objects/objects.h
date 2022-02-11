@@ -17,6 +17,8 @@ struct tt_2d_object
 
 	//properties
 	GLuint texture;
+		//says if the texture will be cleared when the object is deleted
+		bool is_text_object;
 
 } typedef tt_2d_object;
 
@@ -26,13 +28,18 @@ void tt_2d_object_clear_render_list();
 
 //common 2d object functions
 tt_2d_object* tt_2d_object_new();
+void tt_2d_object_delete(tt_2d_object **object);
 void tt_2d_object_render(tt_2d_object *object);
 void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position);
 void tt_2d_object_scale(tt_2d_object *object, tt_vec2 *scale);
 void tt_2d_object_rotate(tt_2d_object *object, float radians);
 void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture);
 
-//sprite
+//object kinds
 void tt_2d_object_make_sprite(tt_2d_object *object);
+void tt_2d_object_make_text(
+	tt_2d_object *object,
+	const tt_font *font,
+	const char *text);
 
 #endif
