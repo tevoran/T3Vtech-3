@@ -68,7 +68,7 @@ tt_mat4 tt_math_mat4_make_quat_rot_mat(tt_vec3 *rot_axis, float radians)
 	q.y=rot_axis->y * sin(radians/2);
 	q.z=rot_axis->z * sin(radians/2);
 	q.w=cos(radians/2);
-	q=tt_math_vec4_normalize(q);
+	q=tt_math_vec4_normalize(&q);
 
 	//the rotation matrix with the difference to the current rotation matrix
 	tt_mat4 rot_mat;

@@ -27,7 +27,7 @@ sr::rocket::rocket(
 	//tt_3d_object_rotate(m_rocket, &rot_axis, 1.0 * tt_PI);
 
 	m_pos=pos_start;
-	float length=tt_math_vec3_length(dir);
+	float length=tt_math_vec3_length(&dir);
 	m_dir.x=dir.x/length;
 	m_dir.y=dir.y/length;
 	m_dir.z=dir.z/length;

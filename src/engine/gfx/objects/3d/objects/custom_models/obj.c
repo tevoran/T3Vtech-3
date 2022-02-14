@@ -116,7 +116,7 @@ bool tt_3d_object_custom_model_load_obj_file(
 				}
 
 				pos_array[i_pos]=tmp;
-				float tmp_length=tt_math_vec3_length(pos_array[i_pos]);
+				float tmp_length=tt_math_vec3_length(&pos_array[i_pos]);
 				tmp_length*=2; //we need the diameter instead of the radius
 				if(*size_bounding_sphere < tmp_length)
 				{
