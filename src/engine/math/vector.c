@@ -11,6 +11,16 @@ tt_vec4 tt_math_vec4_normalize(tt_vec4 v)
 	return v_out;
 }
 
+tt_vec3 tt_math_vec4_normalize(tt_vec3 v)
+{
+	tt_vec3 v_out;
+	float length=sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+	v_out.x=v.x/length;
+	v_out.y=v.y/length;
+	v_out.z=v.z/length;
+	return v_out;
+}
+
 float tt_math_vec3_length(tt_vec3 v)
 {
 	return sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
