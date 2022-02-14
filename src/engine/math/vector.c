@@ -44,6 +44,15 @@ tt_vec3 tt_math_vec3_rotate(tt_vec3 *rot_axis, float radians, tt_vec3 *vec)
 	return out_vec;
 }
 
+tt_vec3 tt_math_vec3_mul_float(tt_vec3 *v, float a)
+{
+	tt_vec3 out;
+	out.x=v->x*a;
+	out.y=v->y*a;
+	out.z=v->z*a;
+	return out;
+}
+
 tt_vec3 tt_math_vec3_add(tt_vec3 *a, tt_vec3 *b)
 {
 	tt_vec3 out;
