@@ -437,6 +437,38 @@ void tt_2d_texture_delete(tt_2d_texture **texture);
 
 In the case that there is not active 2D texture assigned to a sprite then the default texture will be assigned in the next rendering of the sprite.
 
+##### 2D Text
+
+2D Text will be rendered by the engine into 2D textures that can then be used as regular 2D textures on sprites. These 2D text textures can also be deleted in the same way as regular 2D textures.
+
+To create a 2D text texture call
+
+```c
+tt_2d_texture* tt_2d_texture_make_text(
+	const tt_font *font,
+	const char *text,
+	const tt_color_rgba_u8 color);
+```
+
+The tt_color_rgba_u8 struct is a simple struct that contains the color information that is necessary for the text to be rendered.
+
+```c
+struct tt_color_rgba_u8
+{
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
+} typedef tt_color_rgba_u8;
+```
+
+A complete example for the creation of a new 2D text texture would look like this
+
+```c
+tt_color_rgba_u8 color={0,255,0,255};
+tt_2d_texture *text_tex=tt_2d_texture_make_text(font, "test text message", color);
+```
+
 ## Handling of Input
 
 ### Mouse
