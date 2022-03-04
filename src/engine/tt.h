@@ -27,6 +27,7 @@
 #include <common/new_frame.h>
 #include <common/time.h>
 #include <common/color.h>
+#include <common/collision/3D/collision.h>
 
 #include <gfx/gfx.h>
 #include <input/input.h>

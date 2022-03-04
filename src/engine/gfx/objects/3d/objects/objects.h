@@ -28,6 +28,10 @@ struct tt_3d_object
 	//lighting
 	bool lighting_affected;
 
+	//collision properties
+	tt_3d_collision_aabb aabb; //its measurements derive from the mesh itself
+		//so it needs effectively transformed like the mesh itself to be usable
+
 } typedef tt_3d_object;
 
 #include "custom_models/custom_model.h"

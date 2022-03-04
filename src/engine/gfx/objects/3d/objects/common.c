@@ -30,6 +30,15 @@ tt_3d_object* tt_3d_object_new()
 	new_object->lighting_affected=true;
 	new_object->size_bounding_sphere=0;
 	new_object->invisibility_toggle=false; //make visible by default
+
+	//setting the aabb to defaults
+	new_object->aabb.x_max=0.0;
+	new_object->aabb.x_min=0.0;
+	new_object->aabb.y_max=0.0;
+	new_object->aabb.y_min=0.0;
+	new_object->aabb.z_max=0.0;
+	new_object->aabb.z_min=0.0;
+
 	return new_object;
 }
 
