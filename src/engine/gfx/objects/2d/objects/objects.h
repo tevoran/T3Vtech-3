@@ -37,9 +37,5 @@ void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture);
 
 //object kinds
 void tt_2d_object_make_sprite(tt_2d_object *object);
-void tt_2d_object_make_text(
-	tt_2d_object *object,
-	const tt_font *font,
-	const char *text);
 
 #endif

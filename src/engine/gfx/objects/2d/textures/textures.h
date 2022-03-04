@@ -20,4 +20,11 @@ tt_2d_texture* tt_2d_texture_new_from_RGBA(
 	const bool bilinear_filtering);
 void tt_2d_texture_delete(tt_2d_texture **texture);
 
+
+//text textures
+tt_2d_texture* tt_2d_texture_make_text(
+	const tt_font *font,
+	const char *text,
+	const tt_color_rgba_u8 color);
+
 #endif
