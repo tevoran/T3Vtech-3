@@ -388,12 +388,44 @@ In most cases you want to make your 2D object a sprite. To do so, simply call
 void tt_2d_object_make_sprite(tt_2d_object *object);
 ```
 
+#### Deletion of a 2D Object
+
+If a 2D object is not necessary anymore then it can be deleted. It is just necessary to call 
+
+```c
+void tt_2d_object_delete(tt_2d_object **object);
+```
+
 #### Rendering of a 2D Object
 
-Unlike 3D objects 2D objects are not rendered automatically in T3Vtech-3. They are not rendered automatically because the engine can not know in which order the engine's user wants them to be rendered. There the responsibility is given to the user. A 2D object can be issued to be rendered for a frame by calling
+Unlike 3D objects 2D objects are not rendered automatically in T3Vtech-3. They are not rendered automatically because the engine can not know in which order the engine's user wants them to be rendered. Therefor the responsibility is given to the user. A 2D object can be issued to be rendered for a frame by calling
 
 ```c
 void tt_2d_object_render(tt_2d_object *object);
+```
+
+#### Rotation of a 2D Object
+
+2D objects can be rotated by calling
+
+```c
+void tt_2d_object_rotate(tt_2d_object *object, float radians);
+```
+
+#### Scaling of a 2D Object
+
+Scaling 2D objects is done by calling 
+
+```c
+void tt_2d_object_scale(tt_2d_object *object, tt_vec2 *scale);
+```
+
+#### Translation of a 2D Object
+
+Setting the position of a 2D object is done by calling
+
+```c
+void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position);
 ```
 
 #### 2D Textures
