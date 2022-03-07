@@ -16,7 +16,7 @@ int main()
 	//collision test
 	tt_3d_object *col_cube=tt_3d_object_new();
 	tt_3d_object_make_cube(col_cube);
-	cube_pos.x=2;
+	cube_pos.y=2;
 	tt_3d_object_set_position(col_cube, &cube_pos);
 
 	tt_2d_object *col_txt=tt_2d_object_new();
@@ -63,7 +63,7 @@ int main()
 	i++;
 
 	//collision test
-	cube_pos.x-=0.005;
+	cube_pos.y-=0.005;
 	tt_3d_object_set_position(col_cube, &cube_pos);
 
 
