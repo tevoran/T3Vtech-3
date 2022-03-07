@@ -13,7 +13,23 @@ int main()
 	tt_3d_texture *crate=tt_3d_texture_new("assets/smiley.png", false);
 	tt_3d_object_use_texture(cube, crate);
 
+	//collision test
+	tt_3d_object *col_cube=tt_3d_object_new();
+	tt_3d_object_make_cube(col_cube);
+	cube_pos.x=2;
+	tt_3d_object_set_position(col_cube, &cube_pos);
 
+	tt_2d_object *col_txt=tt_2d_object_new();
+	tt_2d_object_make_sprite(col_txt);
+
+	tt_font *font=tt_font_open("assets/fonts/OpenSans-Light.ttf", 100);
+	tt_color_rgba_u8 txt_color={255,255,255,255};
+	tt_2d_texture *col_txt_tex=tt_2d_texture_make_text(font, "COLLIDING", txt_color);
+	tt_2d_object_use_texture(col_txt, col_txt_tex);
+	tt_vec2 col_txt_pos={-0.90,0.95};
+	tt_vec2 col_txt_scale={0.2,0.1};
+	tt_2d_object_scale(col_txt, &col_txt_scale);
+	tt_2d_object_set_position(col_txt, &col_txt_pos);
 
 	tt_vec3 dir_light_dir={-1,0,0};
 	tt_vec3 color_dir_light={1.0,0.0,0.0};
@@ -39,24 +55,6 @@ int main()
 	//fps cam test
 	tt_input_mouse_set_relative_mode(true);
 
-	//text test
-	tt_font *font=tt_font_open("assets/fonts/OpenSans-Regular.ttf", 100);
-	tt_2d_object *text_obj=tt_2d_object_new();
-	tt_2d_object_make_sprite(text_obj);
-	tt_color_rgba_u8 color={0,255,0,255};
-	tt_2d_texture *text_tex=tt_2d_texture_make_text(font, "test text message", color);
-	tt_2d_object_use_texture(text_obj, text_tex);
-
-
-	tt_vec2 sprite_pos={0.0,0.0};
-
-	tt_2d_object *sprite2=tt_2d_object_new();
-	tt_2d_object_make_sprite(sprite2);
-	tt_vec2 sprite_scale={0.3,0.3};
-	tt_2d_object_scale(sprite2, &sprite_scale);
-	tt_2d_texture *sprite2_tex=tt_2d_texture_new("assets/smiley_RGBA.png", false);
-	tt_2d_object_use_texture(sprite2, sprite2_tex);
-
 
 	float angle=0.0;
 	int i=0;
@@ -64,9 +62,15 @@ int main()
 	{
 	i++;
 
-	//sprite test
-	tt_2d_object_render(text_obj);
+	//collision test
+	cube_pos.x-=0.005;
+	tt_3d_object_set_position(col_cube, &cube_pos);
 
+
+	if(tt_3d_object_colliding_aabb(cube, col_cube))
+	{
+		tt_2d_object_render(col_txt);
+	}
 
 	//fps cam test
 	static float roll_radians=0;
@@ -93,8 +97,6 @@ int main()
 
 		tt_new_frame();
 	}
-
-//	tt_font_delete(&font);
 
 	return 0;
 }

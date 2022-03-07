@@ -127,3 +127,42 @@ float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object)
 {
 	return object->size_bounding_sphere;
 }
+
+//collisions
+bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b)
+{
+	//translation
+	tt_vec3 a_max;
+	a_max.x=a->aabb.x_max + a->translation.array[3][0];
+	a_max.y=a->aabb.y_max + a->translation.array[3][1];
+	a_max.z=a->aabb.z_max + a->translation.array[3][2];
+
+	tt_vec3 a_min;
+	a_min.x=a->aabb.x_min + a->translation.array[3][0];
+	a_min.y=a->aabb.y_min + a->translation.array[3][1];
+	a_min.z=a->aabb.z_min + a->translation.array[3][2];
+
+	tt_vec3 b_max;
+	b_max.x=b->aabb.x_max + b->translation.array[3][0];
+	b_max.y=b->aabb.y_max + b->translation.array[3][1];
+	b_max.z=b->aabb.z_max + b->translation.array[3][2];
+
+	tt_vec3 b_min;
+	b_min.x=b->aabb.x_min + b->translation.array[3][0];
+	b_min.y=b->aabb.y_min + b->translation.array[3][1];
+	b_min.z=b->aabb.z_min + b->translation.array[3][2];
+
+	//checking for collision
+	bool out=false;
+	if(	a_min.x <= b_max.x &&
+		a_max.x >= b_min.x &&
+		a_min.y <= b_max.y &&
+		a_max.y >= b_min.y &&
+		a_min.z <= b_max.z &&
+		a_max.z >= b_min.z)
+	{
+		out=true;
+	}
+
+	return out;
+}

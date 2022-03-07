@@ -65,4 +65,7 @@ void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle);
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object);
 
+//collisions
+bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b);
+
 #endif
