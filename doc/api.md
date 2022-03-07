@@ -468,6 +468,21 @@ A complete example for the creation of a new 2D text texture would look like thi
 tt_color_rgba_u8 color={0,255,0,255};
 tt_2d_texture *text_tex=tt_2d_texture_make_text(font, "test text message", color);
 ```
+### Fonts
+
+Fonts are used for rendering text into textures for sprites. Currently fonts and text are only used in 2D.
+
+Fonts can also be handled like other resources in T3Vtech-3. They have to be loaded to be used and once they are not necessary they need to be free'd manually.
+
+```c
+//loading a font into memory
+tt_font* tt_font_open(
+	const char* filename,
+	const int size_pt);
+
+//deleting a font from memory
+void tt_font_delete(tt_font **font);
+```
 
 ## Handling of Input
 
