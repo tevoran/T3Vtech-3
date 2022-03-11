@@ -18,9 +18,9 @@ int main()
 	tt_3d_object *col_cube=tt_3d_object_new();
 	//tt_3d_object_make_cube(col_cube);
 	tt_3d_object_use_custom_model(col_cube, col_model);
-	cube_pos.y=2;
+	cube_pos.y=1.05;
 	tt_3d_object_set_position(col_cube, &cube_pos);
-	tt_vec3 col_scale={0.04,0.04,0.04};
+	tt_vec3 col_scale={0.1,0.1,0.1};
 	tt_3d_object_scale(col_cube, &col_scale);
 
 	tt_2d_object *col_txt=tt_2d_object_new();
@@ -67,9 +67,11 @@ int main()
 	i++;
 
 	//collision test
-	cube_pos.y-=0.005;
+	//cube_pos.y-=0.005;
 	tt_3d_object_set_position(col_cube, &cube_pos);
 
+	tt_vec3 col_rot_axis={1,0,0};
+	tt_3d_object_rotate(col_cube, &col_rot_axis, 0.02);
 
 	if(tt_3d_object_colliding_aabb(cube, col_cube))
 	{

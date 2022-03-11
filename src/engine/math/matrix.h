@@ -22,6 +22,10 @@ struct tt_mat4
 //mat2 functions
 void tt_math_mat2_make_identity_matrix(tt_mat2 *mat);
 
+//mat3 functions
+tt_mat3 tt_math_mat4_crop_to_mat3(tt_mat4 *mat);
+tt_vec3 tt_math_mat3_mul_vec3(tt_mat3 *mat, tt_vec3 *vec);
+
 //mat4 functions
 void tt_math_mat4_make_identity_matrix(tt_mat4 *mat);
 void tt_math_mat4_make_projection_matrix(
@@ -32,9 +36,7 @@ void tt_math_mat4_make_projection_matrix(
 	const float near_clipping_plane,
 	const float far_clipping_plane);
 tt_mat4 tt_math_mat4_make_quat_rot_mat(tt_vec3 *rot_axis, float radians);
-
 tt_mat4 tt_math_mat4_mul(tt_mat4 *a, tt_mat4 *b); //a will be multiplied with b
-
 tt_mat4 tt_math_mat4_transpose(tt_mat4 *a);
 
 #endif

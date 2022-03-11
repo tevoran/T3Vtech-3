@@ -9,6 +9,37 @@ void tt_math_mat2_make_identity_matrix(tt_mat2 *mat)
 	mat->array[1][1]=1.0;
 }
 
+//mat3
+tt_mat3 tt_math_mat4_crop_to_mat3(tt_mat4 *mat)
+{
+	tt_mat3 out;
+	out.array[0][0]=mat->array[0][0];
+	out.array[0][1]=mat->array[0][1];
+	out.array[0][2]=mat->array[0][2];
+	out.array[1][0]=mat->array[1][0];
+	out.array[1][1]=mat->array[1][1];
+	out.array[1][2]=mat->array[1][2];
+	out.array[2][0]=mat->array[2][0];
+	out.array[2][1]=mat->array[2][1];
+	out.array[2][2]=mat->array[2][2];
+	return out;
+}
+
+tt_vec3 tt_math_mat3_mul_vec3(tt_mat3 *mat, tt_vec3 *vec)
+{
+	tt_vec3 out;
+	out.x=	mat->array[0][0] * vec->x
+			+ mat->array[0][1] * vec->y
+			+ mat->array[0][2] * vec->z;
+	out.y=	mat->array[1][0] * vec->x
+			+ mat->array[1][1] * vec->y
+			+ mat->array[1][2] * vec->z;
+	out.z=	mat->array[2][0] * vec->x
+			+ mat->array[2][1] * vec->y
+			+ mat->array[2][2] * vec->z;
+	return out;
+}
+
 //mat4
 
 float id_mat4[4][4]={

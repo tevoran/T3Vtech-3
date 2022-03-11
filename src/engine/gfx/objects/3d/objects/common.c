@@ -132,25 +132,381 @@ float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object)
 bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b)
 {
 	//transformations
+	//scaling
+	//object a
+	tt_vec3 a_x_max_tmp;
+		a_x_max_tmp.x=a->aabb.x_max * a->scale.array[0][0];
+		a_x_max_tmp.y=0;
+		a_x_max_tmp.z=0;
+	tt_vec3 a_x_min_tmp;
+		a_x_min_tmp.x=a->aabb.x_min * a->scale.array[0][0];
+		a_x_min_tmp.y=0;
+		a_x_min_tmp.z=0;
+	tt_vec3 a_y_max_tmp;
+		a_y_max_tmp.x=0;
+		a_y_max_tmp.y=a->aabb.y_max * a->scale.array[1][1];
+		a_y_max_tmp.z=0;
+	tt_vec3 a_y_min_tmp;
+		a_y_min_tmp.x=0;
+		a_y_min_tmp.y=a->aabb.y_min * a->scale.array[1][1];
+		a_y_min_tmp.z=0;
+	tt_vec3 a_z_max_tmp;
+		a_z_max_tmp.x=0;
+		a_z_max_tmp.y=0;
+		a_z_max_tmp.z=a->aabb.z_max * a->scale.array[2][2];
+	tt_vec3 a_z_min_tmp;
+		a_z_min_tmp.x=0;
+		a_z_min_tmp.y=0;
+		a_z_min_tmp.z=a->aabb.z_min * a->scale.array[2][2];
+
+	//object b
+	tt_vec3 b_x_max_tmp;
+		b_x_max_tmp.x=b->aabb.x_max * b->scale.array[0][0];
+		b_x_max_tmp.y=0;
+		b_x_max_tmp.z=0;
+	tt_vec3 b_x_min_tmp;
+		b_x_min_tmp.x=b->aabb.x_min * b->scale.array[0][0];
+		b_x_min_tmp.y=0;
+		b_x_min_tmp.z=0;
+	tt_vec3 b_y_max_tmp;
+		b_y_max_tmp.x=0;
+		b_y_max_tmp.y=b->aabb.y_max * b->scale.array[1][1];
+		b_y_max_tmp.z=0;
+	tt_vec3 b_y_min_tmp;
+		b_y_min_tmp.x=0;
+		b_y_min_tmp.y=b->aabb.y_min * b->scale.array[1][1];
+		b_y_min_tmp.z=0;
+	tt_vec3 b_z_max_tmp;
+		b_z_max_tmp.x=0;
+		b_z_max_tmp.y=0;
+		b_z_max_tmp.z=b->aabb.z_max * b->scale.array[2][2];
+	tt_vec3 b_z_min_tmp;
+		b_z_min_tmp.x=0;
+		b_z_min_tmp.y=0;
+		b_z_min_tmp.z=b->aabb.z_min * b->scale.array[2][2];
+
+	//rotation
+	tt_mat3 a_rot=tt_math_mat4_crop_to_mat3(&a->rotation);
+	tt_mat3 b_rot=tt_math_mat4_crop_to_mat3(&b->rotation);
+
+	//object a
+	a_x_max_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_x_max_tmp);
+	a_x_min_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_x_min_tmp);
+	a_y_max_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_y_max_tmp);
+	a_y_min_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_y_min_tmp);
+	a_z_max_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_z_max_tmp);
+	a_z_min_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_z_min_tmp);
+
+	//object b
+	b_x_max_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_x_max_tmp);
+	b_x_min_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_x_min_tmp);
+	b_y_max_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_y_max_tmp);
+	b_y_min_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_y_min_tmp);
+	b_z_max_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_z_max_tmp);
+	b_z_min_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_z_min_tmp);
+
+
+	//getting the new extreme values for the aabb after the rotation
+	//object a
 	tt_vec3 a_max;
-	a_max.x=a->aabb.x_max * a->scale.array[0][0] + a->translation.array[3][0];
-	a_max.y=a->aabb.y_max * a->scale.array[1][1] + a->translation.array[3][1];
-	a_max.z=a->aabb.z_max * a->scale.array[2][2] + a->translation.array[3][2];
+		//x max
+		a_max.x=a_x_max_tmp.x;
+		if(a_max.x < a_x_min_tmp.x)
+		{
+			a_max.x = a_x_min_tmp.x;
+		}
+		if(a_max.x < a_y_max_tmp.x)
+		{
+			a_max.x = a_y_max_tmp.x;
+		}
+		if(a_max.x < a_y_min_tmp.x)
+		{
+			a_max.x = a_y_min_tmp.x;
+		}
+		if(a_max.x < a_z_max_tmp.x)
+		{
+			a_max.x = a_z_max_tmp.x;
+		}
+		if(a_max.x < a_z_min_tmp.x)
+		{
+			a_max.x = a_z_min_tmp.x;
+		}
+
+		//y max
+		a_max.y=a_x_max_tmp.y;
+		if(a_max.y < a_x_min_tmp.y)
+		{
+			a_max.y = a_x_min_tmp.y;
+		}
+		if(a_max.y < a_y_max_tmp.y)
+		{
+			a_max.y = a_y_max_tmp.y;
+		}
+		if(a_max.y < a_y_min_tmp.y)
+		{
+			a_max.y = a_y_min_tmp.y;
+		}
+		if(a_max.y < a_z_max_tmp.y)
+		{
+			a_max.y = a_z_max_tmp.y;
+		}
+		if(a_max.y < a_z_min_tmp.y)
+		{
+			a_max.y = a_z_min_tmp.y;
+		}
+
+		//z max
+		a_max.z=a_x_max_tmp.z;
+		if(a_max.z < a_x_min_tmp.z)
+		{
+			a_max.z = a_x_min_tmp.z;
+		}
+		if(a_max.z < a_y_max_tmp.z)
+		{
+			a_max.z = a_y_max_tmp.z;
+		}
+		if(a_max.z < a_y_min_tmp.z)
+		{
+			a_max.z = a_y_min_tmp.z;
+		}
+		if(a_max.z < a_z_max_tmp.z)
+		{
+			a_max.z = a_z_max_tmp.z;
+		}
+		if(a_max.z < a_z_min_tmp.z)
+		{
+			a_max.z = a_z_min_tmp.z;
+		}
 
 	tt_vec3 a_min;
-	a_min.x=a->aabb.x_min * a->scale.array[0][0] + a->translation.array[3][0];
-	a_min.y=a->aabb.y_min * a->scale.array[1][1] + a->translation.array[3][1];
-	a_min.z=a->aabb.z_min * a->scale.array[2][2] + a->translation.array[3][2];
+		//x min
+		a_min.x=a_x_min_tmp.x;
+		if(a_min.x > a_x_min_tmp.x)
+		{
+			a_max.x = a_x_min_tmp.x;
+		}
+		if(a_min.x > a_y_max_tmp.x)
+		{
+			a_min.x = a_y_max_tmp.x;
+		}
+		if(a_min.x > a_y_min_tmp.x)
+		{
+			a_min.x = a_y_min_tmp.x;
+		}
+		if(a_min.x > a_z_max_tmp.x)
+		{
+			a_min.x = a_z_max_tmp.x;
+		}
+		if(a_min.x > a_z_min_tmp.x)
+		{
+			a_min.x = a_z_min_tmp.x;
+		}
 
+		//y min
+		a_min.y=a_x_max_tmp.y;
+		if(a_min.y > a_x_min_tmp.y)
+		{
+			a_min.y = a_x_min_tmp.y;
+		}
+		if(a_min.y > a_y_max_tmp.y)
+		{
+			a_min.y = a_y_max_tmp.y;
+		}
+		if(a_min.y > a_y_min_tmp.y)
+		{
+			a_min.y = a_y_min_tmp.y;
+		}
+		if(a_min.y > a_z_max_tmp.y)
+		{
+			a_min.y = a_z_max_tmp.y;
+		}
+		if(a_min.y > a_z_min_tmp.y)
+		{
+			a_min.y = a_z_min_tmp.y;
+		}
+
+		//z min
+		a_min.z=a_x_max_tmp.z;
+		if(a_min.z > a_x_min_tmp.z)
+		{
+			a_min.z = a_x_min_tmp.z;
+		}
+		if(a_min.z > a_y_max_tmp.z)
+		{
+			a_min.z = a_y_max_tmp.z;
+		}
+		if(a_min.z > a_y_min_tmp.z)
+		{
+			a_min.z = a_y_min_tmp.z;
+		}
+		if(a_min.z > a_z_max_tmp.z)
+		{
+			a_min.z = a_z_max_tmp.z;
+		}
+		if(a_min.z > a_z_min_tmp.z)
+		{
+			a_min.z = a_z_min_tmp.z;
+		}
+
+	//object b
 	tt_vec3 b_max;
-	b_max.x=b->aabb.x_max * b->scale.array[0][0] + b->translation.array[3][0];
-	b_max.y=b->aabb.y_max * b->scale.array[1][1] + b->translation.array[3][1];
-	b_max.z=b->aabb.z_max * b->scale.array[2][2] + b->translation.array[3][2];
+		//x max
+		b_max.x=b_x_max_tmp.x;
+		if(b_max.x < b_x_min_tmp.x)
+		{
+			b_max.x = b_x_min_tmp.x;
+		}
+		if(b_max.x < b_y_max_tmp.x)
+		{
+			b_max.x = b_y_max_tmp.x;
+		}
+		if(b_max.x < b_y_min_tmp.x)
+		{
+			b_max.x = b_y_min_tmp.x;
+		}
+		if(b_max.x < b_z_max_tmp.x)
+		{
+			b_max.x = b_z_max_tmp.x;
+		}
+		if(b_max.x < b_z_min_tmp.x)
+		{
+			b_max.x = b_z_min_tmp.x;
+		}
+
+		//y max
+		b_max.y=b_x_max_tmp.y;
+		if(b_max.y < b_x_min_tmp.y)
+		{
+			b_max.y = b_x_min_tmp.y;
+		}
+		if(b_max.y < b_y_max_tmp.y)
+		{
+			b_max.y = b_y_max_tmp.y;
+		}
+		if(b_max.y < b_y_min_tmp.y)
+		{
+			b_max.y = b_y_min_tmp.y;
+		}
+		if(b_max.y < b_z_max_tmp.y)
+		{
+			b_max.y = b_z_max_tmp.y;
+		}
+		if(b_max.y < b_z_min_tmp.y)
+		{
+			b_max.y = b_z_min_tmp.y;
+		}
+
+		//z max
+		b_max.z=b_x_max_tmp.z;
+		if(b_max.z < b_x_min_tmp.z)
+		{
+			b_max.z = b_x_min_tmp.z;
+		}
+		if(b_max.z < b_y_max_tmp.z)
+		{
+			b_max.z = b_y_max_tmp.z;
+		}
+		if(b_max.z < b_y_min_tmp.z)
+		{
+			b_max.z = b_y_min_tmp.z;
+		}
+		if(b_max.z < b_z_max_tmp.z)
+		{
+			b_max.z = b_z_max_tmp.z;
+		}
+		if(b_max.z < b_z_min_tmp.z)
+		{
+			b_max.z = b_z_min_tmp.z;
+		}
 
 	tt_vec3 b_min;
-	b_min.x=b->aabb.x_min * b->scale.array[0][0] + b->translation.array[3][0];
-	b_min.y=b->aabb.y_min * b->scale.array[1][1] + b->translation.array[3][1];
-	b_min.z=b->aabb.z_min * b->scale.array[2][2] + b->translation.array[3][2];
+		//x min
+		b_min.x=b_x_min_tmp.x;
+		if(b_min.x > b_x_min_tmp.x)
+		{
+			b_max.x = b_x_min_tmp.x;
+		}
+		if(b_min.x > b_y_max_tmp.x)
+		{
+			b_min.x = b_y_max_tmp.x;
+		}
+		if(b_min.x > b_y_min_tmp.x)
+		{
+			b_min.x = b_y_min_tmp.x;
+		}
+		if(b_min.x > b_z_max_tmp.x)
+		{
+			b_min.x = b_z_max_tmp.x;
+		}
+		if(b_min.x > b_z_min_tmp.x)
+		{
+			b_min.x = b_z_min_tmp.x;
+		}
+
+		//y min
+		b_min.y=b_x_max_tmp.y;
+		if(b_min.y > b_x_min_tmp.y)
+		{
+			b_min.y = b_x_min_tmp.y;
+		}
+		if(b_min.y > b_y_max_tmp.y)
+		{
+			b_min.y = b_y_max_tmp.y;
+		}
+		if(b_min.y > b_y_min_tmp.y)
+		{
+			b_min.y = b_y_min_tmp.y;
+		}
+		if(b_min.y > b_z_max_tmp.y)
+		{
+			b_min.y = b_z_max_tmp.y;
+		}
+		if(b_min.y > b_z_min_tmp.y)
+		{
+			b_min.y = b_z_min_tmp.y;
+		}
+
+		//z min
+		b_min.z=b_x_max_tmp.z;
+		if(b_min.z > b_x_min_tmp.z)
+		{
+			b_min.z = b_x_min_tmp.z;
+		}
+		if(b_min.z > b_y_max_tmp.z)
+		{
+			b_min.z = b_y_max_tmp.z;
+		}
+		if(b_min.z > b_y_min_tmp.z)
+		{
+			b_min.z = b_y_min_tmp.z;
+		}
+		if(b_min.z > b_z_max_tmp.z)
+		{
+			b_min.z = b_z_max_tmp.z;
+		}
+		if(b_min.z > b_z_min_tmp.z)
+		{
+			b_min.z = b_z_min_tmp.z;
+		}
+
+	//translation
+	//object a
+	a_max.x+=a->translation.array[3][0];
+	a_max.y+=a->translation.array[3][1];
+	a_max.z+=a->translation.array[3][2];
+
+	a_min.x+=a->translation.array[3][0];
+	a_min.y+=a->translation.array[3][1];
+	a_min.z+=a->translation.array[3][2];
+
+	//object b
+	b_max.x+=b->translation.array[3][0];
+	b_max.y+=b->translation.array[3][1];
+	b_max.z+=b->translation.array[3][2];
+
+	b_min.x+=b->translation.array[3][0];
+	b_min.y+=b->translation.array[3][1];
+	b_min.z+=b->translation.array[3][2];
 
 	//checking for collision
 	bool out=false;
@@ -166,3 +522,11 @@ bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b)
 
 	return out;
 }
+
+/*
+
+	x_max=1,0,0;
+	x_min=-1,0,0;
+	y_max=0,1,0;
+	y_min=0,-1,0;
+*/
