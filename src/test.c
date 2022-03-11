@@ -14,11 +14,13 @@ int main()
 	tt_3d_object_use_texture(cube, crate);
 
 	//collision test
+	tt_3d_custom_model *col_model=tt_3d_custom_model_load_file("assets/models/ship/ship.obj");
 	tt_3d_object *col_cube=tt_3d_object_new();
-	tt_3d_object_make_cube(col_cube);
+	//tt_3d_object_make_cube(col_cube);
+	tt_3d_object_use_custom_model(col_cube, col_model);
 	cube_pos.y=2;
 	tt_3d_object_set_position(col_cube, &cube_pos);
-	tt_vec3 col_scale={0.4,0.04,0.4};
+	tt_vec3 col_scale={0.04,0.04,0.04};
 	tt_3d_object_scale(col_cube, &col_scale);
 
 	tt_2d_object *col_txt=tt_2d_object_new();

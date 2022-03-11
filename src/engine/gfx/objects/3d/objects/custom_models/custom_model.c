@@ -8,6 +8,7 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 	GLfloat *vertex_data;
 	GLuint *index_data;
 	float size_bounding_sphere;
+	tt_3d_collision_aabb aabb;
 
 	//deciding the file type
 	//OBJ
@@ -20,7 +21,8 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 			&num_indices,
 			&vertex_data, 
 			&index_data,
-			&size_bounding_sphere))
+			&size_bounding_sphere,
+			&aabb))
 		{
 			return NULL;
 		}
@@ -41,9 +43,19 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 		printf("[ERROR] memory couldn't be allocated for a custom 3D model\n");
 		return NULL;
 	}
+	//saving data to the custom object's struct
 	model->num_verts=num_verts;
 	model->num_indices=num_indices;
 	model->size_bounding_sphere=size_bounding_sphere;
+	model->aabb=aabb;
+	/* aabb values;
+	printf("aabb: x_max: %f\n", model->aabb.x_max);
+	printf("aabb: x_min: %f\n", model->aabb.x_min);
+	printf("aabb: y_max: %f\n", model->aabb.y_max);
+	printf("aabb: y_min: %f\n", model->aabb.y_min);
+	printf("aabb: z_max: %f\n", model->aabb.z_max);
+	printf("aabb: z_min: %f\n", model->aabb.z_min);
+	*/
 
 	glGenVertexArrays(1, &model->vao);
 	glBindVertexArray(model->vao);

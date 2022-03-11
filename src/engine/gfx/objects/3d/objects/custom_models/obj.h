@@ -12,5 +12,6 @@ bool tt_3d_object_custom_model_load_obj_file(
 	int *num_indices,
 	GLfloat **vertex_data,
 	GLuint **index_data,
-	float *size_bounding_sphere);
+	float *size_bounding_sphere,
+	tt_3d_collision_aabb *aabb);
 #endif

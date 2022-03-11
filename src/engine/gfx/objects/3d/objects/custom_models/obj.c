@@ -12,9 +12,17 @@ bool tt_3d_object_custom_model_load_obj_file(
 	int *num_indices,
 	GLfloat **vertex_data,
 	GLuint **index_data,
-	float *size_bounding_sphere)
+	float *size_bounding_sphere,
+	tt_3d_collision_aabb *aabb)
 {
 	//outgoing variables
+	//set default parameters for the aabb
+	aabb->x_max=0.0;
+	aabb->y_max=0.0;
+	aabb->z_max=0.0;
+	aabb->x_min=0.0;
+	aabb->y_min=0.0;
+	aabb->z_min=0.0;
 	*num_indices=0;
 	*num_vertices=0;
 	*size_bounding_sphere=0;
@@ -116,12 +124,41 @@ bool tt_3d_object_custom_model_load_obj_file(
 				}
 
 				pos_array[i_pos]=tmp;
+
+				//getting the radius of the bounding sphere
 				float tmp_length=tt_math_vec3_length(&pos_array[i_pos]);
 				tmp_length*=2; //we need the diameter instead of the radius
 				if(*size_bounding_sphere < tmp_length)
 				{
 					*size_bounding_sphere=tmp_length;
 				}
+
+				//getting the size of the aabb
+				if(tmp.x > aabb->x_max)
+				{
+					aabb->x_max=tmp.x;
+				}
+				if(tmp.x < aabb->x_min)
+				{
+					aabb->x_min=tmp.x;
+				}
+				if(tmp.y > aabb->y_max)
+				{
+					aabb->y_max=tmp.y;
+				}
+				if(tmp.y < aabb->y_min)
+				{
+					aabb->y_min=tmp.y;
+				}
+				if(tmp.z > aabb->z_max)
+				{
+					aabb->z_max=tmp.z;
+				}
+				if(tmp.z < aabb->z_min)
+				{
+					aabb->z_min=tmp.z;
+				}
+
 				i_pos++;
 			}
 

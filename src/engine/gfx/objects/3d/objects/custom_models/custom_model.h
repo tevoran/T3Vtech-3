@@ -23,6 +23,11 @@ struct tt_3d_custom_model
 
 	//parameters
 	float size_bounding_sphere;
+
+	//collision properties
+	tt_3d_collision_aabb aabb; //its measurements derive from the mesh itself
+		//so it needs effectively transformed like the mesh itself to be usable
+
 } typedef tt_3d_custom_model;
 
 tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path);
