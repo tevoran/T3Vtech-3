@@ -5,6 +5,72 @@ extern tt_node *tt_3d_list_entry_node;
 
 extern GLuint tt_gfx_3d_default_tex; //default texture
 
+//helper functions
+float tt_helper_aabb_select_new_extreme_max(
+	float x_max,
+	float x_min, 
+	float y_max,
+	float y_min, 
+	float z_max,
+	float z_min)
+{
+	float out=x_max;
+	if(out < x_min)
+	{
+		out = x_min;
+	}
+	if(out < y_max)
+	{
+		out = y_max;
+	}
+	if(out < y_min)
+	{
+		out = y_min;
+	}
+	if(out < z_max)
+	{
+		out = z_max;
+	}
+	if(out < z_min)
+	{
+		out = z_min;
+	}
+	return out;
+}
+
+float tt_helper_aabb_select_new_extreme_min(
+	float x_max,
+	float x_min, 
+	float y_max,
+	float y_min, 
+	float z_max,
+	float z_min)
+{
+	float out=x_max;
+	if(out > x_min)
+	{
+		out = x_min;
+	}
+	if(out > y_max)
+	{
+		out = y_max;
+	}
+	if(out > y_min)
+	{
+		out = y_min;
+	}
+	if(out > z_max)
+	{
+		out = z_max;
+	}
+	if(out > z_min)
+	{
+		out = z_min;
+	}
+	return out;
+}
+
+
 tt_3d_object* tt_3d_object_new() 
 {
 	//creating the 3d object and putting it into the render list
@@ -210,284 +276,116 @@ bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b)
 	//object a
 	tt_vec3 a_max;
 		//x max
-		a_max.x=a_x_max_tmp.x;
-		if(a_max.x < a_x_min_tmp.x)
-		{
-			a_max.x = a_x_min_tmp.x;
-		}
-		if(a_max.x < a_y_max_tmp.x)
-		{
-			a_max.x = a_y_max_tmp.x;
-		}
-		if(a_max.x < a_y_min_tmp.x)
-		{
-			a_max.x = a_y_min_tmp.x;
-		}
-		if(a_max.x < a_z_max_tmp.x)
-		{
-			a_max.x = a_z_max_tmp.x;
-		}
-		if(a_max.x < a_z_min_tmp.x)
-		{
-			a_max.x = a_z_min_tmp.x;
-		}
+		a_max.x=tt_helper_aabb_select_new_extreme_max(
+			a_x_max_tmp.x,
+			a_x_min_tmp.x,
+			a_y_max_tmp.x,
+			a_y_min_tmp.x,
+			a_z_max_tmp.x,
+			a_z_min_tmp.x);
 
 		//y max
-		a_max.y=a_x_max_tmp.y;
-		if(a_max.y < a_x_min_tmp.y)
-		{
-			a_max.y = a_x_min_tmp.y;
-		}
-		if(a_max.y < a_y_max_tmp.y)
-		{
-			a_max.y = a_y_max_tmp.y;
-		}
-		if(a_max.y < a_y_min_tmp.y)
-		{
-			a_max.y = a_y_min_tmp.y;
-		}
-		if(a_max.y < a_z_max_tmp.y)
-		{
-			a_max.y = a_z_max_tmp.y;
-		}
-		if(a_max.y < a_z_min_tmp.y)
-		{
-			a_max.y = a_z_min_tmp.y;
-		}
+		a_max.y=tt_helper_aabb_select_new_extreme_max(
+			a_x_max_tmp.y,
+			a_x_min_tmp.y,
+			a_y_max_tmp.y,
+			a_y_min_tmp.y,
+			a_z_max_tmp.y,
+			a_z_min_tmp.y);
 
 		//z max
-		a_max.z=a_x_max_tmp.z;
-		if(a_max.z < a_x_min_tmp.z)
-		{
-			a_max.z = a_x_min_tmp.z;
-		}
-		if(a_max.z < a_y_max_tmp.z)
-		{
-			a_max.z = a_y_max_tmp.z;
-		}
-		if(a_max.z < a_y_min_tmp.z)
-		{
-			a_max.z = a_y_min_tmp.z;
-		}
-		if(a_max.z < a_z_max_tmp.z)
-		{
-			a_max.z = a_z_max_tmp.z;
-		}
-		if(a_max.z < a_z_min_tmp.z)
-		{
-			a_max.z = a_z_min_tmp.z;
-		}
+		a_max.z=tt_helper_aabb_select_new_extreme_max(
+			a_x_max_tmp.z,
+			a_x_min_tmp.z,
+			a_y_max_tmp.z,
+			a_y_min_tmp.z,
+			a_z_max_tmp.z,
+			a_z_min_tmp.z);
 
 	tt_vec3 a_min;
 		//x min
-		a_min.x=a_x_min_tmp.x;
-		if(a_min.x > a_x_min_tmp.x)
-		{
-			a_max.x = a_x_min_tmp.x;
-		}
-		if(a_min.x > a_y_max_tmp.x)
-		{
-			a_min.x = a_y_max_tmp.x;
-		}
-		if(a_min.x > a_y_min_tmp.x)
-		{
-			a_min.x = a_y_min_tmp.x;
-		}
-		if(a_min.x > a_z_max_tmp.x)
-		{
-			a_min.x = a_z_max_tmp.x;
-		}
-		if(a_min.x > a_z_min_tmp.x)
-		{
-			a_min.x = a_z_min_tmp.x;
-		}
+		a_min.x=tt_helper_aabb_select_new_extreme_min(
+			a_x_max_tmp.x,
+			a_x_min_tmp.x,
+			a_y_max_tmp.x,
+			a_y_min_tmp.x,
+			a_z_max_tmp.x,
+			a_z_min_tmp.x);
 
 		//y min
-		a_min.y=a_x_max_tmp.y;
-		if(a_min.y > a_x_min_tmp.y)
-		{
-			a_min.y = a_x_min_tmp.y;
-		}
-		if(a_min.y > a_y_max_tmp.y)
-		{
-			a_min.y = a_y_max_tmp.y;
-		}
-		if(a_min.y > a_y_min_tmp.y)
-		{
-			a_min.y = a_y_min_tmp.y;
-		}
-		if(a_min.y > a_z_max_tmp.y)
-		{
-			a_min.y = a_z_max_tmp.y;
-		}
-		if(a_min.y > a_z_min_tmp.y)
-		{
-			a_min.y = a_z_min_tmp.y;
-		}
+		a_min.y=tt_helper_aabb_select_new_extreme_min(
+			a_x_max_tmp.y,
+			a_x_min_tmp.y,
+			a_y_max_tmp.y,
+			a_y_min_tmp.y,
+			a_z_max_tmp.y,
+			a_z_min_tmp.y);
 
 		//z min
-		a_min.z=a_x_max_tmp.z;
-		if(a_min.z > a_x_min_tmp.z)
-		{
-			a_min.z = a_x_min_tmp.z;
-		}
-		if(a_min.z > a_y_max_tmp.z)
-		{
-			a_min.z = a_y_max_tmp.z;
-		}
-		if(a_min.z > a_y_min_tmp.z)
-		{
-			a_min.z = a_y_min_tmp.z;
-		}
-		if(a_min.z > a_z_max_tmp.z)
-		{
-			a_min.z = a_z_max_tmp.z;
-		}
-		if(a_min.z > a_z_min_tmp.z)
-		{
-			a_min.z = a_z_min_tmp.z;
-		}
+		a_min.z=tt_helper_aabb_select_new_extreme_min(
+			a_x_max_tmp.z,
+			a_x_min_tmp.z,
+			a_y_max_tmp.z,
+			a_y_min_tmp.z,
+			a_z_max_tmp.z,
+			a_z_min_tmp.z);
 
 	//object b
 	tt_vec3 b_max;
 		//x max
-		b_max.x=b_x_max_tmp.x;
-		if(b_max.x < b_x_min_tmp.x)
-		{
-			b_max.x = b_x_min_tmp.x;
-		}
-		if(b_max.x < b_y_max_tmp.x)
-		{
-			b_max.x = b_y_max_tmp.x;
-		}
-		if(b_max.x < b_y_min_tmp.x)
-		{
-			b_max.x = b_y_min_tmp.x;
-		}
-		if(b_max.x < b_z_max_tmp.x)
-		{
-			b_max.x = b_z_max_tmp.x;
-		}
-		if(b_max.x < b_z_min_tmp.x)
-		{
-			b_max.x = b_z_min_tmp.x;
-		}
+		b_max.x=tt_helper_aabb_select_new_extreme_max(
+			b_x_max_tmp.x,
+			b_x_min_tmp.x,
+			b_y_max_tmp.x,
+			b_y_min_tmp.x,
+			b_z_max_tmp.x,
+			b_z_min_tmp.x);
 
 		//y max
-		b_max.y=b_x_max_tmp.y;
-		if(b_max.y < b_x_min_tmp.y)
-		{
-			b_max.y = b_x_min_tmp.y;
-		}
-		if(b_max.y < b_y_max_tmp.y)
-		{
-			b_max.y = b_y_max_tmp.y;
-		}
-		if(b_max.y < b_y_min_tmp.y)
-		{
-			b_max.y = b_y_min_tmp.y;
-		}
-		if(b_max.y < b_z_max_tmp.y)
-		{
-			b_max.y = b_z_max_tmp.y;
-		}
-		if(b_max.y < b_z_min_tmp.y)
-		{
-			b_max.y = b_z_min_tmp.y;
-		}
+		b_max.y=tt_helper_aabb_select_new_extreme_max(
+			b_x_max_tmp.y,
+			b_x_min_tmp.y,
+			b_y_max_tmp.y,
+			b_y_min_tmp.y,
+			b_z_max_tmp.y,
+			b_z_min_tmp.y);
 
 		//z max
-		b_max.z=b_x_max_tmp.z;
-		if(b_max.z < b_x_min_tmp.z)
-		{
-			b_max.z = b_x_min_tmp.z;
-		}
-		if(b_max.z < b_y_max_tmp.z)
-		{
-			b_max.z = b_y_max_tmp.z;
-		}
-		if(b_max.z < b_y_min_tmp.z)
-		{
-			b_max.z = b_y_min_tmp.z;
-		}
-		if(b_max.z < b_z_max_tmp.z)
-		{
-			b_max.z = b_z_max_tmp.z;
-		}
-		if(b_max.z < b_z_min_tmp.z)
-		{
-			b_max.z = b_z_min_tmp.z;
-		}
+		b_max.z=tt_helper_aabb_select_new_extreme_max(
+			b_x_max_tmp.z,
+			b_x_min_tmp.z,
+			b_y_max_tmp.z,
+			b_y_min_tmp.z,
+			b_z_max_tmp.z,
+			b_z_min_tmp.z);
 
 	tt_vec3 b_min;
 		//x min
-		b_min.x=b_x_min_tmp.x;
-		if(b_min.x > b_x_min_tmp.x)
-		{
-			b_max.x = b_x_min_tmp.x;
-		}
-		if(b_min.x > b_y_max_tmp.x)
-		{
-			b_min.x = b_y_max_tmp.x;
-		}
-		if(b_min.x > b_y_min_tmp.x)
-		{
-			b_min.x = b_y_min_tmp.x;
-		}
-		if(b_min.x > b_z_max_tmp.x)
-		{
-			b_min.x = b_z_max_tmp.x;
-		}
-		if(b_min.x > b_z_min_tmp.x)
-		{
-			b_min.x = b_z_min_tmp.x;
-		}
+		b_min.x=tt_helper_aabb_select_new_extreme_min(
+			b_x_max_tmp.x,
+			b_x_min_tmp.x,
+			b_y_max_tmp.x,
+			b_y_min_tmp.x,
+			b_z_max_tmp.x,
+			b_z_min_tmp.x);
 
 		//y min
-		b_min.y=b_x_max_tmp.y;
-		if(b_min.y > b_x_min_tmp.y)
-		{
-			b_min.y = b_x_min_tmp.y;
-		}
-		if(b_min.y > b_y_max_tmp.y)
-		{
-			b_min.y = b_y_max_tmp.y;
-		}
-		if(b_min.y > b_y_min_tmp.y)
-		{
-			b_min.y = b_y_min_tmp.y;
-		}
-		if(b_min.y > b_z_max_tmp.y)
-		{
-			b_min.y = b_z_max_tmp.y;
-		}
-		if(b_min.y > b_z_min_tmp.y)
-		{
-			b_min.y = b_z_min_tmp.y;
-		}
+		b_min.y=tt_helper_aabb_select_new_extreme_min(
+			b_x_max_tmp.y,
+			b_x_min_tmp.y,
+			b_y_max_tmp.y,
+			b_y_min_tmp.y,
+			b_z_max_tmp.y,
+			b_z_min_tmp.y);
 
 		//z min
-		b_min.z=b_x_max_tmp.z;
-		if(b_min.z > b_x_min_tmp.z)
-		{
-			b_min.z = b_x_min_tmp.z;
-		}
-		if(b_min.z > b_y_max_tmp.z)
-		{
-			b_min.z = b_y_max_tmp.z;
-		}
-		if(b_min.z > b_y_min_tmp.z)
-		{
-			b_min.z = b_y_min_tmp.z;
-		}
-		if(b_min.z > b_z_max_tmp.z)
-		{
-			b_min.z = b_z_max_tmp.z;
-		}
-		if(b_min.z > b_z_min_tmp.z)
-		{
-			b_min.z = b_z_min_tmp.z;
-		}
+		b_min.z=tt_helper_aabb_select_new_extreme_min(
+			b_x_max_tmp.z,
+			b_x_min_tmp.z,
+			b_y_max_tmp.z,
+			b_y_min_tmp.z,
+			b_z_max_tmp.z,
+			b_z_min_tmp.z);
 
 	//translation
 	//object a
