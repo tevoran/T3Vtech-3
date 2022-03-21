@@ -269,6 +269,16 @@ tt_3d_object_use_texture(quad, tex);
 tt_3d_texture_delete(&tex);
 ```
 
+#### Collisions
+
+It can be checked if two 3D objects are colliding with each other.
+
+Currently only axis aligned bounding boxes are available. But they follow the scaling and rotation of the initial model. Sadly the rotations can make the aabb somewhat inaccurate which needs to be considered if rotating is necessary. Besides that the return value is true if there is a collision and is false if there is none.
+
+```c
+bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b);
+```
+
 ### Lighting
 
 #### Ambient Light
