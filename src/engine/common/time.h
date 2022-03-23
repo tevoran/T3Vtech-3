@@ -2,6 +2,7 @@
 #define TT_TIME_H
 
 
+void tt_time_init();
 void tt_time_update();
 long tt_time_current_ns();
 long tt_time_current_frame_ns();

@@ -7,6 +7,11 @@ long time_new_frame_ns=0;
 long time_delta_frame_ns=0;
 float time_delta_frame_s=0;
 
+void tt_time_init() //initialize the last frame value because of UNIX time and so on
+{
+	time_last_frame_ns=tt_time_current_ns();
+}
+
 void tt_time_update()
 {
 	time_new_frame_ns=tt_time_current_ns();

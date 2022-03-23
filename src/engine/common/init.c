@@ -188,5 +188,8 @@ bool tt_init(
 	tt_input_mouse_init();
 	tt_input_controller_add_mappings();
 
+	//init time
+	tt_time_init();
+
 	return true;
 }
