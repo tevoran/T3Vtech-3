@@ -19,11 +19,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 #find_library(SDL2_mixer SDL2_mixer)
 find_package(GLEW REQUIRED)
-if (WIN32)
-    find_package(OPENGL REQUIRED)
-else()
-    find_package(OpenGL REQUIRED)
-endif()
+find_package(OpenGL REQUIRED)
 
 
 #creating the library

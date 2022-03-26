@@ -62,3 +62,6 @@ cmake ..
 make
 ```
 
+## Windows-specific Build Steps
+
+Ensure that SDL2, SDL2_ttf and GLEW are on your system and that they are listed on your PATH. CMake should then be able to find these dependencies at build-time. At runtime there may be errors related to missing DLLs. Copy these into the folder where the executable is outputted to (likely ```build/Debug```).
