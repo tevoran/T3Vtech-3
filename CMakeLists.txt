@@ -19,7 +19,11 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 #find_library(SDL2_mixer SDL2_mixer)
 find_package(GLEW REQUIRED)
-find_package(OPENGL REQUIRED)
+if (WIN32)
+    find_package(OPENGL REQUIRED)
+else()
+    find_library(GL GL)
+endif()
 
 
 #creating the library
@@ -30,7 +34,12 @@ add_library(T3Vtech STATIC ${engine})
 
 target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_LIBRARIES}")
 target_link_libraries(T3Vtech LINK_PRIVATE "${GLEW_LIBRARIES}")
-target_link_libraries(T3Vtech LINK_PRIVATE "${OPENGL_LIBRARIES}")
+if (WIN32)
+    target_link_libraries(T3Vtech LINK_PRIVATE "${OPENGL_LIBRARIES}")
+else()
+    target_link_libraries(T3Vtech LINK_PRIVATE "${GL}")
+endif()
+
 if (NOT MSVC)
     target_link_libraries(T3Vtech LINK_PRIVATE m)
 endif()
