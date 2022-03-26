@@ -1,6 +1,6 @@
 #include <shooting-range.hpp>
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	sr::sr sr; //starting the game
 	sr::player player;

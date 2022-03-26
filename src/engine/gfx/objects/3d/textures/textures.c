@@ -74,6 +74,7 @@ tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering
 		iy_origin++;
 	}
 
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, image_flip);
 	stbi_image_free(image_data);
 	free(image_flip);

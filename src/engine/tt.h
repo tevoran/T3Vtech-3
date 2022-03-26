@@ -13,8 +13,8 @@
 #include <math.h>
 
 //vendor
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include <GL/glew.h>
 #include <stb_image.h>
 
@@ -36,4 +36,4 @@
 	}
 #endif
 
-#endif 
+#endif /* TT_H */

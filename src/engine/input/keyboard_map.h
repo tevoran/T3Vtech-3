@@ -1,7 +1,7 @@
 #ifndef TT_INPUT_KEYBOARDMAP_H
 #define TT_INPUT_KEYBOARDMAP_H
 
-#include <SDL2/SDL.h>
+#include <tt.h>
 
 //this is a remap of the SDL scancodes
 //for more information look at this URL

@@ -6,7 +6,7 @@ extern uint32_t tt_desktop_res_x;
 extern uint32_t tt_desktop_res_y;
 extern SDL_GLContext tt_glcontext;
 
-void tt_quit()
+void tt_quit(void)
 {
 	//quitting the graphics system
 	tt_gfx_quit(tt_quiet);

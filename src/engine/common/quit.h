@@ -3,6 +3,6 @@
 
 #include <tt.h>
 
-void tt_quit();
+void tt_quit(void );
 
 #endif

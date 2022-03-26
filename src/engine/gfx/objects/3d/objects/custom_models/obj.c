@@ -1,5 +1,7 @@
 #include <tt.h>
 
+#include <string.h>
+
 #define LINE_LENGTH 1024
 
 
@@ -76,8 +78,8 @@ bool tt_3d_object_custom_model_load_obj_file(
 				while(token)
 				{
 					int elem_read=0;
-					float tmp_a, tmp_b, tmp_c;
-					elem_read=sscanf(token, "%f/%f/%f", &tmp_a, &tmp_b, &tmp_c);
+					int tmp_a, tmp_b, tmp_c;
+					elem_read=sscanf(token, "%d/%d/%d", &tmp_a, &tmp_b, &tmp_c);
 					//when face contains vertices count them
 					if(elem_read>0)
 					{
