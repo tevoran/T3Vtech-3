@@ -29,7 +29,6 @@ bool tt_init(
 	//zero as return value means everything is fine
 	if(0!=SDL_Init(
 		SDL_INIT_TIMER |
-		SDL_INIT_AUDIO |
 		SDL_INIT_VIDEO |
 		SDL_INIT_EVENTS|
 		SDL_INIT_GAMECONTROLLER))
@@ -190,6 +189,8 @@ bool tt_init(
 
 	//init time
 	tt_time_init();
+
+	tt_audio_init();
 
 	return true;
 }
