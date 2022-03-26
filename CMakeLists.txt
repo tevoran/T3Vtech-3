@@ -22,7 +22,7 @@ find_package(GLEW REQUIRED)
 if (WIN32)
     find_package(OPENGL REQUIRED)
 else()
-    find_library(GL GL)
+    find_package(OpenGL REQUIRED)
 endif()
 
 
@@ -34,12 +34,7 @@ add_library(T3Vtech STATIC ${engine})
 
 target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_LIBRARIES}")
 target_link_libraries(T3Vtech LINK_PRIVATE "${GLEW_LIBRARIES}")
-if (WIN32)
-    target_link_libraries(T3Vtech LINK_PRIVATE "${OPENGL_LIBRARIES}")
-else()
-    target_link_libraries(T3Vtech LINK_PRIVATE "${GL}")
-endif()
-
+target_link_libraries(T3Vtech LINK_PRIVATE "${OPENGL_LIBRARIES}")
 if (NOT MSVC)
     target_link_libraries(T3Vtech LINK_PRIVATE m)
 endif()
