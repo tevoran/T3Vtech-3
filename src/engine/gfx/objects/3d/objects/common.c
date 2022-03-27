@@ -1,76 +1,13 @@
 #include <tt.h>
 
+#include <float.h>
+
 //this is the beginning of the 3D object rendering list
 extern tt_node *tt_3d_list_entry_node;
 
 extern GLuint tt_gfx_3d_default_tex; //default texture
 
 //helper functions
-float tt_helper_aabb_select_new_extreme_max(
-	float x_max,
-	float x_min, 
-	float y_max,
-	float y_min, 
-	float z_max,
-	float z_min)
-{
-	float out=x_max;
-	if(out < x_min)
-	{
-		out = x_min;
-	}
-	if(out < y_max)
-	{
-		out = y_max;
-	}
-	if(out < y_min)
-	{
-		out = y_min;
-	}
-	if(out < z_max)
-	{
-		out = z_max;
-	}
-	if(out < z_min)
-	{
-		out = z_min;
-	}
-	return out;
-}
-
-float tt_helper_aabb_select_new_extreme_min(
-	float x_max,
-	float x_min, 
-	float y_max,
-	float y_min, 
-	float z_max,
-	float z_min)
-{
-	float out=x_max;
-	if(out > x_min)
-	{
-		out = x_min;
-	}
-	if(out > y_max)
-	{
-		out = y_max;
-	}
-	if(out > y_min)
-	{
-		out = y_min;
-	}
-	if(out > z_max)
-	{
-		out = z_max;
-	}
-	if(out > z_min)
-	{
-		out = z_min;
-	}
-	return out;
-}
-
-
 tt_3d_object* tt_3d_object_new() 
 {
 	//creating the 3d object and putting it into the render list
@@ -94,16 +31,12 @@ tt_3d_object* tt_3d_object_new()
 
 	new_object->texture=tt_gfx_3d_default_tex;
 	new_object->lighting_affected=true;
-	new_object->size_bounding_sphere=0;
+	new_object->bounding_sphere_radius=0;
 	new_object->invisibility_toggle=false; //make visible by default
 
 	//setting the aabb to defaults
-	new_object->aabb.x_max=0.0;
-	new_object->aabb.x_min=0.0;
-	new_object->aabb.y_max=0.0;
-	new_object->aabb.y_min=0.0;
-	new_object->aabb.z_max=0.0;
-	new_object->aabb.z_min=0.0;
+	new_object->aabb.max = (tt_vec3){ 0, 0, 0 };
+	new_object->aabb.min = (tt_vec3){ 0, 0, 0 };
 
 	return new_object;
 }
@@ -191,234 +124,68 @@ void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle)
 //getting object properties
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object)
 {
-	return object->size_bounding_sphere;
+	return object->bounding_sphere_radius;
+}
+
+void tt_3d_aabb_after_world_transform(tt_3d_object *obj, tt_3d_collision_aabb *aabb) {
+	tt_vec3 vertices[8];
+	const tt_vec3 bounds[2] = { obj->aabb.min, obj->aabb.max };
+	for (int i=0; i<2; ++i)
+	{
+		for (int j=0; j<2; ++j)
+		{
+			for (int k=0; k<2; ++k)
+			{
+				vertices[i*4+j*2+k*1].x = bounds[i].x;
+				vertices[i*4+j*2+k*1].y = bounds[j].y;
+				vertices[i*4+j*2+k*1].z = bounds[k].z;
+			}
+		}
+	}
+
+	tt_vec3 scale = (tt_vec3)
+	{
+		obj->scale.array[0][0],
+		obj->scale.array[1][1],
+		obj->scale.array[2][2],
+	};
+
+	tt_vec3 translation = (tt_vec3)
+	{
+		obj->translation.array[3][0],
+		obj->translation.array[3][1],
+		obj->translation.array[3][2]
+	};
+
+	tt_mat3 rotation = tt_math_mat4_crop_to_mat3(&obj->rotation);
+
+	aabb->min = (tt_vec3){ FLT_MAX, FLT_MAX, FLT_MAX };
+	aabb->max = (tt_vec3){ FLT_MIN, FLT_MIN, FLT_MIN };
+
+	for (int i=0; i<8; ++i)
+	{
+		vertices[i] = tt_math_vec3_mul(&vertices[i], &scale);
+		vertices[i] = tt_math_mat3_mul_vec3(&rotation, &vertices[i]);
+		vertices[i] = tt_math_vec3_add(&vertices[i], &translation);
+
+		aabb->min = tt_math_vec3_min(&aabb->min, &vertices[i]);
+		aabb->max = tt_math_vec3_max(&aabb->max, &vertices[i]);
+	}
 }
 
 //collisions
 bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b)
 {
-	//transformations
-	//scaling
-	//object a
-	tt_vec3 a_x_max_tmp;
-		a_x_max_tmp.x=a->aabb.x_max * a->scale.array[0][0];
-		a_x_max_tmp.y=0;
-		a_x_max_tmp.z=0;
-	tt_vec3 a_x_min_tmp;
-		a_x_min_tmp.x=a->aabb.x_min * a->scale.array[0][0];
-		a_x_min_tmp.y=0;
-		a_x_min_tmp.z=0;
-	tt_vec3 a_y_max_tmp;
-		a_y_max_tmp.x=0;
-		a_y_max_tmp.y=a->aabb.y_max * a->scale.array[1][1];
-		a_y_max_tmp.z=0;
-	tt_vec3 a_y_min_tmp;
-		a_y_min_tmp.x=0;
-		a_y_min_tmp.y=a->aabb.y_min * a->scale.array[1][1];
-		a_y_min_tmp.z=0;
-	tt_vec3 a_z_max_tmp;
-		a_z_max_tmp.x=0;
-		a_z_max_tmp.y=0;
-		a_z_max_tmp.z=a->aabb.z_max * a->scale.array[2][2];
-	tt_vec3 a_z_min_tmp;
-		a_z_min_tmp.x=0;
-		a_z_min_tmp.y=0;
-		a_z_min_tmp.z=a->aabb.z_min * a->scale.array[2][2];
+	tt_3d_collision_aabb a_aabb, b_aabb;
+	tt_3d_aabb_after_world_transform(a, &a_aabb);
+	tt_3d_aabb_after_world_transform(b, &b_aabb);
 
-	//object b
-	tt_vec3 b_x_max_tmp;
-		b_x_max_tmp.x=b->aabb.x_max * b->scale.array[0][0];
-		b_x_max_tmp.y=0;
-		b_x_max_tmp.z=0;
-	tt_vec3 b_x_min_tmp;
-		b_x_min_tmp.x=b->aabb.x_min * b->scale.array[0][0];
-		b_x_min_tmp.y=0;
-		b_x_min_tmp.z=0;
-	tt_vec3 b_y_max_tmp;
-		b_y_max_tmp.x=0;
-		b_y_max_tmp.y=b->aabb.y_max * b->scale.array[1][1];
-		b_y_max_tmp.z=0;
-	tt_vec3 b_y_min_tmp;
-		b_y_min_tmp.x=0;
-		b_y_min_tmp.y=b->aabb.y_min * b->scale.array[1][1];
-		b_y_min_tmp.z=0;
-	tt_vec3 b_z_max_tmp;
-		b_z_max_tmp.x=0;
-		b_z_max_tmp.y=0;
-		b_z_max_tmp.z=b->aabb.z_max * b->scale.array[2][2];
-	tt_vec3 b_z_min_tmp;
-		b_z_min_tmp.x=0;
-		b_z_min_tmp.y=0;
-		b_z_min_tmp.z=b->aabb.z_min * b->scale.array[2][2];
-
-	//rotation
-	tt_mat3 a_rot=tt_math_mat4_crop_to_mat3(&a->rotation);
-	tt_mat3 b_rot=tt_math_mat4_crop_to_mat3(&b->rotation);
-
-	//object a
-	a_x_max_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_x_max_tmp);
-	a_x_min_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_x_min_tmp);
-	a_y_max_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_y_max_tmp);
-	a_y_min_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_y_min_tmp);
-	a_z_max_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_z_max_tmp);
-	a_z_min_tmp=tt_math_mat3_mul_vec3(&a_rot, &a_z_min_tmp);
-
-	//object b
-	b_x_max_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_x_max_tmp);
-	b_x_min_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_x_min_tmp);
-	b_y_max_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_y_max_tmp);
-	b_y_min_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_y_min_tmp);
-	b_z_max_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_z_max_tmp);
-	b_z_min_tmp=tt_math_mat3_mul_vec3(&b_rot, &b_z_min_tmp);
-
-
-	//getting the new extreme values for the aabb after the rotation
-	//object a
-	tt_vec3 a_max;
-		//x max
-		a_max.x=tt_helper_aabb_select_new_extreme_max(
-			a_x_max_tmp.x,
-			a_x_min_tmp.x,
-			a_y_max_tmp.x,
-			a_y_min_tmp.x,
-			a_z_max_tmp.x,
-			a_z_min_tmp.x);
-
-		//y max
-		a_max.y=tt_helper_aabb_select_new_extreme_max(
-			a_x_max_tmp.y,
-			a_x_min_tmp.y,
-			a_y_max_tmp.y,
-			a_y_min_tmp.y,
-			a_z_max_tmp.y,
-			a_z_min_tmp.y);
-
-		//z max
-		a_max.z=tt_helper_aabb_select_new_extreme_max(
-			a_x_max_tmp.z,
-			a_x_min_tmp.z,
-			a_y_max_tmp.z,
-			a_y_min_tmp.z,
-			a_z_max_tmp.z,
-			a_z_min_tmp.z);
-
-	tt_vec3 a_min;
-		//x min
-		a_min.x=tt_helper_aabb_select_new_extreme_min(
-			a_x_max_tmp.x,
-			a_x_min_tmp.x,
-			a_y_max_tmp.x,
-			a_y_min_tmp.x,
-			a_z_max_tmp.x,
-			a_z_min_tmp.x);
-
-		//y min
-		a_min.y=tt_helper_aabb_select_new_extreme_min(
-			a_x_max_tmp.y,
-			a_x_min_tmp.y,
-			a_y_max_tmp.y,
-			a_y_min_tmp.y,
-			a_z_max_tmp.y,
-			a_z_min_tmp.y);
-
-		//z min
-		a_min.z=tt_helper_aabb_select_new_extreme_min(
-			a_x_max_tmp.z,
-			a_x_min_tmp.z,
-			a_y_max_tmp.z,
-			a_y_min_tmp.z,
-			a_z_max_tmp.z,
-			a_z_min_tmp.z);
-
-	//object b
-	tt_vec3 b_max;
-		//x max
-		b_max.x=tt_helper_aabb_select_new_extreme_max(
-			b_x_max_tmp.x,
-			b_x_min_tmp.x,
-			b_y_max_tmp.x,
-			b_y_min_tmp.x,
-			b_z_max_tmp.x,
-			b_z_min_tmp.x);
-
-		//y max
-		b_max.y=tt_helper_aabb_select_new_extreme_max(
-			b_x_max_tmp.y,
-			b_x_min_tmp.y,
-			b_y_max_tmp.y,
-			b_y_min_tmp.y,
-			b_z_max_tmp.y,
-			b_z_min_tmp.y);
-
-		//z max
-		b_max.z=tt_helper_aabb_select_new_extreme_max(
-			b_x_max_tmp.z,
-			b_x_min_tmp.z,
-			b_y_max_tmp.z,
-			b_y_min_tmp.z,
-			b_z_max_tmp.z,
-			b_z_min_tmp.z);
-
-	tt_vec3 b_min;
-		//x min
-		b_min.x=tt_helper_aabb_select_new_extreme_min(
-			b_x_max_tmp.x,
-			b_x_min_tmp.x,
-			b_y_max_tmp.x,
-			b_y_min_tmp.x,
-			b_z_max_tmp.x,
-			b_z_min_tmp.x);
-
-		//y min
-		b_min.y=tt_helper_aabb_select_new_extreme_min(
-			b_x_max_tmp.y,
-			b_x_min_tmp.y,
-			b_y_max_tmp.y,
-			b_y_min_tmp.y,
-			b_z_max_tmp.y,
-			b_z_min_tmp.y);
-
-		//z min
-		b_min.z=tt_helper_aabb_select_new_extreme_min(
-			b_x_max_tmp.z,
-			b_x_min_tmp.z,
-			b_y_max_tmp.z,
-			b_y_min_tmp.z,
-			b_z_max_tmp.z,
-			b_z_min_tmp.z);
-
-	//translation
-	//object a
-	a_max.x+=a->translation.array[3][0];
-	a_max.y+=a->translation.array[3][1];
-	a_max.z+=a->translation.array[3][2];
-
-	a_min.x+=a->translation.array[3][0];
-	a_min.y+=a->translation.array[3][1];
-	a_min.z+=a->translation.array[3][2];
-
-	//object b
-	b_max.x+=b->translation.array[3][0];
-	b_max.y+=b->translation.array[3][1];
-	b_max.z+=b->translation.array[3][2];
-
-	b_min.x+=b->translation.array[3][0];
-	b_min.y+=b->translation.array[3][1];
-	b_min.z+=b->translation.array[3][2];
-
-	//checking for collision
-	bool out=false;
-	if(	a_min.x <= b_max.x &&
-		a_max.x >= b_min.x &&
-		a_min.y <= b_max.y &&
-		a_max.y >= b_min.y &&
-		a_min.z <= b_max.z &&
-		a_max.z >= b_min.z)
-	{
-		out=true;
-	}
-
-	return out;
+	return a_aabb.max.x >= b_aabb.min.x
+		&& a_aabb.min.x <= b_aabb.max.x
+		&& a_aabb.max.y >= b_aabb.min.y
+		&& a_aabb.min.y <= b_aabb.max.x
+		&& a_aabb.max.z >= b_aabb.min.z
+		&& a_aabb.min.z <= b_aabb.max.z;
 }
 
 /*

@@ -22,7 +22,7 @@ struct tt_3d_custom_model
 	uint32_t num_indices;
 
 	//parameters
-	float size_bounding_sphere;
+	float bounding_sphere_radius;
 
 	//collision properties
 	tt_3d_collision_aabb aabb; //its measurements derive from the mesh itself

@@ -1,6 +1,5 @@
 #include <tt.h>
 
-
 void tt_gfx_render()
 {
 	//render 3D stuff

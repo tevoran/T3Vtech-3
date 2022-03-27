@@ -7,7 +7,6 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 	int num_indices;
 	GLfloat *vertex_data;
 	GLuint *index_data;
-	float size_bounding_sphere;
 	tt_3d_collision_aabb aabb;
 
 	//deciding the file type
@@ -21,7 +20,6 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 			&num_indices,
 			&vertex_data, 
 			&index_data,
-			&size_bounding_sphere,
 			&aabb))
 		{
 			return NULL;
@@ -46,7 +44,7 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 	//saving data to the custom object's struct
 	model->num_verts=num_verts;
 	model->num_indices=num_indices;
-	model->size_bounding_sphere=size_bounding_sphere;
+	model->bounding_sphere_radius=tt_3d_aabb_get_radius(&aabb);
 	model->aabb=aabb;
 	/* aabb values;
 	printf("aabb: x_max: %f\n", model->aabb.x_max);

@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	tt_3d_object *col_cube=tt_3d_object_new();
 	//tt_3d_object_make_cube(col_cube);
 	tt_3d_object_use_custom_model(col_cube, col_model);
-	cube_pos.y=1.05;
+	cube_pos.y=1.5;
 	tt_3d_object_set_position(col_cube, &cube_pos);
 	tt_vec3 col_scale={0.1,0.1,0.1};
 	tt_3d_object_scale(col_cube, &col_scale);
@@ -64,36 +64,36 @@ int main(int argc, char *argv[])
 	int i=0;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
-	i++;
+		i++;
 
-	//collision test
-	//cube_pos.y-=0.005;
-	tt_3d_object_set_position(col_cube, &cube_pos);
+		//collision test
+		//cube_pos.y-=0.005;
+		tt_3d_object_set_position(col_cube, &cube_pos);
 
-	tt_vec3 col_rot_axis={1,0,0};
-	tt_3d_object_rotate(col_cube, &col_rot_axis, 0.02);
+		tt_vec3 col_rot_axis={1,0,0};
+		tt_3d_object_rotate(col_cube, &col_rot_axis, 0.02);
 
-	if(tt_3d_object_colliding_aabb(cube, col_cube))
-	{
-		tt_2d_object_render(col_txt);
-	}
+		if(tt_3d_object_colliding_aabb(cube, col_cube))
+		{
+			tt_2d_object_render(col_txt);
+		}
 
-	//fps cam test
-	static float roll_radians=0;
-	static float pitch_radians=0;
+		//fps cam test
+		static float roll_radians=0;
+		static float pitch_radians=0;
 
-	int dx, dy;
-	float time=tt_time_current_frame_s();
-	tt_input_mouse_relative_motion(&dx, &dy);
-	roll_radians+=(float)dy * time * 0.02;
-	pitch_radians+=(float)dx * time * 0.02;
-	tt_camera_fps(roll_radians, pitch_radians);
+		int dx, dy;
+		float time=tt_time_current_frame_s();
+		tt_input_mouse_relative_motion(&dx, &dy);
+		roll_radians+=(float)dy * time * 0.02;
+		pitch_radians+=(float)dx * time * 0.02;
+		tt_camera_fps(roll_radians, pitch_radians);
 
-	tt_vec3 rot_axis={1,1,0};
-	if(tt_input_mouse_button_down(TT_MOUSE_LEFT))
-	{
-		tt_3d_object_rotate(cube, &rot_axis, 0.01);
-	}
+		tt_vec3 rot_axis={1,1,0};
+		if(tt_input_mouse_button_down(TT_MOUSE_LEFT))
+		{
+			tt_3d_object_rotate(cube, &rot_axis, 0.01);
+		}
 
 		tt_directional_light_delete(l2);
 		l2=tt_directional_light_new();

@@ -48,6 +48,7 @@ target_link_libraries(T3Vtech LINK_PRIVATE "${SDL2_TTF_LIBRARY}")
 include_directories("${SDL2_INCLUDE_DIRS}")
 include_directories("${SDL2_TTF_INCLUDE_DIRS}")
 include_directories("${GLEW_INCLUDE_DIR}")
+include_directories("${OPENAL_INCLUDE_DIR}")
 
 #creating library test
 file(GLOB_RECURSE "test" SRC src/test.c)

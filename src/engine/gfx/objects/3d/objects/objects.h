@@ -22,7 +22,7 @@ struct tt_3d_object
 
 	//properties
 	GLuint texture;
-	float size_bounding_sphere; //the size of the bounding sphere
+	float bounding_sphere_radius;
 	bool invisibility_toggle;
 
 	//lighting
@@ -66,6 +66,7 @@ void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle);
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object);
 
 //collisions
+void tt_3d_aabb_after_world_transform(tt_3d_object *obj, tt_3d_collision_aabb *aabb);
 bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b);
 
 #endif

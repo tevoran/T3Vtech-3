@@ -105,13 +105,9 @@ void tt_3d_object_make_cube(tt_3d_object *object)
 	object->vao=tt_gfx_3d_cube_vao;
 	object->vbo=tt_gfx_3d_cube_vbo;
 	object->ibo=tt_gfx_3d_cube_ibo;
-	object->size_bounding_sphere=1.0; //diameter is 1.0
+	object->bounding_sphere_radius = sqrtf(3 * 0.5 * 0.5); //diameter is 1.0
 
 	//setting aabb
-	object->aabb.x_max=0.5;
-	object->aabb.x_min=-0.5;
-	object->aabb.y_max=0.5;
-	object->aabb.y_min=-0.5;
-	object->aabb.z_max=0.5;
-	object->aabb.z_min=-0.5;
+	object->aabb.max = (tt_vec3){ 0.5, 0.5, 0.5 };
+	object->aabb.min = (tt_vec3){ -0.5, -0.5, -0.5 };
 }

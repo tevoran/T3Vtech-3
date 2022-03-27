@@ -58,7 +58,6 @@ void tt_math_mat4_make_identity_matrix(tt_mat4 *mat)
 			mat->array[iy][ix]=id_mat4[iy][ix];
 		}
 	}
-
 }
 
 void tt_math_mat4_make_projection_matrix(

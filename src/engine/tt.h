@@ -17,8 +17,8 @@
 #include <SDL_ttf.h>
 #include <GL/glew.h>
 #include <stb_image.h>
-#include <AL/al.h>
-#include <AL/alc.h>
+#include <al.h>
+#include <alc.h>
 
 //engine headers
 #include <math/math.h>

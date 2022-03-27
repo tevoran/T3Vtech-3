@@ -53,13 +53,10 @@ void tt_3d_object_make_quad(tt_3d_object *object)
 	object->vao=tt_gfx_3d_quad_vao;
 	object->vbo=tt_gfx_3d_quad_vbo;
 	object->ibo=tt_gfx_3d_quad_ibo;
-	object->size_bounding_sphere=1.0; //diameter is 1.0
 
 	//setting aabb
-	object->aabb.x_max=0.5;
-	object->aabb.x_min=-0.5;
-	object->aabb.y_max=0.5;
-	object->aabb.y_min=-0.5;
-	object->aabb.z_max=0.0;
-	object->aabb.z_min=-0.0;
+	object->aabb.max = (tt_vec3){ 0.5, 0.5, 0.0 };
+	object->aabb.min = (tt_vec3){ -0.5, -0.5, 0.0 };
+
+	object->bounding_sphere_radius = tt_3d_aabb_get_radius(&object->aabb);
 }
