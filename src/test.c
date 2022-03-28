@@ -59,6 +59,18 @@ int main(int argc, char *argv[])
 	//fps cam test
 	tt_input_mouse_set_relative_mode(true);
 
+	//test data
+	int16_t data[22000*10];
+	for(int i=0; i<22000*10; i++)
+	{
+		data[i]=sin((float)i/3500)*INT_MAX;
+	}
+
+	//audio test
+	tt_3d_audio_source *source=tt_audio_3d_source_new();
+	tt_sound *sound=tt_audio_sound_from_data(data,sizeof(data),22000,true);
+	tt_audio_buffer_sound_for_3d_source(sound,source);
+	tt_audio_play_3d_source(source);
 
 	float angle=0.0;
 	int i=0;

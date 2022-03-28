@@ -8,6 +8,9 @@ extern SDL_GLContext tt_glcontext;
 
 void tt_quit(void)
 {
+	//quitting the audio system
+	tt_audio_quit();
+
 	//quitting the graphics system
 	tt_gfx_quit(tt_quiet);
 

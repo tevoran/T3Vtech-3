@@ -11,6 +11,8 @@
 #include <stdbool.h>
 #include <inttypes.h>
 #include <math.h>
+#include <limits.h>
+
 
 //vendor
 #include <SDL.h>
