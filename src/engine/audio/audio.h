@@ -17,6 +17,14 @@ struct tt_sound
 void tt_audio_init();
 void tt_audio_quit();
 
+//file reading functions
+void tt_audio_load_wav(
+	const char *path,
+	void **data,
+	int *size_of_data,
+	int *frequency,
+	bool *stereo);
+
 //user functions
 tt_3d_audio_source* tt_audio_3d_source_new();
 tt_sound* tt_audio_sound_from_data(
@@ -24,9 +32,11 @@ tt_sound* tt_audio_sound_from_data(
 	const int size_of_data,
 	const int frequency,
 	const bool stereo);
+tt_sound* tt_audio_sound_from_file(const char *path);
 void tt_audio_buffer_sound_for_3d_source(
 	tt_sound *sound,
 	tt_3d_audio_source *source);
 void tt_audio_play_3d_source(tt_3d_audio_source *source);
+void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle);
 
 #endif

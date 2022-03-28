@@ -68,9 +68,10 @@ int main(int argc, char *argv[])
 
 	//audio test
 	tt_3d_audio_source *source=tt_audio_3d_source_new();
-	tt_sound *sound=tt_audio_sound_from_data(data,sizeof(data),22000,true);
+	tt_sound *sound=tt_audio_sound_from_file("assets/audio/test-moo.wav");
 	tt_audio_buffer_sound_for_3d_source(sound,source);
 	tt_audio_play_3d_source(source);
+	tt_audio_loop_3d_source(source, true);
 
 	float angle=0.0;
 	int i=0;

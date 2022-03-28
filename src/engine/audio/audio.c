@@ -113,6 +113,40 @@ tt_sound* tt_audio_sound_from_data(
 	return new_sound;
 }
 
+tt_sound* tt_audio_sound_from_file(const char *path)
+{
+	void *data=NULL;
+	int size_of_data=0;
+	int frequency=0;
+	bool stereo=false;
+
+	if(strstr(path, ".wav"))
+	{
+		tt_audio_load_wav(path, &data, &size_of_data, &frequency, &stereo);
+	}
+
+	tt_sound *new_sound=NULL;
+	if(data)
+	{
+		new_sound=tt_audio_sound_from_data(
+			data,
+			size_of_data,
+			frequency,
+			stereo);	
+	}
+
+	//printf("data: %x\nsize_of_data: %u\nfrequency: %u\n", data, size_of_data, frequency);
+	if(new_sound)
+	{
+		printf("audio file successfully read from %s\n", path);
+	}
+	else
+	{
+		printf("[ERROR] error while reading audio file from %s\n", path);
+	}
+	return new_sound;
+}
+
 void tt_audio_buffer_sound_for_3d_source(
 	tt_sound *sound,
 	tt_3d_audio_source *source)
@@ -136,5 +170,21 @@ void tt_audio_play_3d_source(tt_3d_audio_source *source)
 	else
 	{
 		printf("[ERROR] a 3D audio source need to exist otherwise no sound can be played\n");
+	}
+}
+
+void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle)
+{
+	if(!source)
+	{
+		return;	
+	}
+	if(loop_toggle)
+	{
+		alSourcei(source->source, AL_LOOPING, AL_TRUE);
+	}
+	else
+	{
+		alSourcei(source->source, AL_LOOPING, AL_FALSE);
 	}
 }
