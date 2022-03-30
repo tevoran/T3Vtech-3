@@ -16,8 +16,12 @@ void main()
 	//transformations
 	vec2 pos_tmp = pos * scale;
 	pos_tmp = rotation * pos_tmp;
-	pos_tmp.x = pos_tmp.x * aspect;
+	//pos_tmp.x = pos_tmp.x * aspect;
 	pos_tmp = pos_tmp + translation;
+
+	//converting to NDC
+	pos_tmp = pos_tmp * 2;
+	pos_tmp = pos_tmp - 1;
 
 	//outgoing variables
 	gl_Position = vec4(pos_tmp, 1.0, 1.0);

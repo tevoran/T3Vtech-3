@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	tt_color_rgba_u8 txt_color={255,255,255,255};
 	tt_2d_texture *col_txt_tex=tt_2d_texture_make_text(font, "COLLIDING", txt_color);
 	tt_2d_object_use_texture(col_txt, col_txt_tex);
-	tt_vec2 col_txt_pos={-0.90,0.95};
+	tt_vec2 col_txt_pos={0.5,0.5};
 	tt_vec2 col_txt_scale={0.2,0.1};
 	tt_2d_object_scale(col_txt, &col_txt_scale);
 	tt_2d_object_set_position(col_txt, &col_txt_pos);
@@ -71,7 +71,14 @@ int main(int argc, char *argv[])
 	tt_sound *sound=tt_audio_sound_from_file("assets/audio/test-moo.wav");
 	tt_audio_buffer_sound_for_3d_source(sound,source);
 	tt_audio_play_3d_source(source);
-	tt_audio_loop_3d_source(source, true);
+	tt_audio_loop_3d_source(source, false);
+
+
+	//2D position test
+	tt_2d_object *pos_test=tt_2d_object_new();
+	tt_2d_object_make_sprite(pos_test);
+	tt_vec2 pos_test_pos={0.1,1.0};
+	tt_2d_object_set_position(pos_test, &pos_test_pos);
 
 	float angle=0.0;
 	int i=0;

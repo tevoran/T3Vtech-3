@@ -1,5 +1,7 @@
 #include <tt.h>
 
+
+//reads currently only 16 bit audio
 void tt_audio_load_wav(
 	const char *path,
 	void **data,
