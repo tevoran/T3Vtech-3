@@ -12,6 +12,6 @@ void tt_gfx_2d_render();
 
 //3D stuff
 void tt_set_fov(float radians);
-
+void tt_set_far_plane(float distance);
 
 #endif

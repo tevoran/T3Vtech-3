@@ -44,6 +44,18 @@ void tt_set_fov(float radians)
 		tt_far_plane);	
 }
 
+void tt_set_far_plane(float distance)
+{
+	tt_far_plane = distance;
+	tt_math_mat4_make_projection_matrix(
+		&tt_perspective_projection_mat,
+		tt_res_x,
+		tt_res_y,
+		tt_fov,
+		tt_near_plane,
+		tt_far_plane);
+}
+
 void tt_gfx_3d_preparation()
 {
 	glUseProgram(tt_std_3d_shader);
