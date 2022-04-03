@@ -160,7 +160,7 @@ void tt_3d_aabb_after_world_transform(tt_3d_object *obj, tt_3d_collision_aabb *a
 	tt_mat3 rotation = tt_math_mat4_crop_to_mat3(&obj->rotation);
 
 	aabb->min = (tt_vec3){ FLT_MAX, FLT_MAX, FLT_MAX };
-	aabb->max = (tt_vec3){ FLT_MIN, FLT_MIN, FLT_MIN };
+	aabb->max = (tt_vec3){ -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i=0; i<8; ++i)
 	{
