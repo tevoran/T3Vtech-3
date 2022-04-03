@@ -27,12 +27,14 @@ layout(std140, binding = 1) uniform point_light
 in vec2 base_tex_coord;
 in vec4 dir_light_result;
 in vec4 point_light_result;
-
+in vec3 normal_out;
+in vec3 world_position_out;
 
 uniform sampler2D base_tex;
 
 //lighting
 uniform bool gouraud_shading_toggle;
+uniform bool phong_shading_toggle;
 uniform bool object_light_affected;
 	
 //ambient lighting
@@ -54,7 +56,29 @@ void main()
 
 		//ambient lighting
 		vec3 amb_light = amb_light_strength * amb_light_color;
-		color = vec4(amb_light,1.0) * color;
+		color = vec4(amb_light, 1.0) * color;
+
+		if(phong_shading_toggle)
+		{
+			for(int i = 0; i < point_light_num_active.x; i++)
+			{
+				//getting the direction from the fragment
+				vec3 light_direction = point_light_location[i].xyz - world_position_out;
+
+				//determining intensity from light angle
+				float l_dot_n = dot(light_direction, normal_out);
+				if(l_dot_n > 0)
+				{
+					float l_distance = length(light_direction);
+					l_dot_n /= l_distance;
+
+					float falloff = 1 / (l_distance * l_distance);
+					vec3 diffuse = base_color.rgb * point_light_strength[i].rgb * l_dot_n * falloff;
+
+					color += vec4(diffuse, 0.0);
+				}
+			}
+		}
 
 		//gouraud shading based lighting
 		if(gouraud_shading_toggle)
@@ -74,6 +98,4 @@ void main()
 
 		}		
 	}
-
-
 }

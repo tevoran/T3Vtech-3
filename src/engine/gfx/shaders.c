@@ -362,6 +362,7 @@ GLuint tt_gfx_create_shader(
 	{
 		glAttachShader(program, shader.fragment);
 	}
+
 	glLinkProgram(program);
 
 	//cleanup

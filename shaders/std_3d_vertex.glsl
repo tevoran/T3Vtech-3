@@ -39,12 +39,16 @@ uniform mat4 cam_rotation;
 
 //lighting
 uniform bool gouraud_shading_toggle;
+uniform bool phong_shading_toggle;
 uniform bool object_light_affected;
 
 //variables to fragment shader
 out vec2 base_tex_coord;
 out vec4 dir_light_result;
 out vec4 point_light_result;
+
+out vec3 normal_out;
+out vec3 world_position_out;
 
 void main()
 {
@@ -57,6 +61,9 @@ void main()
 		* vertex_world_pos;
 	vec4 normal_tmp = rotation * vec4(normal_in, 1.0);
 	vec3 normal=normalize(vec3(normal_tmp.xyz));
+
+	world_position_out = vertex_world_pos.xyz;
+	normal_out = normal;
 
 	//lighting
 	if(object_light_affected)
@@ -107,7 +114,6 @@ void main()
 				tmp_color=point_light_intensity[i] * tmp_color;
 				point_light_result+=tmp_color;
 			}
-
 		}
 	}
 

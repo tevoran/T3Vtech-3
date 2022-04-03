@@ -107,6 +107,13 @@ bool tt_init(
 		}
 	}
 
+	//setting the desired OpenGL version
+	if (!quiet) {
+		printf("using OpenGL 4.5\n");
+	}
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
+
 	tt_glcontext=SDL_GL_CreateContext(tt_window);
 	if(tt_glcontext==NULL)
 	{
@@ -134,14 +141,6 @@ bool tt_init(
 			printf("GLEW initialized\n");
 		}
 	}
-
-	//setting the desired OpenGL version
-	if(!quiet)
-	{
-		printf("using OpenGL 4.5\n");
-	}
-    SDL_GL_SetAttribute (SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-    SDL_GL_SetAttribute (SDL_GL_CONTEXT_MINOR_VERSION, 5);
 
 	SDL_DisableScreenSaver();
 

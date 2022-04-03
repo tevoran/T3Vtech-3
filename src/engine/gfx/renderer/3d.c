@@ -12,14 +12,15 @@ extern float tt_near_plane; //near clipping plane
 extern float tt_far_plane; //far clipping plane
 extern float tt_fov; //field of view in radians
 extern tt_mat4 tt_perspective_projection_mat; //the 3D perspective projection matrix
+
 //camera
 extern tt_mat4 tt_camera_position; //current camera position
 extern tt_mat4 tt_camera_rotation; //current camera rotation
 
-
 //shader stuff
 extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
+extern bool tt_gfx_phong_shading_active; //toggle if phong shading is active
 extern GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 extern GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
 
@@ -66,6 +67,9 @@ void tt_gfx_3d_preparation()
 	//lighting
 	GLint gouraud_shading_toggle=glGetUniformLocation(tt_std_3d_shader, "gouraud_shading_toggle");
 	glUniform1i(gouraud_shading_toggle, tt_gfx_gouraud_shading_active);
+
+	GLint phong_shading_toggle = glGetUniformLocation(tt_std_3d_shader, "phong_shading_toggle");
+	glUniform1i(phong_shading_toggle, tt_gfx_phong_shading_active);
 
 	//directional light uniform buffer object
 	GLuint dir_light=glGetUniformBlockIndex(tt_std_3d_shader, "dir_light");
@@ -142,7 +146,6 @@ void tt_gfx_3d_render()
 					NULL);
 					
 			}
-
 
 			//get to the next object to render
 			current_node=tt_list_next_node(current_node);
