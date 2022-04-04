@@ -76,6 +76,19 @@ tt_3d_audio_source* tt_audio_3d_source_new()
 	return new_source;
 }
 
+void tt_audio_3d_source_delete(tt_3d_audio_source **source)
+{
+	if(*source==NULL)
+	{
+		return;
+	}
+
+	alDeleteSources(1, &(*source)->source);
+
+	free(*source);
+	*source=NULL; //mark source as deleted
+}
+
 tt_sound* tt_audio_sound_from_data(
 	const void *data,
 	const int size_of_data,

@@ -27,6 +27,7 @@ void tt_audio_load_wav(
 
 //user functions
 tt_3d_audio_source* tt_audio_3d_source_new();
+void tt_audio_3d_source_delete(tt_3d_audio_source **source);
 tt_sound* tt_audio_sound_from_data(
 	const void *data,
 	const int size_of_data,

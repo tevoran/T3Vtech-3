@@ -71,8 +71,8 @@ int main(int argc, char *argv[])
 	tt_sound *sound=tt_audio_sound_from_file("assets/audio/test-moo.wav");
 	tt_audio_buffer_sound_for_3d_source(sound,source);
 	tt_audio_play_3d_source(source);
-	tt_audio_loop_3d_source(source, false);
-
+	//tt_audio_loop_3d_source(source, false);
+	tt_audio_3d_source_delete(&source);
 
 	//2D position test
 	tt_2d_object *pos_test=tt_2d_object_new();
