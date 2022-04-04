@@ -36,6 +36,9 @@ uniform sampler2D base_tex;
 uniform bool gouraud_shading_toggle;
 uniform bool phong_shading_toggle;
 uniform bool object_light_affected;
+
+//global settings
+uniform bool tone_mapping_toggle;
 	
 //ambient lighting
 uniform float amb_light_strength;
@@ -43,6 +46,17 @@ uniform vec3 amb_light_color;
 
 //output
 out vec4 color;
+
+vec3 aces_approx(vec3 v)
+{
+    v *= 0.6f;
+    float a = 2.51f;
+    float b = 0.03f;
+    float c = 2.43f;
+    float d = 0.59f;
+    float e = 0.14f;
+    return clamp((v * ( a * v + b)) / ( v * (c * v + d) + e), 0.0f, 1.0f);
+}
 
 void main()
 {
@@ -60,13 +74,14 @@ void main()
 
 		if(phong_shading_toggle)
 		{
+			vec3 normal = normalize(normal_out);
 			for(int i = 0; i < point_light_num_active.x; i++)
 			{
 				//getting the direction from the fragment
 				vec3 light_direction = point_light_location[i].xyz - world_position_out;
 
 				//determining intensity from light angle
-				float l_dot_n = dot(light_direction, normal_out);
+				float l_dot_n = dot(light_direction, normal);
 				if(l_dot_n > 0)
 				{
 					float l_distance = length(light_direction);
@@ -96,6 +111,11 @@ void main()
 			//point lights
 			color+=base_color * point_light_result;
 
-		}		
+		}
+
+		if (tone_mapping_toggle)
+		{
+			color = vec4(aces_approx(color.rgb), color.a);
+		}
 	}
 }

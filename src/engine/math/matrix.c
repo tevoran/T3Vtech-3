@@ -87,7 +87,7 @@ void tt_math_mat4_make_projection_matrix(
 	mat->array[3][0]=0;
 	mat->array[3][1]=0;
 	mat->array[3][2]=
-		-(1 - near_clipping_plane) / (far_clipping_plane - near_clipping_plane);
+		-(far_clipping_plane * near_clipping_plane) / (far_clipping_plane - near_clipping_plane);
 	mat->array[3][3]=0;
 }
 

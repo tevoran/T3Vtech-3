@@ -129,7 +129,14 @@ void tt_point_light_delete(tt_point_light light_id)
 	ubo.strength[i].z=1.0;
 	ubo.strength[i].w=1.0;
 
-	remap[i]=remap[light_id];
+	for (int j = 0; j < NUM_MAX_POINT_LIGHTS; ++j)
+	{
+		if (remap[j] == i + 1)
+		{
+			remap[j] = gpu_id + 1;
+		}
+	}
+
 	remap[light_id]=TT_NO_LIGHT;
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);

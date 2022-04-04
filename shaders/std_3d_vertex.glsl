@@ -42,6 +42,9 @@ uniform bool gouraud_shading_toggle;
 uniform bool phong_shading_toggle;
 uniform bool object_light_affected;
 
+//global settings
+uniform bool tone_mapping_toggle;
+
 //variables to fragment shader
 out vec2 base_tex_coord;
 out vec4 dir_light_result;

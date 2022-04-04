@@ -50,4 +50,8 @@ void tt_camera_fps(float pitch_radians, float yaw_radians)
 	rot_axis.y=1;
 	rot_axis.x=0;
 	tt_camera_rotate(&rot_axis, yaw_radians);
+
+	tt_camera_rotation.array[0][0] *= -1;
+	tt_camera_rotation.array[1][0] *= -1;
+	tt_camera_rotation.array[2][0] *= -1;
 }

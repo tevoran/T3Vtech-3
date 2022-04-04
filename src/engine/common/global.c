@@ -42,6 +42,9 @@ GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
 	float tt_gfx_amb_light_strength=0.33; //the ambient light strength
 	tt_vec3 tt_gfx_amb_light_color={1.0,1.0,1.0}; //the ambient light color
 
+//global settings
+bool tt_gfx_tone_mapping_toggle=false;
+
 //camera
 tt_mat4 tt_camera_position; //current camera position
 tt_mat4 tt_camera_rotation; //current camera rotation

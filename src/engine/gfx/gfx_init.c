@@ -10,7 +10,7 @@ extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
 extern bool tt_gfx_phong_shading_active; //toggle if phong shading is active
-
+extern bool tt_gfx_tone_mapping_toggle; //toggle if tone mapping is enabled
 
 //returns true if successfull
 bool tt_gfx_init(const bool quiet)
@@ -80,6 +80,7 @@ bool tt_gfx_init(const bool quiet)
 	//setting lighting defaults
 	tt_gfx_gouraud_shading_active=true; //activate gouraud shading
 	tt_gfx_phong_shading_active=false;
+	tt_gfx_tone_mapping_toggle=false;
 	tt_gfx_directional_light_setup();
 	tt_gfx_point_light_setup();
 
