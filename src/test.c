@@ -42,43 +42,36 @@ int main(int argc, char *argv[])
 	tt_directional_light_set_strength(l1, 1);
 	tt_directional_light_set_direction(l1, &dir_light_dir);
 
-	tt_dir_light l2=tt_directional_light_new();
-	tt_vec3 dir_light_dir_2={1,0,0};
-	tt_vec3 color_dir_light_2={0.0,0.0,1.0};
-	tt_directional_light_set_color(l2, &color_dir_light_2);
-	tt_directional_light_set_strength(l2, 1);
-	tt_directional_light_set_direction(l2, &dir_light_dir_2);
-
-	tt_dir_light l3=tt_directional_light_new();
-	tt_vec3 dir_light_dir_3={0,-1,0};
-	tt_vec3 color_dir_light_3={0.0,1.0,0.0};
-	tt_directional_light_set_color(l3, &color_dir_light_3);
-	tt_directional_light_set_strength(l3, 1);
-	tt_directional_light_set_direction(l3, &dir_light_dir_3);
-
 	//fps cam test
 	tt_input_mouse_set_relative_mode(true);
 
-	//test data
-	int16_t data[22000*10];
-	for(int i=0; i<22000*10; i++)
+	//batch rendering test
+	tt_3d_object* obj[3];
+	tt_vec3 obj_pos={-3,2,0};
+	tt_vec3 obj_scale={0.03, 0.03, 0.03};
+
+	for(int i=0; i<3; i++)
 	{
-		data[i]=sin((float)i/3500)*INT_MAX;
+		obj[i]=tt_3d_object_new();
+		tt_3d_object_use_custom_model(obj[i], col_model);
+		tt_3d_object_set_position(obj[i], &obj_pos);
+		obj_pos.z+=0.5;
+		printf("Z: %f\n", obj_pos.z);
+		tt_3d_object_scale(obj[i], &obj_scale);
+		//tt_3d_object_make_invisible(obj[i], true);
 	}
+	tt_3d_batch_object *batch=tt_3d_batch_object_new();
+	tt_3d_batch_object_batch_custom_model_objects(
+		batch,
+		col_model,
+		3,
+		obj);
+	tt_3d_object *batch_test=tt_3d_object_new();
+	tt_3d_object_use_batch_object(batch_test, batch);
+	tt_vec3 batch_pos={6,0,0};
+	tt_3d_object_set_position(batch_test, &batch_pos);
+	//tt_3d_object_make_invisible(batch_test, false);
 
-	//audio test
-	tt_3d_audio_source *source=tt_audio_3d_source_new();
-	tt_sound *sound=tt_audio_sound_from_file("assets/audio/test-moo.wav");
-	tt_audio_buffer_sound_for_3d_source(sound,source);
-	tt_audio_play_3d_source(source);
-	//tt_audio_loop_3d_source(source, false);
-	tt_audio_3d_source_delete(&source);
-
-	//2D position test
-	tt_2d_object *pos_test=tt_2d_object_new();
-	tt_2d_object_make_sprite(pos_test);
-	tt_vec2 pos_test_pos={0.1,1.0};
-	tt_2d_object_set_position(pos_test, &pos_test_pos);
 
 	float angle=0.0;
 	int i=0;
@@ -115,14 +108,10 @@ int main(int argc, char *argv[])
 			tt_3d_object_rotate(cube, &rot_axis, 0.01);
 		}
 
-		tt_directional_light_delete(l2);
-		l2=tt_directional_light_new();
-		tt_directional_light_set_color(l2, &color_dir_light_2);
-		tt_directional_light_set_strength(l2, 1);
-		tt_directional_light_set_direction(l2, &dir_light_dir_2);
-
 		tt_new_frame();
 	}
+
+	tt_3d_batch_object_delete(&batch);
 
 	return 0;
 }

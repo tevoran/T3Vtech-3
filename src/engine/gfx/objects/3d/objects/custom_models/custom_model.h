@@ -21,6 +21,10 @@ struct tt_3d_custom_model
 	uint32_t num_verts;
 	uint32_t num_indices;
 
+	//actual model data
+	GLfloat *vertex_data;
+	GLuint *index_data;
+
 	//parameters
 	float bounding_sphere_radius;
 

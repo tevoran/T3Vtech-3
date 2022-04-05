@@ -44,16 +44,10 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 	//saving data to the custom object's struct
 	model->num_verts=num_verts;
 	model->num_indices=num_indices;
+	model->vertex_data=vertex_data;
+	model->index_data=index_data;
 	model->bounding_sphere_radius=tt_3d_aabb_get_radius(&aabb);
 	model->aabb=aabb;
-	/* aabb values;
-	printf("aabb: x_max: %f\n", model->aabb.x_max);
-	printf("aabb: x_min: %f\n", model->aabb.x_min);
-	printf("aabb: y_max: %f\n", model->aabb.y_max);
-	printf("aabb: y_min: %f\n", model->aabb.y_min);
-	printf("aabb: z_max: %f\n", model->aabb.z_max);
-	printf("aabb: z_min: %f\n", model->aabb.z_min);
-	*/
 
 	glGenVertexArrays(1, &model->vao);
 	glBindVertexArray(model->vao);
@@ -71,15 +65,20 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 		index_data,
 		GL_STATIC_DRAW);
 
-	free(vertex_data);
-	free(index_data);
-
 	return model;
 }
 
 
 void tt_3d_custom_model_delete(tt_3d_custom_model **model)
 {
+	if(*model == NULL)
+	{
+		return;
+	}
+	
+	free((*model)->vertex_data);
+	free((*model)->index_data);
+
 	glDeleteVertexArrays(1, &(*model)->vao);
 	glDeleteBuffers(1, &(*model)->vbo);
 	glDeleteBuffers(1, &(*model)->ibo);

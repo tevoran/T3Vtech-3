@@ -13,7 +13,12 @@ struct tt_3d_object
 	GLuint vao;
 	GLuint vbo;
 	GLuint ibo;
+	uint32_t num_verts;
 	uint32_t num_indices;
+
+	//actual model data
+	GLfloat *vertex_data;
+	GLuint *index_data;
 
 	//transformations
 	tt_mat4 translation;
@@ -25,6 +30,10 @@ struct tt_3d_object
 	float bounding_sphere_radius;
 	bool invisibility_toggle;
 
+	//batch rendering
+	bool batch;
+	bool batch_rendered;
+
 	//lighting
 	bool lighting_affected;
 
@@ -34,6 +43,7 @@ struct tt_3d_object
 
 } typedef tt_3d_object;
 
+#include "batch_objects/batch_object.h"
 #include "custom_models/custom_model.h"
 
 //preparation functions
@@ -50,6 +60,7 @@ tt_3d_object* tt_3d_object_new();
 void tt_3d_object_make_quad(tt_3d_object *object);
 void tt_3d_object_make_cube(tt_3d_object *object);
 void tt_3d_object_use_custom_model(tt_3d_object *object, tt_3d_custom_model *model);
+void tt_3d_object_use_batch_object(tt_3d_object *object, tt_3d_batch_object *batch_object);
 void tt_3d_object_delete(tt_3d_object **object);
 
 //transformations

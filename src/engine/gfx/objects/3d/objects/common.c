@@ -21,6 +21,7 @@ tt_3d_object* tt_3d_object_new()
 
 	//initializing the object to default values
 	new_object->num_indices=0;
+	new_object->num_verts=0;
 	new_object->vao=0;
 	new_object->vbo=0;
 	new_object->ibo=0;
@@ -33,6 +34,14 @@ tt_3d_object* tt_3d_object_new()
 	new_object->lighting_affected=true;
 	new_object->bounding_sphere_radius=0;
 	new_object->invisibility_toggle=false; //make visible by default
+
+	//actual model data
+	new_object->vertex_data=NULL;
+	new_object->index_data=NULL;
+
+	//batch rendering
+	new_object->batch=false;
+	new_object->batch_rendered=false;
 
 	//setting the aabb to defaults
 	new_object->aabb.max = (tt_vec3){ 0, 0, 0 };
