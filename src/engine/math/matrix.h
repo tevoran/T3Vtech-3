@@ -25,6 +25,7 @@ void tt_math_mat2_make_identity_matrix(tt_mat2 *mat);
 //mat3 functions
 tt_mat3 tt_math_mat4_crop_to_mat3(tt_mat4 *mat);
 tt_vec3 tt_math_mat3_mul_vec3(tt_mat3 *mat, tt_vec3 *vec);
+tt_mat3 tt_math_mat3_mul(tt_mat3 *a, tt_mat3 *b); //a will be multiplied with b
 
 //mat4 functions
 void tt_math_mat4_make_identity_matrix(tt_mat4 *mat);

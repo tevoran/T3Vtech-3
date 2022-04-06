@@ -28,8 +28,7 @@ void tt_3d_batch_object_batch_custom_model_objects(
 	tt_3d_object **object)
 {
 	tt_vertex *vertex_base=(tt_vertex*)model->vertex_data;
-	tt_vertex vertex_rotated;
-	tt_vertex vertex_scaled;
+	tt_vertex vertex_rot_and_scaled;
 	tt_vertex vertex_translated;
 	tt_vertex *vertex_out=malloc(
 		num * model->num_verts * sizeof(tt_vertex));
@@ -38,6 +37,7 @@ void tt_3d_batch_object_batch_custom_model_objects(
 	GLuint *index_out=malloc(
 		num * model->num_indices * sizeof(GLuint));
 
+	//looking for highest index value
 	GLuint max_index=0;
 	for(int i=0; i<model->num_indices; i++)
 	{
@@ -48,11 +48,13 @@ void tt_3d_batch_object_batch_custom_model_objects(
 	}
 	max_index++;
 
+	//calculating the mesh data
 	for(int i=0; i<num; i++)
 	{
 
 		tt_mat3 mat_rotation=tt_math_mat4_crop_to_mat3(&object[i]->rotation);
 		tt_mat3 mat_scale=tt_math_mat4_crop_to_mat3(&object[i]->scale);
+		tt_mat3 mat_rot_and_scale=tt_math_mat3_mul(&mat_rotation, &mat_scale);
 		tt_vec3 vec_translation=(tt_vec3) 
 		{
 			object[i]->translation.array[3][0],
@@ -60,24 +62,18 @@ void tt_3d_batch_object_batch_custom_model_objects(
 			object[i]->translation.array[3][2],
 		};
 
-		printf("x: %f y: %f z: %f\n", mat_scale.array[0][0], mat_scale.array[1][1], mat_scale.array[2][2]);
-		printf("x: %f y: %f z: %f\n", vec_translation.x, vec_translation.y, vec_translation.z);
-
 		//vertices
 		for(int j=0; j<model->num_verts; j++)
 		{
 			//taking texture coordinates and normals to the end
 			vertex_translated.tex=vertex_base[j].tex;
-			vertex_translated.normal=vertex_base[j].normal;
 
-			//rotation
-			vertex_rotated.pos=tt_math_mat3_mul_vec3(&mat_rotation, &vertex_base[j].pos);
-
-			//scaling
-			vertex_scaled.pos=tt_math_mat3_mul_vec3(&mat_scale, &vertex_rotated.pos);
+			//rotation and scaling
+			vertex_rot_and_scaled.pos=tt_math_mat3_mul_vec3(&mat_rot_and_scale, &vertex_base[j].pos);
+			vertex_rot_and_scaled.normal=tt_math_mat3_mul_vec3(&mat_rotation, &vertex_base[j].normal);
 
 			//translation
-			vertex_translated.pos=tt_math_vec3_add(&vec_translation, &vertex_scaled.pos);
+			vertex_translated.pos=tt_math_vec3_add(&vec_translation, &vertex_rot_and_scaled.pos);
 
 			//save vertex
 			vertex_out[i * model->num_verts + j]=vertex_translated;

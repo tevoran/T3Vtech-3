@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 
 	//collision test
 	tt_3d_custom_model *col_model=tt_3d_custom_model_load_file("assets/models/ship/ship.obj");
+	tt_3d_texture *col_tex=tt_3d_texture_new("assets/models/ship/ship.bmp", true);
 	tt_3d_object *col_cube=tt_3d_object_new();
 	//tt_3d_object_make_cube(col_cube);
 	tt_3d_object_use_custom_model(col_cube, col_model);
@@ -46,31 +47,33 @@ int main(int argc, char *argv[])
 	tt_input_mouse_set_relative_mode(true);
 
 	//batch rendering test
-	tt_3d_object* obj[3];
+	int num=100000;
+	tt_3d_object* obj[num];
 	tt_vec3 obj_pos={-3,2,0};
 	tt_vec3 obj_scale={0.03, 0.03, 0.03};
 
-	for(int i=0; i<3; i++)
+	for(int i=0; i<num; i++)
 	{
 		obj[i]=tt_3d_object_new();
 		tt_3d_object_use_custom_model(obj[i], col_model);
 		tt_3d_object_set_position(obj[i], &obj_pos);
 		obj_pos.z+=0.5;
-		printf("Z: %f\n", obj_pos.z);
 		tt_3d_object_scale(obj[i], &obj_scale);
 		//tt_3d_object_make_invisible(obj[i], true);
 	}
 	tt_3d_batch_object *batch=tt_3d_batch_object_new();
-	tt_3d_batch_object_batch_custom_model_objects(
-		batch,
-		col_model,
-		3,
-		obj);
+	tt_3d_batch_object_batch_custom_model_objects(batch,col_model,num,obj);
 	tt_3d_object *batch_test=tt_3d_object_new();
 	tt_3d_object_use_batch_object(batch_test, batch);
 	tt_vec3 batch_pos={6,0,0};
 	tt_3d_object_set_position(batch_test, &batch_pos);
+	//tt_3d_object_use_texture(batch_test, col_tex);
 	//tt_3d_object_make_invisible(batch_test, false);
+
+	for(int i=0; i<num; i++)
+	{
+		tt_3d_object_delete(&obj[i]);
+	}
 
 
 	float angle=0.0;
@@ -79,6 +82,8 @@ int main(int argc, char *argv[])
 	{
 		i++;
 
+		float time_s=tt_time_current_frame_s();
+		printf("%f s\n", time_s);
 		//collision test
 		//cube_pos.y-=0.005;
 		tt_3d_object_set_position(col_cube, &cube_pos);

@@ -40,6 +40,22 @@ tt_vec3 tt_math_mat3_mul_vec3(tt_mat3 *mat, tt_vec3 *vec)
 	return out;
 }
 
+tt_mat3 tt_math_mat3_mul(tt_mat3 *a, tt_mat3 *b) //a will be multiplied with b
+{
+	tt_mat3 out;
+	for(int iy=0; iy<3; iy++)
+	{
+		for(int ix=0; ix<3; ix++)
+		{
+			out.array[iy][ix]=
+				a->array[iy][0] * b->array[0][ix]
+				+ a->array[iy][1] * b->array[1][ix]
+				+ a->array[iy][2] * b->array[2][ix];
+		}
+	}
+	return out;
+}
+
 //mat4
 
 float id_mat4[4][4]={
