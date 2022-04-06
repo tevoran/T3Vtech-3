@@ -246,6 +246,37 @@ tt_3d_texture *tex=tt_3d_texture_new("assets/models/ship/ship.bmp", false);
 tt_3d_object_use_texture(ship, tex);
 tt_3d_object_use_custom_model(ship, ship_model);
 ```
+
+#### Batched Objects
+
+If it happens that too many 3D objects are getting rendered it might be wise to batch some of the 3D custom models up into one 3D object. This will increase performance in some instances strongly as this will decrease the necessary amount of communication between RAM and video RAM/CPU and GPU. Though batching up big amounts of geometry might take up to a couple of seconds. So this isn't a one size fits all solution but if you have many static 3D objects that use the same 3D custom model then this might improve performance.
+
+A new 3D batch object is created by calling
+```c
+tt_3d_batch_object* tt_3d_batch_object_new();
+```
+
+When it comes to the actual batching of 3D objects then it is necessary to call this
+```c
+void tt_3d_batch_object_batch_custom_model_objects(
+	tt_3d_batch_object *batch_object,
+	tt_3d_custom_model *model,
+	unsigned int num,
+	tt_3d_object **object);
+```
+It is important to note that the used 3D objects will be used for their transformations such as rotation and scaling. This will lead to a usable batched object that cointains only the the custom model that was specified but with the previously specified locations, rotations and scalings of the 3D objects in the list.
+In many cases you might want to make the previously existing 3D objects invisibly or delete them to avoid unnecessary duplicates being rendered.
+
+After the batch object was created it can be used with a regular 3D object by calling
+```c
+void tt_3d_object_use_batch_object(tt_3d_object *object, tt_3d_batch_object *batch_object);
+```
+
+The batch object can be destroyed after its usage by calling
+```c
+void tt_3d_batch_object_delete(tt_3d_batch_object **batch_object);
+```
+
 #### Textures
 
 Textures are an object that is very similarily used like "tt_3d_object"s. They are created and deleted and in between they can be used to cover 3D models. If no texture is specified for a 3D object then the object will get a pink default texture.
