@@ -120,9 +120,7 @@ void tt_gfx_3d_render()
 
 		while(true)
 		{
-			if(	!current_object->invisibility_toggle //if invisible there is no need to render
-				&& (!current_object->batch_rendered || current_object->batch)  //render some objects in batches
-				) 
+			if(	!current_object->invisibility_toggle) //if invisible there is no need to render 
 			{
 				//prepare uniforms
 				GLint translation=glGetUniformLocation(tt_std_3d_shader, "translation");

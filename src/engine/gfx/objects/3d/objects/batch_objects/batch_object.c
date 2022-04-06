@@ -74,6 +74,7 @@ void tt_3d_batch_object_batch_custom_model_objects(
 
 			//translation
 			vertex_translated.pos=tt_math_vec3_add(&vec_translation, &vertex_rot_and_scaled.pos);
+			vertex_translated.normal=vertex_rot_and_scaled.normal;
 
 			//save vertex
 			vertex_out[i * model->num_verts + j]=vertex_translated;

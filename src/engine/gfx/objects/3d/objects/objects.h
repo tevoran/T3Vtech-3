@@ -30,10 +30,6 @@ struct tt_3d_object
 	float bounding_sphere_radius;
 	bool invisibility_toggle;
 
-	//batch rendering
-	bool batch;
-	bool batch_rendered;
-
 	//lighting
 	bool lighting_affected;
 

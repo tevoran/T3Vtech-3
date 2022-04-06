@@ -39,10 +39,6 @@ tt_3d_object* tt_3d_object_new()
 	new_object->vertex_data=NULL;
 	new_object->index_data=NULL;
 
-	//batch rendering
-	new_object->batch=false;
-	new_object->batch_rendered=false;
-
 	//setting the aabb to defaults
 	new_object->aabb.max = (tt_vec3){ 0, 0, 0 };
 	new_object->aabb.min = (tt_vec3){ 0, 0, 0 };
