@@ -1,14 +1,12 @@
 #ifndef TT_MATH_VECTOR_H
 #define TT_MATH_VECTOR_H
 
-#pragma pack(1)
 struct tt_vec2
 {
 	float x;
 	float y;
 } typedef tt_vec2;
 
-#pragma pack(1)
 struct tt_vec3
 {
 	float x;
@@ -16,7 +14,6 @@ struct tt_vec3
 	float z;
 } typedef tt_vec3;
 
-#pragma pack(1)
 struct tt_vec4
 {
 	float x;
