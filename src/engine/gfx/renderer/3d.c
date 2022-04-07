@@ -123,20 +123,22 @@ void tt_gfx_3d_render()
 			if(	!current_object->invisibility_toggle) //if invisible there is no need to render 
 			{
 				//prepare uniforms
-				GLint translation=glGetUniformLocation(tt_std_3d_shader, "translation");
-				GLint scale=glGetUniformLocation(tt_std_3d_shader, "scale");
+				GLint transform=glGetUniformLocation(tt_std_3d_shader, "transform");
 				GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
 				GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
 
-				//set uniforms
-				const GLfloat *mat4_uniform=(const GLfloat*)current_object->translation.array;
-				glUniformMatrix4fv(translation, 1, GL_FALSE, mat4_uniform);
+				//calculate object transformation matrix
+				tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->rotation, &current_object->scale);
+				mat4_transform=tt_math_mat4_mul(&mat4_transform, &current_object->translation);
 
-				mat4_uniform=(const GLfloat*)current_object->scale.array;
-				glUniformMatrix4fv(scale, 1, GL_FALSE, mat4_uniform);
-				
+				const GLfloat *mat4_uniform=NULL;
+
+				//set uniforms
 				mat4_uniform=(const GLfloat*)current_object->rotation.array;
 				glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
+
+				mat4_uniform=(const GLfloat*)&mat4_transform;
+				glUniformMatrix4fv(transform, 1, GL_FALSE, mat4_uniform);
 
 				glUniform1i(affected_by_light, current_object->lighting_affected);
 

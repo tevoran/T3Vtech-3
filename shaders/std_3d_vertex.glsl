@@ -28,8 +28,7 @@ layout(std140, binding = 1) uniform point_light
 };
 
 //transformations
-uniform mat4 translation;
-uniform mat4 scale;
+uniform mat4 transform;
 uniform mat4 rotation;
 uniform mat4 projection;
 
@@ -57,7 +56,8 @@ void main()
 {
 	//basic transformations
 	vec4 pos = vec4 (pos_in, 1.0);
-	vec4 vertex_world_pos=translation * scale * rotation * pos;
+	//vec4 vertex_world_pos=translation * scale * rotation * pos;
+	vec4 vertex_world_pos=transform * pos;
 	pos = projection 
 		* cam_rotation 
 		* cam_translation 

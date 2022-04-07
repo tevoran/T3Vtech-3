@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	tt_input_mouse_set_relative_mode(true);
 
 	//batch rendering test
-	int num=100000;
+	int num=10;
 	tt_3d_object* obj[num];
 	tt_vec3 obj_pos={-3,2,0};
 	tt_vec3 obj_scale={0.03, 0.03, 0.03};
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 		float time=tt_time_current_frame_s();
 		tt_input_mouse_relative_motion(&dx, &dy);
 		roll_radians+=(float)dy * time * 0.02;
-		pitch_radians+=(float)dx * time * 0.02;
+		pitch_radians-=(float)dx * time * 0.02;
 		tt_camera_fps(roll_radians, pitch_radians);
 
 		tt_vec3 rot_axis={1,1,0};
