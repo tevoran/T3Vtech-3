@@ -88,7 +88,7 @@ void main()
 					l_dot_n /= l_distance;
 
 					float falloff = 1 / (l_distance * l_distance);
-					vec3 diffuse = base_color.rgb * point_light_strength[i].rgb * l_dot_n * falloff;
+					vec3 diffuse = point_light_color[i].rgb * base_color.rgb * point_light_strength[i].rgb * l_dot_n * falloff;
 
 					color += vec4(diffuse, 0.0);
 				}
