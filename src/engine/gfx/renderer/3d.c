@@ -63,19 +63,12 @@ void tt_gfx_3d_preparation()
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
-	//setting the perspective projection matrix
-	GLint projection_mat=glGetUniformLocation(tt_std_3d_shader, "projection");
-	const GLfloat *projection_mat_ptr=(const GLfloat*) tt_perspective_projection_mat.array;
-	glUniformMatrix4fv(projection_mat, 1, GL_FALSE, projection_mat_ptr);
-
-	//camera
-	GLint cam_translation=glGetUniformLocation(tt_std_3d_shader, "cam_translation");
-	const GLfloat *cam_translation_ptr=(const GLfloat*)tt_camera_position.array;
-	glUniformMatrix4fv(cam_translation, 1, GL_FALSE, cam_translation_ptr);
-
-	GLint cam_rotation=glGetUniformLocation(tt_std_3d_shader, "cam_rotation");
-	const GLfloat *cam_rotation_ptr=(const GLfloat*)tt_camera_rotation.array;
-	glUniformMatrix4fv(cam_rotation, 1, GL_FALSE, cam_rotation_ptr);
+	//global camera and projection matrix
+	tt_mat4 mat4_cam_and_projection=tt_math_mat4_mul(&tt_camera_position, &tt_camera_rotation);
+	mat4_cam_and_projection=tt_math_mat4_mul(&mat4_cam_and_projection, &tt_perspective_projection_mat);
+	GLint cam_and_projection_mat=glGetUniformLocation(tt_std_3d_shader, "cam_and_projection");
+	const GLfloat *cam_and_projection_mat_ptr=(const GLfloat*) &mat4_cam_and_projection.array;
+	glUniformMatrix4fv(cam_and_projection_mat, 1, GL_FALSE, cam_and_projection_mat_ptr);
 
 	//lighting
 	GLint gouraud_shading_toggle=glGetUniformLocation(tt_std_3d_shader, "gouraud_shading_toggle");
