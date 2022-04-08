@@ -38,6 +38,7 @@ void tt_math_mat4_make_projection_matrix(
 	const float far_clipping_plane);
 tt_mat4 tt_math_mat4_make_quat_rot_mat(tt_vec3 *rot_axis, float radians);
 tt_mat4 tt_math_mat4_mul(tt_mat4 *a, tt_mat4 *b); //a will be multiplied with b
+tt_vec4 tt_math_mat4_mul_vec4(tt_mat4 *mat, tt_vec4 *vec);
 tt_mat4 tt_math_mat4_transpose(tt_mat4 *a);
 
 #endif

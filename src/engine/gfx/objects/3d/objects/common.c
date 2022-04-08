@@ -81,9 +81,14 @@ void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale)
 
 void tt_3d_object_set_position(tt_3d_object *object, tt_vec3 *position)
 {
-	object->translation.array[3][0]=position->x;
-	object->translation.array[3][1]=position->y;
-	object->translation.array[3][2]=position->z;
+	object->translation.array[0][3]=position->x;
+	object->translation.array[1][3]=position->y;
+	object->translation.array[2][3]=position->z;
+}
+
+void tt_3d_object_set_rotation(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
+{
+	object->rotation = tt_math_mat4_make_quat_rot_mat(rot_axis, radians);
 }
 
 void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
@@ -157,9 +162,9 @@ void tt_3d_aabb_after_world_transform(tt_3d_object *obj, tt_3d_collision_aabb *a
 
 	tt_vec3 translation = (tt_vec3)
 	{
-		obj->translation.array[3][0],
-		obj->translation.array[3][1],
-		obj->translation.array[3][2]
+		obj->translation.array[0][3],
+		obj->translation.array[1][3],
+		obj->translation.array[2][3]
 	};
 
 	tt_mat3 rotation = tt_math_mat4_crop_to_mat3(&obj->rotation);

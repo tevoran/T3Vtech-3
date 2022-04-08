@@ -62,6 +62,7 @@ void tt_3d_object_delete(tt_3d_object **object);
 //transformations
 void tt_3d_object_scale(tt_3d_object *object, tt_vec3 *scale);
 void tt_3d_object_set_position(tt_3d_object *object, tt_vec3 *position);
+void tt_3d_object_set_rotation(tt_3d_object *object, tt_vec3 *rot_axis, float radians);
 void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians);
 void tt_3d_object_rotate_like(tt_3d_object *object_target, tt_3d_object *object_already_rotated);
 

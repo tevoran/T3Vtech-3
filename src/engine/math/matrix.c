@@ -97,13 +97,14 @@ void tt_math_mat4_make_projection_matrix(
 
 	mat->array[2][0]=0;
 	mat->array[2][1]=0;
-	mat->array[2][2]=0;
-	mat->array[2][3]=1;
+	mat->array[2][2]=
+		-far_clipping_plane / (far_clipping_plane - near_clipping_plane);
+	mat->array[2][3]=
+		-2.0f * (far_clipping_plane * near_clipping_plane) / (far_clipping_plane - near_clipping_plane);
 
 	mat->array[3][0]=0;
 	mat->array[3][1]=0;
-	mat->array[3][2]=
-		-(far_clipping_plane * near_clipping_plane) / (far_clipping_plane - near_clipping_plane);
+	mat->array[3][2]=-1;	
 	mat->array[3][3]=0;
 }
 
@@ -118,19 +119,19 @@ tt_mat4 tt_math_mat4_make_quat_rot_mat(tt_vec3 *rot_axis, float radians)
 
 	//the rotation matrix with the difference to the current rotation matrix
 	tt_mat4 rot_mat;
-	rot_mat.array[0][0]=2*(q.w*q.w+q.x*q.x)-1;
-	rot_mat.array[0][1]=2*(q.x*q.y+q.z*q.w);
-	rot_mat.array[0][2]=2*(q.x*q.z-q.y*q.w);
+	rot_mat.array[0][0]=1-2*(q.y*q.y+q.z*q.z);
+	rot_mat.array[0][1]=2*(q.x*q.y-q.z*q.w);
+	rot_mat.array[0][2]=2*(q.x*q.z+q.y*q.w);
 	rot_mat.array[0][3]=0;
 
-	rot_mat.array[1][0]=2*(q.x*q.y-q.w*q.z);
-	rot_mat.array[1][1]=2*(q.w*q.w+q.y*q.y)-1;
-	rot_mat.array[1][2]=2*(q.y*q.z+q.x*q.w);
+	rot_mat.array[1][0]=2*(q.x*q.y+q.z*q.w);
+	rot_mat.array[1][1]=1-2*(q.x*q.x+q.z*q.z);
+	rot_mat.array[1][2]=2*(q.y*q.z-q.x*q.w);
 	rot_mat.array[1][3]=0;
 
-	rot_mat.array[2][0]=2*(q.x*q.z+q.y*q.w);
-	rot_mat.array[2][1]=2*(q.y*q.z-q.x*q.w);
-	rot_mat.array[2][2]=2*(q.w*q.w+q.z*q.z)-1;
+	rot_mat.array[2][0]=2*(q.x*q.z-q.y*q.w);
+	rot_mat.array[2][1]=2*(q.y*q.z+q.x*q.w);
+	rot_mat.array[2][2]=1-2*(q.x*q.x+q.y*q.y);
 	rot_mat.array[2][3]=0;
 
 	rot_mat.array[3][0]=0;
@@ -155,6 +156,28 @@ tt_mat4 tt_math_mat4_mul(tt_mat4 *a, tt_mat4 *b)
 				+ a->array[iy][3] * b->array[3][ix];
 		}
 	}
+	return out;
+}
+
+tt_vec4 tt_math_mat4_mul_vec4(tt_mat4 *mat, tt_vec4 *vec)
+{
+	tt_vec4 out;
+	out.x = mat->array[0][0] * vec->x
+		+ mat->array[0][1] * vec->y
+		+ mat->array[0][2] * vec->z
+		+ mat->array[0][3] * vec->w;
+	out.y = mat->array[1][0] * vec->x
+		+ mat->array[1][1] * vec->y
+		+ mat->array[1][2] * vec->z
+		+ mat->array[1][3] * vec->w;
+	out.z = mat->array[2][0] * vec->x
+		+ mat->array[2][1] * vec->y
+		+ mat->array[2][2] * vec->z
+		+ mat->array[2][3] * vec->w;
+	out.w = mat->array[3][0] * vec->x
+		+ mat->array[3][1] * vec->y
+		+ mat->array[3][2] * vec->z
+		+ mat->array[3][3] * vec->w;
 	return out;
 }
 

@@ -57,9 +57,9 @@ void tt_3d_batch_object_batch_custom_model_objects(
 		tt_mat3 mat_rot_and_scale=tt_math_mat3_mul(&mat_rotation, &mat_scale);
 		tt_vec3 vec_translation=(tt_vec3) 
 		{
-			object[i]->translation.array[3][0],
-			object[i]->translation.array[3][1],
-			object[i]->translation.array[3][2],
+			object[i]->translation.array[0][3],
+			object[i]->translation.array[1][3],
+			object[i]->translation.array[2][3],
 		};
 
 		//vertices

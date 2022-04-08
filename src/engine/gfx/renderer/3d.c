@@ -64,11 +64,11 @@ void tt_gfx_3d_preparation()
 	glDisable(GL_BLEND);
 
 	//global camera and projection matrix
-	tt_mat4 mat4_cam_and_projection=tt_math_mat4_mul(&tt_camera_position, &tt_camera_rotation);
-	mat4_cam_and_projection=tt_math_mat4_mul(&mat4_cam_and_projection, &tt_perspective_projection_mat);
+	tt_mat4 mat4_cam_and_projection=tt_math_mat4_mul(&tt_camera_rotation, &tt_camera_position);
+	mat4_cam_and_projection=tt_math_mat4_mul(&tt_perspective_projection_mat, &mat4_cam_and_projection);
 	GLint cam_and_projection_mat=glGetUniformLocation(tt_std_3d_shader, "cam_and_projection");
 	const GLfloat *cam_and_projection_mat_ptr=(const GLfloat*) &mat4_cam_and_projection.array;
-	glUniformMatrix4fv(cam_and_projection_mat, 1, GL_FALSE, cam_and_projection_mat_ptr);
+	glUniformMatrix4fv(cam_and_projection_mat, 1, GL_TRUE, cam_and_projection_mat_ptr);
 
 	//lighting
 	GLint gouraud_shading_toggle=glGetUniformLocation(tt_std_3d_shader, "gouraud_shading_toggle");
@@ -121,17 +121,17 @@ void tt_gfx_3d_render()
 				GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
 
 				//calculate object transformation matrix
-				tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->rotation, &current_object->scale);
-				mat4_transform=tt_math_mat4_mul(&mat4_transform, &current_object->translation);
+				tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->translation, &current_object->rotation);
+				mat4_transform=tt_math_mat4_mul(&mat4_transform, &current_object->scale);
 
 				const GLfloat *mat4_uniform=NULL;
 
 				//set uniforms
 				mat4_uniform=(const GLfloat*)current_object->rotation.array;
-				glUniformMatrix4fv(rotation, 1, GL_FALSE, mat4_uniform);
+				glUniformMatrix4fv(rotation, 1, GL_TRUE, mat4_uniform);
 
 				mat4_uniform=(const GLfloat*)&mat4_transform;
-				glUniformMatrix4fv(transform, 1, GL_FALSE, mat4_uniform);
+				glUniformMatrix4fv(transform, 1, GL_TRUE, mat4_uniform);
 
 				glUniform1i(affected_by_light, current_object->lighting_affected);
 
