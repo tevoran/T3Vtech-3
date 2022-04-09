@@ -22,6 +22,7 @@ extern GLuint tt_std_3d_shader; //the default shader program for all 3d objects
 extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
 extern bool tt_gfx_phong_shading_active; //toggle if phong shading is active
 extern bool tt_gfx_tone_mapping_toggle; //toggle if tone mapping is enabled
+extern float tt_gfx_exposure; //full scene exposure
 extern GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 extern GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
 
@@ -80,6 +81,9 @@ void tt_gfx_3d_preparation()
 	//global settings
 	GLint tone_mapping_toggle = glGetUniformLocation(tt_std_3d_shader, "tone_mapping_toggle");
 	glUniform1i(tone_mapping_toggle, tt_gfx_tone_mapping_toggle);
+
+	GLint exposure = glGetUniformLocation(tt_std_3d_shader, "exposure");
+	glUniform1f(exposure, tt_gfx_exposure);
 
 	//directional light uniform buffer object
 	GLuint dir_light=glGetUniformBlockIndex(tt_std_3d_shader, "dir_light");

@@ -8,7 +8,7 @@ extern tt_node *tt_3d_list_entry_node;
 extern GLuint tt_gfx_3d_default_tex; //default texture
 
 //helper functions
-tt_3d_object* tt_3d_object_new() 
+tt_3d_object* tt_3d_object_new()
 {
 	//creating the 3d object and putting it into the render list
 	tt_3d_object *new_object=malloc(sizeof(tt_3d_object));
@@ -54,7 +54,7 @@ void tt_3d_object_delete(tt_3d_object **object)
 	//if this object has already been deleted then just quit
 	if(*object==NULL)
 	{
-		return; 
+		return;
 	}
 
 	//if this object is the first object in the render list

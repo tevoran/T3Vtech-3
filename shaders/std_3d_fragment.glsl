@@ -39,6 +39,7 @@ uniform bool object_light_affected;
 
 //global settings
 uniform bool tone_mapping_toggle;
+uniform float exposure;
 	
 //ambient lighting
 uniform float amb_light_strength;
@@ -110,12 +111,13 @@ void main()
 		
 			//point lights
 			color+=base_color * point_light_result;
-
 		}
+	}
 
-		if (tone_mapping_toggle)
-		{
-			color = vec4(aces_approx(color.rgb), color.a);
-		}
+	color.rgb *= exposure;
+
+	if (tone_mapping_toggle && object_light_affected)
+	{
+		color = vec4(aces_approx(color.rgb), color.a);
 	}
 }

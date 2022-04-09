@@ -44,6 +44,7 @@ uniform bool object_light_affected;
 
 //global settings
 uniform bool tone_mapping_toggle;
+uniform float exposure;
 
 //variables to fragment shader
 out vec2 base_tex_coord;

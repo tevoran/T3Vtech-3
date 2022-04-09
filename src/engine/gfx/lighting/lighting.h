@@ -11,6 +11,7 @@ typedef int tt_dir_light;
 void tt_gfx_gouraud_shading(bool active);
 void tt_gfx_phong_shading(bool active);
 void tt_gfx_tone_mapping(bool active);
+void tt_gfx_set_exposure(float exposure);
 
 //ambient light
 void tt_ambient_light_set_strength(float strength);
