@@ -73,12 +73,19 @@ bool tt_init(
 
 	if(fullscreen)
 	{
+		int num_displays = SDL_GetNumVideoDisplays();
+		if(!quiet)
+		{
+			SDL_Log("SDL_GetNumVideoDisplays(): %i", num_displays);
+		}
+
 		tt_window=SDL_CreateWindow(
 			window_name, 
-			SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED,
-			res_x, res_y,
-			SDL_WINDOW_FULLSCREEN |
+			0,
+			0,
+			0, 0,
+			SDL_WINDOW_FULLSCREEN_DESKTOP |
+			SDL_WINDOW_BORDERLESS |
 			SDL_WINDOW_OPENGL);		
 	}
 	else

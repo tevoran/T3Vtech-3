@@ -58,8 +58,21 @@ tt_3d_audio_source* tt_audio_3d_source_new()
 		printf("[ERROR] couldn't allocate memory for a 3D audio source\n");
 		return NULL;
 	}
-	alGenSources(1, &new_source->source);
 	ALenum error=alGetError();
+	alGenSources(1, &new_source->source);
+	error=alGetError();
+	if(error==AL_OUT_OF_MEMORY)
+	{
+		printf("[ERROR] OpenAL has not enough memory to allocate the audio source\n");
+	}
+	if(error==AL_INVALID_VALUE)
+	{
+		printf("[ERROR] There are not enough non-memory resources or the source pointer is not valid\n");
+	}
+	if(error==AL_INVALID_OPERATION )
+	{
+		printf("[ERROR] There is no valid context\n");
+	}
 	if(error!=AL_NO_ERROR)
 	{
 		printf("[ERROR] error while creating a 3D audio source\n");
