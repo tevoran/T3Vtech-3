@@ -9,7 +9,7 @@ void tt_audio_load_wav(
 	int *frequency,
 	bool *stereo)
 {
-	FILE *file=fopen(path, "r");
+	FILE *file=fopen(path, "rb");
 	if(!file)
 	{
 		printf("[ERROR] WAV file couldn't be read\n");
@@ -23,6 +23,8 @@ void tt_audio_load_wav(
 	if(!strstr(riff_mark, "RIFF"))
 	{
 		printf("[ERROR] the WAV file is missing the RIFF mark and is therefor not a WAV file\n");
+		fclose(file);
+		return;
 	}
 
 	//reading file size
@@ -36,6 +38,8 @@ void tt_audio_load_wav(
 	if(!strstr(wave_mark, "WAVE"))
 	{
 		printf("[ERROR] the WAV file is missing the WAVE mark and is therefor not a WAV file\n");
+		fclose(file);
+		return;
 	}
 
 	//format mark check
@@ -44,6 +48,8 @@ void tt_audio_load_wav(
 	if(!strstr(fmt_mark, "fmt "))
 	{
 		printf("[ERROR] the WAV file is missing the format mark and is therefor not a WAV file\n");
+		fclose(file);
+		return;
 	}
 
 	//length of format data
@@ -52,6 +58,8 @@ void tt_audio_load_wav(
 	if(format_length!=16)
 	{
 		printf("[ERROR] the format size is not correct. The file is corrupt.\n");
+		fclose(file);
+		return;
 	}
 
 	//check of format type
@@ -60,6 +68,8 @@ void tt_audio_load_wav(
 	if(format_type!=1) //1 means PCM
 	{
 		printf("[ERROR] the format type is not correct.\n");
+		fclose(file);
+		return;
 	}
 
 	//number of channels
@@ -90,7 +100,9 @@ void tt_audio_load_wav(
 	fgets(data_mark, 5, file);
 	if(!strstr(data_mark, "data"))
 	{
-		printf("[ERROR] the WAV file is missing the data mark and is therefor not a WAV file\n");
+		printf("[ERROR] the WAV file is missing the data mark and is therefore not a WAV file\n");
+		fclose(file);
+		return;
 	}
 
 	//data size
@@ -99,4 +111,6 @@ void tt_audio_load_wav(
 	//data pointer
 	*data=malloc(*size_of_data);
 	fread(*data, *size_of_data, 1, file);
+
+	fclose(file);
 }
