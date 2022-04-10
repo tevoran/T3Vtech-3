@@ -8,7 +8,7 @@ sr::sr::sr()
 		"T3Vtech-3 Shooting Range Demo",
 		1920,
 		1080,
-		false,
+		true,
 		16,
 		false);
 
