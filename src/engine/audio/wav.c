@@ -75,8 +75,8 @@ void tt_audio_load_wav(
 	//number of channels
 	Uint16 num_channels=0;
 	fread(&num_channels, 2, 1, file);
-	*stereo=num_channels;
 	printf("number of channels in WAV file: %u\n", num_channels);
+	*stereo=num_channels==2;
 
 	//sample rate
 	fread(frequency, 4, 1, file);
