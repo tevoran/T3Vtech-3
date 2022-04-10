@@ -91,10 +91,16 @@ void tt_3d_object_set_rotation(tt_3d_object *object, tt_vec3 *rot_axis, float ra
 	object->rotation = tt_math_mat4_make_quat_rot_mat(rot_axis, radians);
 }
 
-void tt_3d_object_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
+void tt_3d_object_rotate_local_axis(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
 {
 	tt_mat4 rot_delta_mat=tt_math_mat4_make_quat_rot_mat(rot_axis, radians);
 	object->rotation=tt_math_mat4_mul(&rot_delta_mat, &object->rotation);
+}
+
+void tt_3d_object_pre_rotate(tt_3d_object *object, tt_vec3 *rot_axis, float radians)
+{
+	tt_mat4 rot_delta_mat = tt_math_mat4_make_quat_rot_mat(rot_axis, radians);
+	object->rotation = tt_math_mat4_mul(&object->rotation, &rot_delta_mat);
 }
 
 void tt_3d_object_rotate_like(tt_3d_object *object_target, tt_3d_object *object_already_rotated)
