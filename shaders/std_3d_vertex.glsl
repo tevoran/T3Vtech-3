@@ -1,6 +1,7 @@
 #version 450
 #define NUM_MAX_DIR_LIGHTS 8
 #define NUM_MAX_POINT_LIGHTS 128
+#define NUM_MAX_POINT_LIGHTS_PER_OBJECT 16
 
 
 layout(location = 0) in vec3 pos_in;
@@ -40,6 +41,9 @@ uniform mat4 cam_and_projection;
 //lighting
 uniform bool gouraud_shading_toggle;
 uniform bool phong_shading_toggle;
+
+uniform int object_point_light_count;
+uniform int object_point_lights[NUM_MAX_POINT_LIGHTS_PER_OBJECT];
 uniform bool object_light_affected;
 
 //global settings

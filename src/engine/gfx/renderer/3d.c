@@ -123,6 +123,8 @@ void tt_gfx_3d_render()
 				GLint transform=glGetUniformLocation(tt_std_3d_shader, "transform");
 				GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
 				GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
+				GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
+				GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
 
 				//calculate object transformation matrix
 				tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->translation, &current_object->rotation);
@@ -138,6 +140,8 @@ void tt_gfx_3d_render()
 				glUniformMatrix4fv(transform, 1, GL_TRUE, mat4_uniform);
 
 				glUniform1i(affected_by_light, current_object->lighting_affected);
+				glUniform1i(point_light_count, current_object->point_light_count);
+				glUniform1iv(point_light_list, current_object->point_light_count, (const GLint *)current_object->point_lights);
 
 				//bind buffers
 				//glBindVertexArray(current_object->vao);

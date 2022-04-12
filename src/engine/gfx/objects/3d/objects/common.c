@@ -32,6 +32,7 @@ tt_3d_object* tt_3d_object_new()
 
 	new_object->texture=tt_gfx_3d_default_tex;
 	new_object->lighting_affected=true;
+	new_object->point_light_count=0;
 	new_object->bounding_sphere_radius=0;
 	new_object->invisibility_toggle=false; //make visible by default
 
@@ -130,6 +131,40 @@ void tt_3d_object_use_default_texture(tt_3d_object *object)
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle)
 {
 	object->lighting_affected=toggle;
+}
+
+void tt_3d_object_add_point_light(tt_3d_object *object, tt_point_light light)
+{
+	if(object->point_light_count>=MAX_POINT_LIGHTS_PER_OBJECT)
+	{
+		return;
+	}
+
+	object->point_lights[object->point_light_count++] = light;
+}
+
+void tt_3d_object_remove_point_light(tt_3d_object *object, tt_point_light light)
+{
+	for(int i=0; i<object->point_light_count; ++i)
+	{
+		if (object->point_lights[i] == light)
+		{
+			object->point_lights[i] = object->point_lights[object->point_light_count - 1];
+
+			--i;
+			--object->point_light_count;
+		}
+	}
+}
+
+void tt_3d_object_clear_point_lights(tt_3d_object *object)
+{
+	object->point_light_count = 0;
+}
+
+int tt_3d_object_get_point_light_count(tt_3d_object *object)
+{
+	return object->point_light_count;
 }
 
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle)

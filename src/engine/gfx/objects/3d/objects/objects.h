@@ -3,6 +3,8 @@
 
 #include <tt.h>
 
+#define MAX_POINT_LIGHTS_PER_OBJECT 16
+
 //all 3D objects are organized in a linked list that the render goes through
 struct tt_3d_object
 {
@@ -31,6 +33,9 @@ struct tt_3d_object
 	bool invisibility_toggle;
 
 	//lighting
+	tt_point_light point_lights[MAX_POINT_LIGHTS_PER_OBJECT];
+	int point_light_count;
+
 	bool lighting_affected;
 
 	//collision properties
@@ -70,9 +75,14 @@ void tt_3d_object_rotate_like(tt_3d_object *object_target, tt_3d_object *object_
 //object properties
 void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture);
 void tt_3d_object_use_default_texture(tt_3d_object *object);
-void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle);
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object);
+
+void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);
+void tt_3d_object_add_point_light(tt_3d_object *object, tt_point_light light);
+void tt_3d_object_remove_point_light(tt_3d_object *object, tt_point_light light);
+void tt_3d_object_clear_point_lights(tt_3d_object *object);
+int tt_3d_object_get_point_light_count(tt_3d_object *object);
 
 //collisions
 void tt_3d_aabb_after_world_transform(tt_3d_object *obj, tt_3d_collision_aabb *aabb);

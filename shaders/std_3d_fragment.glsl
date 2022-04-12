@@ -1,6 +1,7 @@
 #version 450
 #define NUM_MAX_DIR_LIGHTS 8
 #define NUM_MAX_POINT_LIGHTS 128
+#define NUM_MAX_POINT_LIGHTS_PER_OBJECT 16
 
 
 //directional lighting light sources
@@ -35,6 +36,9 @@ uniform sampler2D base_tex;
 //lighting
 uniform bool gouraud_shading_toggle;
 uniform bool phong_shading_toggle;
+
+uniform int object_point_light_count;
+uniform int object_point_lights[NUM_MAX_POINT_LIGHTS_PER_OBJECT];
 uniform bool object_light_affected;
 
 //global settings
@@ -76,10 +80,12 @@ void main()
 		if(phong_shading_toggle)
 		{
 			vec3 normal = normalize(normal_out);
-			for(int i = 0; i < point_light_num_active.x; i++)
+			for(int i = 0; i < object_point_light_count; i++)
 			{
+				int l = object_point_lights[i];
+
 				//getting the direction from the fragment
-				vec3 light_direction = point_light_location[i].xyz - world_position_out;
+				vec3 light_direction = point_light_location[l].xyz - world_position_out;
 
 				//determining intensity from light angle
 				float l_dot_n = dot(light_direction, normal);
@@ -89,7 +95,7 @@ void main()
 					l_dot_n /= l_distance;
 
 					float falloff = 1 / (l_distance * l_distance);
-					vec3 diffuse = point_light_color[i].rgb * base_color.rgb * point_light_strength[i].rgb * l_dot_n * falloff;
+					vec3 diffuse = point_light_color[l].rgb * base_color.rgb * point_light_strength[l].rgb * l_dot_n * falloff;
 
 					color += vec4(diffuse, 0.0);
 				}
