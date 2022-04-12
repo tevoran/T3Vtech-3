@@ -32,7 +32,8 @@ tt_vec3 tt_camera_view_direction()
 	tmp_mat.array[1][3]=start_dir.y;
 	tmp_mat.array[2][3]=start_dir.z;
 
-	tmp_mat=tt_math_mat4_mul(&tt_camera_rotation, &tmp_mat);
+	tt_mat4 inv_mat=tt_math_mat4_transpose(&tt_camera_rotation);
+	tmp_mat=tt_math_mat4_mul(&inv_mat, &tmp_mat);
 	tt_vec3 out=
 	{
 		tmp_mat.array[0][3],
