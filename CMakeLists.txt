@@ -55,6 +55,10 @@ file(GLOB_RECURSE "audio" SRC src/tests/audio/audio.c)
 add_executable(audio WIN32 ${audio})
 target_link_libraries(audio LINK_PRIVATE T3Vtech)
 
+file(GLOB_RECURSE "input" SRC src/tests/input/input.c)
+add_executable(input WIN32 ${input})
+target_link_libraries(input LINK_PRIVATE T3Vtech)
+
 #creating library test
 file(GLOB_RECURSE "test" SRC src/test.c)
 add_executable(test WIN32 ${test})
