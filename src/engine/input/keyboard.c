@@ -29,11 +29,11 @@ void tt_input_keyboard_press_update(SDL_Event event)
 			if(keyboard_press[i]==NO_KEY_PRESS)
 			{
 				keyboard_press[i]=event.key.keysym.scancode;
+				break;
 			}
 		}
 	}
 }
-
 
 bool tt_input_keyboard_key_down(const unsigned char key)
 {
