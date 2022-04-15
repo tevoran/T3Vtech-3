@@ -36,6 +36,9 @@ tt_3d_object* tt_3d_object_new()
 	new_object->bounding_sphere_radius=0;
 	new_object->invisibility_toggle=false; //make visible by default
 
+	new_object->color = (tt_vec3){ 1.0f, 1.0f, 1.0f };
+	new_object->emission = (tt_vec3){ 0.0f, 0.0f, 0.0f };
+
 	//actual model data
 	new_object->vertex_data=NULL;
 	new_object->index_data=NULL;
@@ -126,6 +129,16 @@ void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture)
 void tt_3d_object_use_default_texture(tt_3d_object *object)
 {
 	object->texture=tt_gfx_3d_default_tex;
+}
+
+void tt_3d_object_set_color(tt_3d_object *object, tt_vec3 *color)
+{
+	object->color = *color;
+}
+
+void tt_3d_object_set_emission(tt_3d_object *object, tt_vec3 *emission)
+{
+	object->emission = *emission;
 }
 
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle)

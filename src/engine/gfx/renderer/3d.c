@@ -23,6 +23,8 @@ extern bool tt_gfx_gouraud_shading_active; //toggle if gouraud shading is active
 extern bool tt_gfx_phong_shading_active; //toggle if phong shading is active
 extern bool tt_gfx_tone_mapping_toggle; //toggle if tone mapping is enabled
 extern float tt_gfx_exposure; //full scene exposure
+extern float tt_gfx_saturation; //full scene saturation
+extern float tt_gfx_contrast; //full scene contrast
 extern GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 extern GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
 
@@ -85,6 +87,12 @@ void tt_gfx_3d_preparation()
 	GLint exposure = glGetUniformLocation(tt_std_3d_shader, "exposure");
 	glUniform1f(exposure, tt_gfx_exposure);
 
+	GLint saturation = glGetUniformLocation(tt_std_3d_shader, "saturation");
+	glUniform1f(saturation, tt_gfx_saturation);
+
+	GLint contrast = glGetUniformLocation(tt_std_3d_shader, "contrast");
+	glUniform1f(contrast, tt_gfx_contrast);
+
 	//directional light uniform buffer object
 	GLuint dir_light=glGetUniformBlockIndex(tt_std_3d_shader, "dir_light");
 	glUniformBlockBinding(tt_std_3d_shader, dir_light, DIR_LIGHT_BINDING);
@@ -125,6 +133,8 @@ void tt_gfx_3d_render()
 				GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
 				GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
 				GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
+				GLint object_color= glGetUniformLocation(tt_std_3d_shader, "object_color");
+				GLint object_emission = glGetUniformLocation(tt_std_3d_shader, "object_emission");
 
 				//calculate object transformation matrix
 				tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->translation, &current_object->rotation);
@@ -142,6 +152,8 @@ void tt_gfx_3d_render()
 				glUniform1i(affected_by_light, current_object->lighting_affected);
 				glUniform1i(point_light_count, current_object->point_light_count);
 				glUniform1iv(point_light_list, current_object->point_light_count, (const GLint *)current_object->point_lights);
+				glUniform3f(object_color, current_object->color.x, current_object->color.y, current_object->color.z);
+				glUniform3f(object_emission, current_object->emission.x, current_object->emission.y, current_object->emission.z);
 
 				//bind buffers
 				//glBindVertexArray(current_object->vao);

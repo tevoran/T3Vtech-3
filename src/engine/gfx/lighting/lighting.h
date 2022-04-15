@@ -12,6 +12,8 @@ void tt_gfx_gouraud_shading(bool active);
 void tt_gfx_phong_shading(bool active);
 void tt_gfx_tone_mapping(bool active);
 void tt_gfx_set_exposure(float exposure);
+void tt_gfx_set_saturation(float saturation);
+void tt_gfx_set_contrast(float contrast);
 
 //ambient light
 void tt_ambient_light_set_strength(float strength);

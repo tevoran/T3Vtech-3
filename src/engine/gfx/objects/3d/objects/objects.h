@@ -29,6 +29,9 @@ struct tt_3d_object
 
 	//properties
 	GLuint texture;
+	tt_vec3 color;
+	tt_vec3 emission;
+
 	float bounding_sphere_radius;
 	bool invisibility_toggle;
 
@@ -75,6 +78,8 @@ void tt_3d_object_rotate_like(tt_3d_object *object_target, tt_3d_object *object_
 //object properties
 void tt_3d_object_use_texture(tt_3d_object *object, tt_3d_texture *texture);
 void tt_3d_object_use_default_texture(tt_3d_object *object);
+void tt_3d_object_set_color(tt_3d_object *object, tt_vec3 *color);
+void tt_3d_object_set_emission(tt_3d_object *object, tt_vec3 *emission);
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle);
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object);
 

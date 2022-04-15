@@ -38,6 +38,9 @@ uniform mat4 cam_and_projection;
 //uniform mat4 cam_translation;
 //uniform mat4 cam_rotation;
 
+uniform vec3 object_color;
+uniform vec3 object_emission;
+
 //lighting
 uniform bool gouraud_shading_toggle;
 uniform bool phong_shading_toggle;
@@ -49,6 +52,8 @@ uniform bool object_light_affected;
 //global settings
 uniform bool tone_mapping_toggle;
 uniform float exposure;
+uniform float saturation;
+uniform float contrast;
 
 //variables to fragment shader
 out vec2 base_tex_coord;

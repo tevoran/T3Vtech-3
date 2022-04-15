@@ -45,6 +45,8 @@ GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
 //global settings
 bool tt_gfx_tone_mapping_toggle=false;
 float tt_gfx_exposure=1.0; //full scene exposure
+float tt_gfx_saturation=1.0; //full scene saturation
+float tt_gfx_contrast=1.0; //full scene contrast
 
 //camera
 tt_mat4 tt_camera_position; //current camera position
