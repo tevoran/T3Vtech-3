@@ -157,7 +157,7 @@ vec3 adjust_contrast(vec3 v, float contrast)
 	return ((v - 0.5) * max(contrast, 0.0)) + 0.5;
 }
 
-float get_ao(vec3 pos, in ao_light light)
+float get_ao(vec3 pos, vec3 normal, in ao_light light)
 {
 	float strength = mod(light.p0.w, 1.0);
 	float falloff = (light.p0.w - strength) / 100.0;
@@ -169,8 +169,11 @@ float get_ao(vec3 pos, in ao_light light)
 		clamp(pos.z, light.p0.z, light.p1.z)
 	);
 
-	float dist_2 = max(length(pos - closest_point) - radius, 0);
-	return exp(-dist_2 * falloff) * strength;
+	vec3 center = 0.5 * (light.p0.xyz + light.p1.xyz);
+	float distance = max(length(pos - closest_point) - radius, 0);
+	float normal_dot_delta = max(0.0, sign(-dot(normal, pos - center)));
+
+	return exp(-distance * falloff) * strength * normal_dot_delta;
 }
 
 void main()
@@ -184,11 +187,13 @@ void main()
 		vec4 base_color=color;
 		base_color.rgb *= srgb_to_linear(object_color);
 
+		vec3 normal = normalize(normal_out);
+
 		//calculate ambient occlusion
 		float ao = 0;
 		for (int i = 0; i < object_ao_light_count; i++)
 		{
-			ao = max(ao, get_ao(world_position_out, ao_lights[object_ao_lights[i]]));
+			ao = max(ao, get_ao(world_position_out, normal, ao_lights[object_ao_lights[i]]));
 		}
 
 		//ambient lighting
@@ -197,7 +202,6 @@ void main()
 
 		if(phong_shading_toggle)
 		{
-			vec3 normal = normalize(normal_out);
 			for(int i = 0; i < object_point_light_count; i++)
 			{
 				int l = object_point_lights[i];
