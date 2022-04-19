@@ -2,6 +2,7 @@
 
 #define DIR_LIGHT_BINDING 0
 #define POINT_LIGHT_BINDING 1
+#define AO_LIGHT_BINDING 2
 
 //game settings
 extern uint32_t tt_res_x; //game resolution
@@ -103,6 +104,11 @@ void tt_gfx_3d_preparation()
 	glUniformBlockBinding(tt_std_3d_shader, point_light, POINT_LIGHT_BINDING);
 	glBindBufferBase(GL_UNIFORM_BUFFER, POINT_LIGHT_BINDING, tt_gfx_ubo_point_light);
 
+	//ao light uniform buffer object
+	GLuint ao_light = glGetUniformBlockIndex(tt_std_3d_shader, "ao_light");
+	glUniformBlockBinding(tt_std_3d_shader, ao_light, AO_LIGHT_BINDING);
+	glBindBufferBase(GL_UNIFORM_BUFFER, AO_LIGHT_BINDING, tt_gfx_ubo_point_light);
+
 	//ambient lighting
 	GLint amb_light_strength=glGetUniformLocation(tt_std_3d_shader, "amb_light_strength"); 
 	glUniform1f(amb_light_strength, tt_gfx_amb_light_strength);
@@ -133,8 +139,10 @@ void tt_gfx_3d_render()
 				GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
 				GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
 				GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
-				GLint object_color= glGetUniformLocation(tt_std_3d_shader, "object_color");
-				GLint object_emission = glGetUniformLocation(tt_std_3d_shader, "object_emission");
+				GLint ao_light_count=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_count");
+				GLint ao_light_list=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_list");
+				GLint object_color=glGetUniformLocation(tt_std_3d_shader, "object_color");
+				GLint object_emission=glGetUniformLocation(tt_std_3d_shader, "object_emission");
 
 				//calculate object transformation matrix
 				tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->translation, &current_object->rotation);
@@ -152,6 +160,8 @@ void tt_gfx_3d_render()
 				glUniform1i(affected_by_light, current_object->lighting_affected);
 				glUniform1i(point_light_count, current_object->point_light_count);
 				glUniform1iv(point_light_list, current_object->point_light_count, (const GLint *)current_object->point_lights);
+				glUniform1i(ao_light_count, current_object->ao_light_count);
+				glUniform1iv(ao_light_list, current_object->ao_light_count, (const GLint *)current_object->ao_lights);
 				glUniform3f(object_color, current_object->color.x, current_object->color.y, current_object->color.z);
 				glUniform3f(object_emission, current_object->emission.x, current_object->emission.y, current_object->emission.z);
 

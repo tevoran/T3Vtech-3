@@ -85,6 +85,7 @@ bool tt_gfx_init(const bool quiet)
 	tt_gfx_exposure=1.0f;
 	tt_gfx_directional_light_setup();
 	tt_gfx_point_light_setup();
+	tt_gfx_ao_light_setup();
 
 	return true;
 }

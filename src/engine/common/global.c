@@ -38,6 +38,7 @@ bool tt_gfx_gouraud_shading_active=true; //toggle if gouraud shading is active
 bool tt_gfx_phong_shading_active=true; //toggle if phong shading is active
 GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
+GLuint tt_gfx_ubo_ao_light; //uniform buffer object for ao light data
 	//ambient lighting
 	float tt_gfx_amb_light_strength=0.33; //the ambient light strength
 	tt_vec3 tt_gfx_amb_light_color={1.0,1.0,1.0}; //the ambient light color

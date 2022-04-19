@@ -2,7 +2,8 @@
 #define NUM_MAX_DIR_LIGHTS 8
 #define NUM_MAX_POINT_LIGHTS 128
 #define NUM_MAX_POINT_LIGHTS_PER_OBJECT 16
-
+#define NUM_MAX_AO_LIGHTS 128
+#define NUM_MAX_AO_LIGHTS_PER_OBJECT 16
 
 layout(location = 0) in vec3 pos_in;
 layout(location = 1) in vec2 base_tex_coord_in;
@@ -47,6 +48,8 @@ uniform bool phong_shading_toggle;
 
 uniform int object_point_light_count;
 uniform int object_point_lights[NUM_MAX_POINT_LIGHTS_PER_OBJECT];
+uniform int object_ao_light_count;
+uniform int object_ao_lights[NUM_MAX_AO_LIGHTS_PER_OBJECT];
 uniform bool object_light_affected;
 
 //global settings

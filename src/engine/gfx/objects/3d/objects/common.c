@@ -180,6 +180,40 @@ int tt_3d_object_get_point_light_count(tt_3d_object *object)
 	return object->point_light_count;
 }
 
+void tt_3d_object_add_ao_light(tt_3d_object *object, tt_ao_light light)
+{
+	if (object->ao_light_count>=MAX_AO_LIGHTS_PER_OBJECT)
+	{
+		return;
+	}
+
+	object->ao_lights[object->ao_light_count++] = light;
+}
+
+void tt_3d_object_remove_ao_light(tt_3d_object *object, tt_ao_light light)
+{
+	for (int i = 0; i<object->ao_light_count; ++i)
+	{
+		if (object->ao_lights[i]==light)
+		{
+			object->ao_lights[i] = object->ao_lights[object->ao_light_count - 1];
+
+			--i;
+			--object->ao_light_count;
+		}
+	}
+}
+
+void tt_3d_object_clear_ao_lights(tt_3d_object *object)
+{
+	object->ao_light_count = 0;
+}
+
+int tt_3d_object_get_ao_light_count(tt_3d_object *object)
+{
+	return object->ao_light_count;
+}
+
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle)
 {
 	object->invisibility_toggle=toggle;

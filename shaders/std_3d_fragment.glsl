@@ -2,7 +2,14 @@
 #define NUM_MAX_DIR_LIGHTS 8
 #define NUM_MAX_POINT_LIGHTS 128
 #define NUM_MAX_POINT_LIGHTS_PER_OBJECT 16
+#define NUM_MAX_AO_LIGHTS 128
+#define NUM_MAX_AO_LIGHTS_PER_OBJECT 16
 
+struct ao_light
+{
+	vec4 p0; // w = strength/falloff
+	vec4 p1; // w = radius
+};
 
 //directional lighting light sources
 //vec4 is used because of the padding of the UBO
@@ -24,6 +31,11 @@ layout(std140, binding = 1) uniform point_light
 	vec4 point_light_strength[NUM_MAX_POINT_LIGHTS]; //light intensity
 };
 
+layout(std140, binding = 2) uniform ao_lights_buffer
+{
+	ao_light ao_lights[NUM_MAX_AO_LIGHTS];
+};
+
 //input from the vertex shader
 in vec2 base_tex_coord;
 in vec4 dir_light_result;
@@ -42,6 +54,8 @@ uniform bool phong_shading_toggle;
 
 uniform int object_point_light_count;
 uniform int object_point_lights[NUM_MAX_POINT_LIGHTS_PER_OBJECT];
+uniform int object_ao_light_count;
+uniform int object_ao_lights[NUM_MAX_AO_LIGHTS_PER_OBJECT];
 uniform bool object_light_affected;
 
 //global settings
@@ -143,10 +157,25 @@ vec3 adjust_contrast(vec3 v, float contrast)
 	return ((v - 0.5) * max(contrast, 0.0)) + 0.5;
 }
 
+float get_ao(vec3 pos, in ao_light light)
+{
+	float strength = mod(light.p0.w, 1.0);
+	float falloff = (light.p0.w - strength) / 100.0;
+	float radius = light.p1.w;
+
+	vec3 closest_point = vec3(
+		clamp(pos.x, light.p0.x, light.p1.x),
+		clamp(pos.y, light.p0.y, light.p1.y),
+		clamp(pos.z, light.p0.z, light.p1.z)
+	);
+
+	float dist_2 = max(length(pos - closest_point) - radius, 0);
+	return exp(-dist_2 * falloff) * strength;
+}
+
 void main()
 {
 	color = vec4(srgb_to_linear(texture(base_tex, base_tex_coord).rgb), 1.0);
-	//color = texture(base_tex, base_tex_coord);
 
 	//lighting
 	if(object_light_affected)
@@ -154,6 +183,13 @@ void main()
 		//preparation
 		vec4 base_color=color;
 		base_color.rgb *= srgb_to_linear(object_color);
+
+		//calculate ambient occlusion
+		float ao = 0;
+		for (int i = 0; i < object_ao_light_count; i++)
+		{
+			ao = max(ao, get_ao(world_position_out, ao_lights[object_ao_lights[i]]));
+		}
 
 		//ambient lighting
 		vec3 amb_light = amb_light_strength * amb_light_color;
@@ -177,7 +213,7 @@ void main()
 					l_dot_n /= l_distance;
 
 					float falloff = 1 / (l_distance * l_distance);
-					vec3 diffuse = point_light_color[l].rgb * base_color.rgb * point_light_strength[l].rgb * l_dot_n * falloff;
+					vec3 diffuse = point_light_color[l].rgb * base_color.rgb * point_light_strength[l].rgb * l_dot_n * falloff * (1 - ao);
 
 					color += vec4(diffuse, 0.0);
 				}

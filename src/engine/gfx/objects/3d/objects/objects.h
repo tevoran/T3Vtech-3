@@ -4,6 +4,7 @@
 #include <tt.h>
 
 #define MAX_POINT_LIGHTS_PER_OBJECT 16
+#define MAX_AO_LIGHTS_PER_OBJECT 16
 
 //all 3D objects are organized in a linked list that the render goes through
 struct tt_3d_object
@@ -38,6 +39,9 @@ struct tt_3d_object
 	//lighting
 	tt_point_light point_lights[MAX_POINT_LIGHTS_PER_OBJECT];
 	int point_light_count;
+
+	tt_ao_light ao_lights[MAX_AO_LIGHTS_PER_OBJECT];
+	int ao_light_count;
 
 	bool lighting_affected;
 
@@ -88,6 +92,10 @@ void tt_3d_object_add_point_light(tt_3d_object *object, tt_point_light light);
 void tt_3d_object_remove_point_light(tt_3d_object *object, tt_point_light light);
 void tt_3d_object_clear_point_lights(tt_3d_object *object);
 int tt_3d_object_get_point_light_count(tt_3d_object *object);
+void tt_3d_object_add_ao_light(tt_3d_object *object, tt_ao_light light);
+void tt_3d_object_remove_ao_light(tt_3d_object *object, tt_ao_light light);
+void tt_3d_object_clear_ao_lights(tt_3d_object *object);
+int tt_3d_object_get_ao_light_count(tt_3d_object *object);
 
 //collisions
 void tt_3d_aabb_after_world_transform(tt_3d_object *obj, tt_3d_collision_aabb *aabb);

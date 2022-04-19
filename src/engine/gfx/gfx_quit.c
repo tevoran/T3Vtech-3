@@ -24,6 +24,7 @@ void tt_gfx_quit(const bool quiet)
 	//delete light UBOs
 	tt_gfx_directional_light_cleanup();
 	tt_gfx_point_light_cleanup();
+	tt_gfx_ao_light_cleanup();
 
 	if(!quiet)
 	{
