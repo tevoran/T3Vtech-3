@@ -7,8 +7,12 @@
 
 struct ao_light
 {
-	vec4 p0; // w = strength/falloff
-	vec4 p1; // w = radius
+	vec4 p0;
+	vec4 p1;
+	float strength;
+	float falloff;
+	float radius;
+	float backfacing_attenuation;
 };
 
 //directional lighting light sources
@@ -159,9 +163,10 @@ vec3 adjust_contrast(vec3 v, float contrast)
 
 float get_ao(vec3 pos, in ao_light light)
 {
-	float strength = mod(light.p0.w, 1.0);
-	float falloff = (light.p0.w - strength) / 100.0;
-	float radius = light.p1.w;
+	float strength = light.strength;
+	float falloff = light.falloff;
+	float radius = light.radius;
+	float backfacing_attenuation = light.backfacing_attenuation;
 
 	vec3 closest_point = vec3(
 		clamp(pos.x, light.p0.x, light.p1.x),
@@ -169,8 +174,11 @@ float get_ao(vec3 pos, in ao_light light)
 		clamp(pos.z, light.p0.z, light.p1.z)
 	);
 
-	float dist_2 = max(length(pos - closest_point) - radius, 0);
-	return exp(-dist_2 * falloff) * strength;
+	vec3 center = 0.5 * (light.p0.xyz + light.p1.xyz);
+	float distance = max(length(pos - closest_point) - radius, 0);
+	float normal_dot_delta = backfacing_attenuation * max(0.0, sign(-dot(normal, pos - center))) + (1 - backfacing_attenuation);
+
+	return exp(-distance * falloff) * strength * normal_dot_delta;
 }
 
 void main()

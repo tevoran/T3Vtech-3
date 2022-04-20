@@ -49,6 +49,7 @@ void tt_ao_light_delete(tt_ao_light light_id);
 void tt_ao_light_set_strength(tt_ao_light light_id, float strength);
 void tt_ao_light_set_falloff(tt_ao_light light_id, float falloff);
 void tt_ao_light_set_radius(tt_ao_light light_id, float radius);
+void tt_ao_light_set_backfacing_attenuation(tt_ao_light light_id, float backfacing_attenuation);
 void tt_ao_light_set_bounds(tt_ao_light light_id, tt_vec3 *a, tt_vec3 *b);
 
 #endif

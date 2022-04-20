@@ -8,6 +8,10 @@ struct ao_light_data
 {
 	tt_vec4 p0;
 	tt_vec4 p1;
+	float strength;
+	float falloff;
+	float radius;
+	float backfacing_attenuation;
 } typedef ao_light_data;
 
 struct ao_light_ubo_layout
@@ -113,17 +117,50 @@ void tt_ao_light_set_strength(tt_ao_light light_id, float strength)
 
 	if (strength < 0)
 	{
-		strength = 0;
+		strength=0;
 	}
 	else if (strength >= 1)
 	{
-		strength = 0.9999f;
+		strength=1.0f;
 	}
 
+<<<<<<< HEAD
 	float prev_strength_falloff=ubo.ao_lights[gpu_id - 1].p0.w;
 	float prev_falloff=floor(prev_strength_falloff);
 
 	ubo.ao_lights[gpu_id - 1].p0.w = prev_falloff + strength;
+=======
+	ao_light_ubo.ao_lights[gpu_id-1].strength=strength;
+
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void tt_ao_light_set_backfacing_attenuation(tt_ao_light light_id, float backfacing_attenuation)
+{
+	if(light_id==TT_NO_LIGHT)
+	{
+		return; 
+	}
+
+	int gpu_id=ao_light_remap[light_id];
+	if(!gpu_id)
+	{
+		return;
+	}
+
+	if (backfacing_attenuation<0)
+	{
+		backfacing_attenuation=0;
+	}
+	else if (backfacing_attenuation>=1)
+	{
+		backfacing_attenuation=1.0f;
+	}
+
+	ao_light_ubo.ao_lights[gpu_id-1].backfacing_attenuation=backfacing_attenuation;
+>>>>>>> 2acf92c (Added back-facing attenuation parameter to AO light)
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
@@ -148,10 +185,14 @@ void tt_ao_light_set_falloff(tt_ao_light light_id, float falloff)
 		falloff = 0;
 	}
 
+<<<<<<< HEAD
 	float prev_strength_falloff=ubo.ao_lights[gpu_id - 1].p0.w;
 	float prev_strength=prev_strength_falloff - floor(prev_strength_falloff);
 
 	ubo.ao_lights[gpu_id - 1].p0.w = falloff * 100.0f + prev_strength;
+=======
+	ao_light_ubo.ao_lights[gpu_id-1].falloff = falloff;
+>>>>>>> 2acf92c (Added back-facing attenuation parameter to AO light)
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
@@ -176,7 +217,7 @@ void tt_ao_light_set_radius(tt_ao_light light_id, float radius)
 		radius = 0;
 	}
 
-	ubo.ao_lights[gpu_id-1].p1.w = radius;
+	ao_light_ubo.ao_lights[gpu_id-1].radius=radius;
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
