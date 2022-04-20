@@ -208,3 +208,8 @@ void tt_point_light_set_position(tt_point_light light_id, tt_vec3 *position)
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
+
+int tt_point_light_get_gpu_index(tt_point_light light_id)
+{
+	return remap[light_id]-1;
+}

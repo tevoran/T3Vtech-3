@@ -28,6 +28,7 @@ extern float tt_gfx_saturation; //full scene saturation
 extern float tt_gfx_contrast; //full scene contrast
 extern GLuint tt_gfx_ubo_dir_light; //uniform buffer object with directional light data
 extern GLuint tt_gfx_ubo_point_light; //uniform buffer object for point light data
+extern GLuint tt_gfx_ubo_ao_light; //uniform buffer object for ao light data
 
 //ambient lighting
 extern float tt_gfx_amb_light_strength; //the ambient light strength
@@ -107,7 +108,7 @@ void tt_gfx_3d_preparation()
 	//ao light uniform buffer object
 	GLuint ao_light = glGetUniformBlockIndex(tt_std_3d_shader, "ao_light");
 	glUniformBlockBinding(tt_std_3d_shader, ao_light, AO_LIGHT_BINDING);
-	glBindBufferBase(GL_UNIFORM_BUFFER, AO_LIGHT_BINDING, tt_gfx_ubo_point_light);
+	glBindBufferBase(GL_UNIFORM_BUFFER, AO_LIGHT_BINDING, tt_gfx_ubo_ao_light);
 
 	//ambient lighting
 	GLint amb_light_strength=glGetUniformLocation(tt_std_3d_shader, "amb_light_strength"); 
@@ -140,7 +141,7 @@ void tt_gfx_3d_render()
 				GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
 				GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
 				GLint ao_light_count=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_count");
-				GLint ao_light_list=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_list");
+				GLint ao_light_list=glGetUniformLocation(tt_std_3d_shader, "object_ao_lights");
 				GLint object_color=glGetUniformLocation(tt_std_3d_shader, "object_color");
 				GLint object_emission=glGetUniformLocation(tt_std_3d_shader, "object_emission");
 

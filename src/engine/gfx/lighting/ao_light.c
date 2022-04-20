@@ -19,11 +19,11 @@ struct ao_light_ubo_layout
 	ao_light_data ao_lights[NUM_MAX_AO_LIGHTS];
 } typedef ao_light_ubo_layout;
 
-ao_light_ubo_layout ubo;
+ao_light_ubo_layout ao_light_ubo;
 
 
-//light source remapping array
-tt_ao_light remap[NUM_MAX_AO_LIGHTS];
+//light source ao_light_remapping array
+tt_ao_light ao_light_remap[NUM_MAX_AO_LIGHTS];
 int n_active_ao_lights = 0;
 
 
@@ -31,12 +31,12 @@ void tt_gfx_ao_light_setup()
 {
 	glGenBuffers(1, &tt_gfx_ubo_ao_light);
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	for(int i=0; i< NUM_MAX_AO_LIGHTS; i++)
 	{
-		remap[i]=TT_NO_LIGHT;
+		ao_light_remap[i]=TT_NO_LIGHT;
 	}
 }
 
@@ -58,20 +58,19 @@ tt_ao_light tt_ao_light_new()
 	tt_ao_light out=TT_NO_LIGHT;
 	for(int i=0; i<NUM_MAX_AO_LIGHTS; i++)
 	{
-		if(remap[i]==TT_NO_LIGHT)
+		if(ao_light_remap[i]==TT_NO_LIGHT)
 		{
-			remap[i]=n_active_ao_lights;
+			ao_light_remap[i]=n_active_ao_lights;
 			out=(tt_ao_light)i;
 			break;
 		}
 	}
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
 	return out;
-
 }
 
 void tt_ao_light_delete(tt_ao_light light_id)
@@ -81,24 +80,24 @@ void tt_ao_light_delete(tt_ao_light light_id)
 		return;
 	}
 
-	int gpu_id=remap[light_id]-1;
+	int gpu_id=ao_light_remap[light_id]-1;
 
 	//move last entry to the deleted entry
-	ubo.ao_lights[gpu_id]=ubo.ao_lights[n_active_ao_lights - 1];
+	ao_light_ubo.ao_lights[gpu_id]=ao_light_ubo.ao_lights[n_active_ao_lights-1];
 	--n_active_ao_lights;
 
 	for (int j = 0; j < NUM_MAX_AO_LIGHTS; ++j)
 	{
-		if (remap[j]==n_active_ao_lights + 1)
+		if (ao_light_remap[j]==n_active_ao_lights+1)
 		{
-			remap[j] = gpu_id + 1;
+			ao_light_remap[j] = gpu_id+1;
 		}
 	}
 
-	remap[light_id]=TT_NO_LIGHT;
+	ao_light_remap[light_id]=TT_NO_LIGHT;
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
@@ -109,27 +108,21 @@ void tt_ao_light_set_strength(tt_ao_light light_id, float strength)
 		return; 
 	}
 
-	int gpu_id=remap[light_id];
+	int gpu_id=ao_light_remap[light_id];
 	if(!gpu_id)
 	{
 		return;
 	}
 
-	if (strength < 0)
+	if (strength<0)
 	{
 		strength=0;
 	}
-	else if (strength >= 1)
+	else if (strength>=1)
 	{
 		strength=1.0f;
 	}
 
-<<<<<<< HEAD
-	float prev_strength_falloff=ubo.ao_lights[gpu_id - 1].p0.w;
-	float prev_falloff=floor(prev_strength_falloff);
-
-	ubo.ao_lights[gpu_id - 1].p0.w = prev_falloff + strength;
-=======
 	ao_light_ubo.ao_lights[gpu_id-1].strength=strength;
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
@@ -160,10 +153,9 @@ void tt_ao_light_set_backfacing_attenuation(tt_ao_light light_id, float backfaci
 	}
 
 	ao_light_ubo.ao_lights[gpu_id-1].backfacing_attenuation=backfacing_attenuation;
->>>>>>> 2acf92c (Added back-facing attenuation parameter to AO light)
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
@@ -174,28 +166,21 @@ void tt_ao_light_set_falloff(tt_ao_light light_id, float falloff)
 		return; 
 	}
 
-	int gpu_id=remap[light_id];
+	int gpu_id=ao_light_remap[light_id];
 	if(!gpu_id)
 	{
 		return;
 	}
 
-	if (falloff < 0)
+	if (falloff<0)
 	{
 		falloff = 0;
 	}
 
-<<<<<<< HEAD
-	float prev_strength_falloff=ubo.ao_lights[gpu_id - 1].p0.w;
-	float prev_strength=prev_strength_falloff - floor(prev_strength_falloff);
-
-	ubo.ao_lights[gpu_id - 1].p0.w = falloff * 100.0f + prev_strength;
-=======
 	ao_light_ubo.ao_lights[gpu_id-1].falloff = falloff;
->>>>>>> 2acf92c (Added back-facing attenuation parameter to AO light)
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
@@ -206,21 +191,21 @@ void tt_ao_light_set_radius(tt_ao_light light_id, float radius)
 		return; 
 	}
 
-	int gpu_id=remap[light_id];
+	int gpu_id=ao_light_remap[light_id];
 	if(!gpu_id)
 	{
 		return;
 	}
 
-	if (radius < 0)
+	if (radius<0)
 	{
-		radius = 0;
+		radius=0;
 	}
 
 	ao_light_ubo.ao_lights[gpu_id-1].radius=radius;
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
@@ -231,21 +216,26 @@ void tt_ao_light_set_bounds(tt_ao_light light_id, tt_vec3 *a, tt_vec3 *b)
 		return; 
 	}
 
-	int gpu_id=remap[light_id];
+	int gpu_id=ao_light_remap[light_id];
 	if(!gpu_id)
 	{
 		return;
 	}
 
-	ubo.ao_lights[gpu_id-1].p0.x = a->x;
-	ubo.ao_lights[gpu_id-1].p0.y = a->y;
-	ubo.ao_lights[gpu_id-1].p0.z = a->z;
+	ao_light_ubo.ao_lights[gpu_id-1].p0.x=a->x;
+	ao_light_ubo.ao_lights[gpu_id-1].p0.y=a->y;
+	ao_light_ubo.ao_lights[gpu_id-1].p0.z=a->z;
 
-	ubo.ao_lights[gpu_id-1].p1.x = b->x;
-	ubo.ao_lights[gpu_id-1].p1.y = b->y;
-	ubo.ao_lights[gpu_id-1].p1.z = b->z;
+	ao_light_ubo.ao_lights[gpu_id-1].p1.x=b->x;
+	ao_light_ubo.ao_lights[gpu_id-1].p1.y=b->y;
+	ao_light_ubo.ao_lights[gpu_id-1].p1.z=b->z;
 
 	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+int tt_ao_light_get_gpu_index(tt_ao_light light_id)
+{
+	return ao_light_remap[light_id]-1;
 }

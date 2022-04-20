@@ -161,7 +161,7 @@ vec3 adjust_contrast(vec3 v, float contrast)
 	return ((v - 0.5) * max(contrast, 0.0)) + 0.5;
 }
 
-float get_ao(vec3 pos, in ao_light light)
+float get_ao(vec3 pos, vec3 normal, in ao_light light)
 {
 	float strength = light.strength;
 	float falloff = light.falloff;
@@ -192,11 +192,13 @@ void main()
 		vec4 base_color=color;
 		base_color.rgb *= srgb_to_linear(object_color);
 
+		vec3 normal = normalize(normal_out);
+
 		//calculate ambient occlusion
 		float ao = 0;
 		for (int i = 0; i < object_ao_light_count; i++)
 		{
-			ao = max(ao, get_ao(world_position_out, ao_lights[object_ao_lights[i]]));
+			ao = max(ao, get_ao(world_position_out, normal, ao_lights[object_ao_lights[i]]));
 		}
 
 		//ambient lighting
@@ -205,7 +207,6 @@ void main()
 
 		if(phong_shading_toggle)
 		{
-			vec3 normal = normalize(normal_out);
 			for(int i = 0; i < object_point_light_count; i++)
 			{
 				int l = object_point_lights[i];
