@@ -36,7 +36,8 @@
 #include <gfx/gfx.h>
 #include <audio/audio.h>
 #include <input/input.h>
-
+#include <debug/logging.h>
+		
 #ifdef __cplusplus
 	}
 #endif

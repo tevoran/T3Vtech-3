@@ -6,8 +6,6 @@
 
 
 //general stuff
-//settings
-bool tt_quiet; //this activates/deactivates debug messages
 
 //SDL
 SDL_Window *tt_window=NULL; //game window

@@ -15,8 +15,7 @@ struct shader
 bool tt_gfx_shader_compilation(
 	GLuint* shader,
 	const char *path_to_shader, 
-	const GLenum shader_type,
-	const bool quiet)
+	const GLenum shader_type)
 {
 	Uint32 shader_size;
 	FILE *shader_file;
@@ -26,43 +25,25 @@ bool tt_gfx_shader_compilation(
 	switch(shader_type)
 	{
 		case GL_COMPUTE_SHADER:
-			if(!quiet)
-			{
-				printf("creating a compute shader\n");
-			}
+			tt_log(TT_INFO, "creating a compute shader");
 			break;
 		case GL_VERTEX_SHADER:
-			if(!quiet)
-			{
-				printf("creating a vertex shader\n");
-			}
+			tt_log(TT_INFO, "creating a vertex shader");
 			break;
 		case GL_TESS_CONTROL_SHADER:
-			if(!quiet)
-			{
-				printf("creating a tesselation control shader\n");
-			}
+			tt_log(TT_INFO, "creating a tesselation control shader");
 			break;
 		case GL_TESS_EVALUATION_SHADER:
-			if(!quiet)
-			{
-				printf("creating a tesselation evaluation shader\n");
-			}
+			tt_log(TT_INFO, "creating a tesselation evaluation shader");
 			break;
 		case GL_GEOMETRY_SHADER:
-			if(!quiet)
-			{
-				printf("creating a geometry shader\n");
-			}
+			tt_log(TT_INFO, "creating a geometry shader");
 			break;
 		case GL_FRAGMENT_SHADER:
-			if(!quiet)
-			{
-				printf("creating a fragment shader\n");
-			}
+			tt_log(TT_INFO, "creating a fragment shader");
 			break;
 		default:
-			printf("[ERROR] invalid shader type\n");
+			tt_log(TT_ERROR, "invalid shader type");
 			return false;
 	}
 	shader_file=fopen(path_to_shader, "rb");
@@ -71,37 +52,31 @@ bool tt_gfx_shader_compilation(
 		switch(shader_type)
 		{
 			case GL_COMPUTE_SHADER:
-				printf(
-					"[ERROR] while reading a compute shader from %s\n",
+				tt_log(TT_ERROR, "while reading a compute shader from %s",
 					path_to_shader);
 				break;
 			case GL_VERTEX_SHADER:
-				printf(
-					"[ERROR] while reading a vertex shader from %s\n",
+				tt_log(TT_ERROR, "while reading a vertex shader from %s",
 					path_to_shader);
 				break;
 			case GL_TESS_CONTROL_SHADER:
-				printf(
-					"[ERROR] while reading a tesselation control shader from %s\n",
+				tt_log(TT_ERROR, "while reading a tesselation control shader from %s",
 					path_to_shader);
 				break;
 			case GL_TESS_EVALUATION_SHADER:
-				printf(
-					"[ERROR] while reading a tesselation evaluation shader from %s\n",
+				tt_log(TT_ERROR, "while reading a tesselation evaluation shader from %s",
 					path_to_shader);
 				break;
 			case GL_GEOMETRY_SHADER:
-				printf(
-					"[ERROR] while reading a geometry shader from %s\n",
+				tt_log(TT_ERROR, "while reading a geometry shader from %s",
 					path_to_shader);
 				break;
 			case GL_FRAGMENT_SHADER:
-				printf(
-					"[ERROR] while reading a fragment shader from %s\n",
+				tt_log(TT_ERROR, "while reading a fragment shader from %s",
 					path_to_shader);
 				break;
 			default:
-				printf("[ERROR] invalid shader type\n");
+				tt_log(TT_ERROR, "invalid shader type");
 		}
 		fclose(shader_file);
 		return false;
@@ -120,7 +95,7 @@ bool tt_gfx_shader_compilation(
 	*shader=glCreateShader(shader_type);
 	if(!*shader)
 	{
-		printf("[ERROR] couldn't create a shader\n");
+		tt_log(TT_ERROR, "couldn't create a shader");
 		free(shader_buffer);
 		fclose(shader_file);
 		return false;
@@ -137,7 +112,7 @@ bool tt_gfx_shader_compilation(
 		&shader_size_check_length);
 	if(shader_size_check_length!=shader_size)
 	{
-		printf("[ERROR] shader size got changed\n");
+		tt_log(TT_ERROR, "shader size got changed");
 		free(shader_buffer);
 		fclose(shader_file);
 		return false;
@@ -162,8 +137,8 @@ bool tt_gfx_shader_compilation(
 			log_length,
 			NULL,
 			error_msg);
-		printf("[ERROR] shader couldn't be compiled\n");
-		printf("compilation error message:\n%s\n", error_msg);
+		tt_log(TT_ERROR, "shader couldn't be compiled");
+		tt_log(TT_ERROR, "compilation error message:\n%s", error_msg);
 		free(error_msg);
 		free(shader_buffer);
 		fclose(shader_file);
@@ -186,8 +161,7 @@ GLuint tt_gfx_create_shader(
 	const char *path_to_tess_control_shader,
 	const char *path_to_tess_evaluation_shader,
 	const char *path_to_geometry_shader,
-	const char *path_to_fragment_shader,
-	const bool quiet)
+	const char *path_to_fragment_shader)
 {
 	struct shader shader;
 	shader.compute=0;
@@ -223,13 +197,9 @@ GLuint tt_gfx_create_shader(
 		if(tt_gfx_shader_compilation(
 			&shader.compute,
 			path_to_compute_shader,
-			GL_COMPUTE_SHADER,
-			quiet))
+			GL_COMPUTE_SHADER))
 		{
-			if(!quiet)
-			{
-				printf("successfully created a compute shader\n");
-			}
+			tt_log(TT_INFO, "successfully created a compute shader");
 		}
 		else
 		{
@@ -243,13 +213,9 @@ GLuint tt_gfx_create_shader(
 		if(tt_gfx_shader_compilation(
 			&shader.vertex,
 			path_to_vertex_shader,
-			GL_VERTEX_SHADER,
-			quiet))
+			GL_VERTEX_SHADER))
 		{
-			if(!quiet)
-			{
-				printf("successfully created a vertex shader\n");
-			}
+			tt_log(TT_INFO, "successfully created a vertex shader");
 		}
 		else
 		{
@@ -263,13 +229,9 @@ GLuint tt_gfx_create_shader(
 		if(tt_gfx_shader_compilation(
 			&shader.tess_control,
 			path_to_tess_control_shader,
-			GL_TESS_CONTROL_SHADER,
-			quiet))
+			GL_TESS_CONTROL_SHADER))
 		{
-			if(!quiet)
-			{
-				printf("successfully created a tesselation control shader\n");
-			}
+			tt_log(TT_INFO, "successfully created a tesselation control shader");
 		}
 		else
 		{
@@ -283,13 +245,9 @@ GLuint tt_gfx_create_shader(
 		if(tt_gfx_shader_compilation(
 			&shader.tess_evaluation,
 			path_to_tess_evaluation_shader,
-			GL_TESS_EVALUATION_SHADER,
-			quiet))
+			GL_TESS_EVALUATION_SHADER))
 		{
-			if(!quiet)
-			{
-				printf("successfully created a tesselation evaluation shader\n");
-			}
+			tt_log(TT_INFO, "successfully created a tesselation evaluation shader");
 		}
 		else
 		{
@@ -303,13 +261,9 @@ GLuint tt_gfx_create_shader(
 		if(tt_gfx_shader_compilation(
 			&shader.geometry,
 			path_to_geometry_shader,
-			GL_GEOMETRY_SHADER,
-			quiet))
+			GL_GEOMETRY_SHADER))
 		{
-			if(!quiet)
-			{
-				printf("successfully created a geometry shader\n");
-			}
+			tt_log(TT_INFO, "successfully created a geometry shader");
 		}
 		else
 		{
@@ -323,13 +277,9 @@ GLuint tt_gfx_create_shader(
 		if(tt_gfx_shader_compilation(
 			&shader.fragment,
 			path_to_fragment_shader,
-			GL_FRAGMENT_SHADER,
-			quiet))
+			GL_FRAGMENT_SHADER))
 		{
-			if(!quiet)
-			{
-				printf("successfully created a fragment shader\n");
-			}
+			tt_log(TT_INFO, "successfully created a fragment shader");
 		}
 		else
 		{

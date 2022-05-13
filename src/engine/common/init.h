@@ -9,6 +9,6 @@ bool tt_init(
 	const uint32_t res_y,
 	const bool fullscreen,
 	const int msaa,
-	const bool quiet);
+	const char *logging_file);
 
 #endif

@@ -14,7 +14,7 @@ extern bool tt_gfx_tone_mapping_toggle; //toggle if tone mapping is enabled
 extern float tt_gfx_exposure; //full scene exposure
 
 //returns true if successfull
-bool tt_gfx_init(const bool quiet)
+bool tt_gfx_init()
 {
 	//creating the standard shaders
 	tt_std_2d_shader=tt_gfx_create_shader(
@@ -23,19 +23,15 @@ bool tt_gfx_init(const bool quiet)
 		NULL,
 		NULL,
 		NULL,
-		"shaders/std_2d_fragment.glsl",
-		quiet);
+		"shaders/std_2d_fragment.glsl");
 	if(tt_std_2d_shader==0)
 	{
-		printf("[ERROR] failed to create the standard 2d shader\n");
+		tt_log(TT_ERROR, "failed to create the standard 2d shader");
 		return false;
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("successfully built the standard 2d shader\n");
-		}
+		tt_log(TT_INFO, "successfully built the standard 2d shader");
 	}
 
 	tt_std_3d_shader=tt_gfx_create_shader(
@@ -44,19 +40,15 @@ bool tt_gfx_init(const bool quiet)
 		NULL,
 		NULL,
 		NULL,
-		"shaders/std_3d_fragment.glsl",
-		quiet);
+		"shaders/std_3d_fragment.glsl");
 	if(tt_std_3d_shader==0)
 	{
-		printf("[ERROR] failed to create the standard 3d shader\n");
+		tt_log(TT_ERROR, "failed to create the standard 3d shader");
 		return false;
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("successfully built the standard 3d shader\n");
-		}
+		tt_log(TT_INFO, "successfully built the standard 3d shader");
 	}
 	
 	//preparing the primitives to be able to create them faster on the fly

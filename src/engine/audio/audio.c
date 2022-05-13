@@ -1,53 +1,39 @@
 #include <tt.h>
 
-extern bool tt_quiet; //this activates/deactivates debug messages
-
 ALCdevice *device=NULL;
 ALCcontext *context=NULL;
 
 void tt_audio_init()
 {
-	if(!tt_quiet)
-	{
-		printf("initializing OpenAL...");
-	}
+	tt_log(TT_INFO, "initializing OpenAL...");
 
 	device=alcOpenDevice(NULL); //open default device
 	if(!device)
 	{
-		printf("[ERROR] there couldn't be any audio device found\n");
-		printf("[ERROR] continue without audio\n");
+		tt_log(TT_ERROR, "there couldn't be any audio device found");
+		tt_log(TT_WARN, "continue without audio");
 		return;
 	}
 
 	context=alcCreateContext(device, NULL);
 	if(!alcMakeContextCurrent(context))
 	{
-		printf("[ERROR] context creation failed\n");
-		printf("[ERROR] continue without audio\n");	
+		tt_log(TT_ERROR, "context creation failed");
+		tt_log(TT_WARN, "continue without audio");	
 		return;
 	}
 
 	ALenum error=alGetError(); //reset the error stack
 
-	if(!tt_quiet)
-	{
-		printf("done\n");
-	}
+	tt_log(TT_INFO, "done");
 }
 
 void tt_audio_quit()
 {
-	if(!tt_quiet)
-	{
-		printf("ending the audio system...");
-	}
+	tt_log(TT_INFO, "ending the audio system...");
 	alcDestroyContext(context);
 	alcCloseDevice(device);
-	if(!tt_quiet)
-	{
-		printf("done\n");
-	}
+	tt_log(TT_INFO, "done");
 }
 
 tt_3d_audio_source* tt_audio_3d_source_new()
@@ -55,7 +41,7 @@ tt_3d_audio_source* tt_audio_3d_source_new()
 	tt_3d_audio_source *new_source=malloc(sizeof(tt_3d_audio_source));
 	if(!new_source)
 	{
-		printf("[ERROR] couldn't allocate memory for a 3D audio source\n");
+		tt_log(TT_ERROR, "couldn't allocate memory for a 3D audio source");
 		return NULL;
 	}
 	ALenum error=alGetError();
@@ -63,19 +49,19 @@ tt_3d_audio_source* tt_audio_3d_source_new()
 	error=alGetError();
 	if(error==AL_OUT_OF_MEMORY)
 	{
-		printf("[ERROR] OpenAL has not enough memory to allocate the audio source\n");
+		tt_log(TT_ERROR, "OpenAL has not enough memory to allocate the audio source");
 	}
 	if(error==AL_INVALID_VALUE)
 	{
-		printf("[ERROR] There are not enough non-memory resources or the source pointer is not valid\n");
+		tt_log(TT_ERROR, "There are not enough non-memory resources or the source pointer is not valid");
 	}
 	if(error==AL_INVALID_OPERATION )
 	{
-		printf("[ERROR] There is no valid context\n");
+		tt_log(TT_ERROR, "There is no valid context");
 	}
 	if(error!=AL_NO_ERROR)
 	{
-		printf("[ERROR] error while creating a 3D audio source\n");
+		tt_log(TT_ERROR, "error while creating a 3D audio source");
 		return NULL;
 	}
 
@@ -111,7 +97,7 @@ tt_sound* tt_audio_sound_from_data(
 	tt_sound *new_sound=malloc(sizeof(tt_sound));
 	if(!new_sound)
 	{
-		printf("[ERROR] couldn't allocate memory for a new sound\n");
+		tt_log(TT_ERROR, "couldn't allocate memory for a new sound");
 		return NULL;		
 	}
 	alGenBuffers(1, &new_sound->buffer);
@@ -119,7 +105,7 @@ tt_sound* tt_audio_sound_from_data(
 	if(error!=AL_NO_ERROR)
 	{
 		free(new_sound);
-		printf("[ERROR] error while creating a new buffer for a sound\n");
+		tt_log(TT_ERROR, "error while creating a new buffer for a sound");
 		return NULL;
 	}
 	if(stereo)
@@ -133,7 +119,7 @@ tt_sound* tt_audio_sound_from_data(
 	if(error!=AL_NO_ERROR)
 	{
 		free(new_sound);
-		printf("[ERROR] error while buffering a new sound\n");
+		tt_log(TT_ERROR, "error while buffering a new sound");
 		return NULL;
 	}
 	return new_sound;
@@ -161,14 +147,13 @@ tt_sound* tt_audio_sound_from_file(const char *path)
 			stereo);	
 	}
 
-	//printf("data: %x\nsize_of_data: %u\nfrequency: %u\n", data, size_of_data, frequency);
 	if(new_sound)
 	{
-		printf("audio file successfully read from %s\n", path);
+		tt_log(TT_INFO, "audio file successfully read from %s", path);
 	}
 	else
 	{
-		printf("[ERROR] error while reading audio file from %s\n", path);
+		tt_log(TT_ERROR, "error while reading audio file from %s", path);
 	}
 	return new_sound;
 }
@@ -183,7 +168,7 @@ void tt_audio_buffer_sound_for_3d_source(
 	}
 	else
 	{
-		printf("[ERROR] a sound and a 3D audio source need to exist\n");
+		tt_log(TT_ERROR, "a sound and a 3D audio source need to exist");
 	}
 }
 
@@ -195,7 +180,7 @@ void tt_audio_play_3d_source(tt_3d_audio_source *source)
 	}
 	else
 	{
-		printf("[ERROR] a 3D audio source need to exist otherwise no sound can be played\n");
+		tt_log(TT_ERROR, "a 3D audio source need to exist otherwise no sound can be played");
 	}
 }
 

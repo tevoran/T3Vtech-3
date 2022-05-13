@@ -12,7 +12,7 @@ void tt_audio_load_wav(
 	FILE *file=fopen(path, "rb");
 	if(!file)
 	{
-		printf("[ERROR] WAV file couldn't be read\n");
+		tt_log(TT_ERROR, "WAV file couldn't be read");
 		return;
 	}
 
@@ -22,7 +22,7 @@ void tt_audio_load_wav(
 	fgets(riff_mark, 5, file);
 	if(!strstr(riff_mark, "RIFF"))
 	{
-		printf("[ERROR] the WAV file is missing the RIFF mark and is therefor not a WAV file\n");
+		tt_log(TT_ERROR, "the WAV file is missing the RIFF mark and is therefor not a WAV file");
 		fclose(file);
 		return;
 	}
@@ -30,14 +30,14 @@ void tt_audio_load_wav(
 	//reading file size
 	Uint32 file_size=0;
 	fread(&file_size, 4, 1, file);
-	printf("WAV file is %u kB\n", file_size/1024);
+	tt_log(TT_INFO, "WAV file is %u kB", file_size/1024);
 
 	//WAVE mark check
 	char wave_mark[5]; //+1 Byte for zero termination
 	fgets(wave_mark, 5, file);
 	if(!strstr(wave_mark, "WAVE"))
 	{
-		printf("[ERROR] the WAV file is missing the WAVE mark and is therefor not a WAV file\n");
+		tt_log(TT_ERROR, "the WAV file is missing the WAVE mark and is therefor not a WAV file");
 		fclose(file);
 		return;
 	}
@@ -47,7 +47,7 @@ void tt_audio_load_wav(
 	fgets(fmt_mark, 5, file);
 	if(!strstr(fmt_mark, "fmt "))
 	{
-		printf("[ERROR] the WAV file is missing the format mark and is therefor not a WAV file\n");
+		tt_log(TT_ERROR, "the WAV file is missing the format mark and is therefor not a WAV file");
 		fclose(file);
 		return;
 	}
@@ -57,7 +57,7 @@ void tt_audio_load_wav(
 	fread(&format_length, 4, 1, file);
 	if(format_length!=16)
 	{
-		printf("[ERROR] the format size is not correct. The file is corrupt.\n");
+		tt_log(TT_ERROR, "the format size is not correct. The file is corrupt.");
 		fclose(file);
 		return;
 	}
@@ -67,7 +67,7 @@ void tt_audio_load_wav(
 	fread(&format_type, 2, 1, file);
 	if(format_type!=1) //1 means PCM
 	{
-		printf("[ERROR] the format type is not correct.\n");
+		tt_log(TT_ERROR, "the format type is not correct.");
 		fclose(file);
 		return;
 	}
@@ -75,12 +75,12 @@ void tt_audio_load_wav(
 	//number of channels
 	Uint16 num_channels=0;
 	fread(&num_channels, 2, 1, file);
-	printf("number of channels in WAV file: %u\n", num_channels);
+	tt_log(TT_INFO, "number of channels in WAV file: %u", num_channels);
 	*stereo=num_channels==2;
 
 	//sample rate
 	fread(frequency, 4, 1, file);
-	printf("sample rate used in WAV file: %u\n", *frequency);
+	tt_log(TT_INFO, "sample rate used in WAV file: %u", *frequency);
 
 	//skipping unused values in header
 	char unused[6];
@@ -89,10 +89,10 @@ void tt_audio_load_wav(
 	//bits per sample
 	Uint16 bits_per_sample=0;
 	fread(&bits_per_sample, 2, 1, file);
-	printf("bits per sample used in WAV file: %u\n", bits_per_sample);
+	tt_log(TT_INFO, "bits per sample used in WAV file: %u", bits_per_sample);
 	if(bits_per_sample!=16)
 	{
-		printf("[WARNING] T3Vtech-3 currently uses only 16-bit audio\n");
+		tt_log(TT_WARN, "T3Vtech-3 currently uses only 16-bit audio");
 	}
 
 	//data header
@@ -100,7 +100,7 @@ void tt_audio_load_wav(
 	fgets(data_mark, 5, file);
 	if(!strstr(data_mark, "data"))
 	{
-		printf("[ERROR] the WAV file is missing the data mark and is therefore not a WAV file\n");
+		tt_log(TT_ERROR, "the WAV file is missing the data mark and is therefore not a WAV file");
 		fclose(file);
 		return;
 	}

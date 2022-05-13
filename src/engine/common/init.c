@@ -1,6 +1,5 @@
 #include <tt.h>
 
-extern bool tt_quiet; //this activates/deactivates debug messages
 extern SDL_Window *tt_window;
 extern uint32_t tt_res_x;
 extern uint32_t tt_res_y;
@@ -15,14 +14,19 @@ bool tt_init(
 	const uint32_t res_y,
 	const bool fullscreen,
 	const int msaa,
-	const bool quiet)
-{
-	tt_quiet=quiet;
-	
-	if(!quiet)
+	const char *logging_file)
+{	
+	//if no logging file is specified set a default one
+	if(logging_file==NULL)
 	{
-		printf("initialize T3Vtech-3 engine\n");
+		tt_log_open_log_file("T3Vtech-3.log");
 	}
+	else
+	{
+		tt_log_open_log_file(logging_file);
+	}
+
+	tt_log(TT_INFO, "initialize T3Vtech-3 engine");
 	tt_res_x=res_x;
 	tt_res_y=res_y;
 
@@ -33,25 +37,19 @@ bool tt_init(
 		SDL_INIT_EVENTS|
 		SDL_INIT_GAMECONTROLLER))
 	{
-		printf("[ERROR] couldn't initialize SDL2\n");
+		tt_log(TT_ERROR, "couldn't initialize SDL2");
 		return false;
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("SDL2 initialized\n");
-		}
+		tt_log(TT_INFO, "SDL2 initialized");
 	}
 	
 	//if antialiasing with msaa is requested
 	//then set SDL to what is necessary
 	if(msaa>1)
 	{
-		if(!quiet)
-		{
-			printf("activating %ix MSAA\n", msaa);
-		}
+		tt_log(TT_INFO, "activating %ix MSAA", msaa);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaa);		
 	}
@@ -62,22 +60,16 @@ bool tt_init(
 	SDL_GetDesktopDisplayMode(0, &dm);
 	tt_desktop_res_x=dm.w;
 	tt_desktop_res_y=dm.h;
-	if(!quiet)
-	{
-		printf(
-			"desktop resolution is %ix%i at %iHz\n",
-			tt_desktop_res_x,
-			tt_desktop_res_y,
-			dm.refresh_rate);		
-	}
+	tt_log(TT_INFO,
+		"desktop resolution is %ix%i at %iHz",
+		tt_desktop_res_x,
+		tt_desktop_res_y,
+		dm.refresh_rate);		
 
 	if(fullscreen)
 	{
 		int num_displays = SDL_GetNumVideoDisplays();
-		if(!quiet)
-		{
-			SDL_Log("SDL_GetNumVideoDisplays(): %i", num_displays);
-		}
+		tt_log(TT_INFO, "SDL_GetNumVideoDisplays(): %i", num_displays);
 
 		tt_window=SDL_CreateWindow(
 			window_name, 
@@ -99,86 +91,68 @@ bool tt_init(
 	}
 	if(tt_window==NULL)
 	{
-		printf("[ERROR] couldn't create a SDL2 window\n");
+		tt_log(TT_ERROR, "couldn't create a SDL2 window");
 		return false;
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("SDL2 window created\n");
-			printf(
-				"game resolution is %ix%i\n",
-				tt_res_x,
-				tt_res_y);
-		}
+		tt_log(TT_INFO, "SDL2 window created");
+		tt_log(TT_INFO,
+			"game resolution is %ix%i",
+			tt_res_x,
+			tt_res_y);
 	}
 
 	//setting the desired OpenGL version
-	if (!quiet) {
-		printf("using OpenGL 4.5\n");
-	}
+	tt_log(TT_INFO, "using OpenGL 4.5");
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
 
 	tt_glcontext=SDL_GL_CreateContext(tt_window);
 	if(tt_glcontext==NULL)
 	{
-		printf("[ERROR] couldn't create OpenGL context\n");
+		tt_log(TT_ERROR, "couldn't create OpenGL context");
 		return false;
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("SDL2 OpenGL context created\n");
-		}
+		tt_log(TT_INFO, "SDL2 OpenGL context created");
 	}
 
 
 	if(glewInit()!=GLEW_OK)
 	{
-		printf("[ERROR] GLEW couldn't be initialized\n");
+		tt_log(TT_ERROR, "GLEW couldn't be initialized");
 		return false;
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("GLEW initialized\n");
-		}
+		tt_log(TT_INFO, "GLEW initialized");
 	}
 
 	SDL_DisableScreenSaver();
 
 	if(TTF_Init()!=0)
 	{
-		printf("[ERROR] SDL2_ttf couldn't be initialized\n");
-		printf("error message: %s\n", TTF_GetError());
+		tt_log(TT_ERROR, "SDL2_ttf couldn't be initialized");
+		tt_log(TT_ERROR, "error message: %s", TTF_GetError());
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("SDL2_ttf initialized\n");
-		}
+		tt_log(TT_INFO, "SDL2_ttf initialized");
 	}
 
 	//making sure tt_quit gets called when game is closed
 	atexit(tt_quit);
 
-	if(!tt_gfx_init(quiet))
+	if(!tt_gfx_init())
 	{
-		printf(
-			"[ERROR] couldn't set up the GFX functionalities of T3Vtech-3\n");
+		tt_log(TT_ERROR, "couldn't set up the GFX functionalities of T3Vtech-3");
 		return false;
 	}
 	else
 	{
-		if(!quiet)
-		{
-			printf("GFX functionalities initialized\n");
-		}
+		tt_log(TT_INFO, "GFX functionalities initialized");
 	}
 
 	//activate MSAA, if requested

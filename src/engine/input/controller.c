@@ -80,25 +80,16 @@ int tt_input_controller_count()
 
 void tt_input_controller_add_new(SDL_Event event)
 {
-	if(!tt_quiet)
-	{
-		printf("adding new controller\n");
-	}
+	tt_log(TT_INFO, "adding new controller");
 
 	//adding new controller
 	SDL_GameController *tmp_controller=SDL_GameControllerOpen(event.cdevice.which);
 	if(tmp_controller)
 	{
-		if(!tt_quiet)
-		{
-			printf("%s found\n", SDL_GameControllerName(tmp_controller));
-		}
+		tt_log(TT_INFO, "%s found", SDL_GameControllerName(tmp_controller));
 		SDL_Joystick *tmp_joy= SDL_GameControllerGetJoystick(tmp_controller);
 		int tmp_id=SDL_JoystickInstanceID(tmp_joy);
-		if(!tt_quiet)
-		{
-			printf("tmp_id %i\n", tmp_id); 			
-		}
+		tt_log(TT_INFO, "tmp_id %i", tmp_id); 			
 
 		//saving data into the list
 		controller *new_controller=malloc(sizeof(controller));
@@ -116,9 +107,8 @@ void tt_input_controller_add_new(SDL_Event event)
 
 		char guid_str[1024];
 		SDL_JoystickGetGUIDString(new_controller->guid, guid_str, sizeof(guid_str));
-		printf("GUID_STR: %s\n", guid_str);
-
-		printf("MAPPING: %s\n", SDL_GameControllerMapping(tmp_controller));
+		tt_log(TT_INFO, "GUID_STR: %s", guid_str);
+		tt_log(TT_INFO, "MAPPING: %s", SDL_GameControllerMapping(tmp_controller));
 
 		//reset keys
 		for(int i=0; i<NUM_BUTTONS_SUPPORTED_SDL; i++)
@@ -136,13 +126,10 @@ void tt_input_controller_add_new(SDL_Event event)
 	}
 	else
 	{
-		printf("[ERROR] couldn't add new controller\n");
+		tt_log(TT_ERROR, "couldn't add new controller");
 	}
 
-	if(!tt_quiet)
-	{
-		printf("current number of controller: %i\n", tt_input_controller_count());
-	}
+	tt_log(TT_INFO, "current number of controller: %i", tt_input_controller_count());
 }
 
 void tt_input_controller_removed(SDL_Event event)
@@ -389,13 +376,10 @@ void tt_input_controller_add_mappings()
 {
 	int ret=0;
 	ret=SDL_GameControllerAddMappingsFromFile("settings/controllermappings.txt");
-	if(!tt_quiet)
-	{
-		printf("%i mappings added\n", ret);
-	}
+	tt_log(TT_INFO, "%i controller mappings added", ret);
 	if(ret==-1)
 	{
-		printf("[ERROR] controller mappings couldn't be added\n");
-		printf("SDL2 error message: %s\n", SDL_GetError());
+		tt_log(TT_ERROR, "controller mappings couldn't be added\n");
+		tt_log(TT_ERROR, "SDL2 error message: %s", SDL_GetError());
 	}
 }

@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, false, 16, true);
+	tt_init("T3Vtech3 test window", 1920, 1080, false, 16, NULL);
 
 	tt_3d_object *quad=tt_3d_object_new();
 	tt_3d_object_make_quad(quad);

@@ -12,7 +12,6 @@ GLuint tt_gfx_create_shader(
 	const char *path_to_tess_control_shader,
 	const char *path_to_tess_evaluation_shader,
 	const char *path_to_geometry_shader,
-	const char *path_to_fragment_shader,
-	const bool quiet);
+	const char *path_to_fragment_shader);
 
 #endif

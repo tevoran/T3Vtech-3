@@ -14,9 +14,9 @@
 #include "objects/2d/textures/textures.h"
 #include "objects/2d/objects/objects.h"
 
-bool tt_gfx_init(const bool quiet); //returns true if successfull
+bool tt_gfx_init(); //returns true if successfull
 
 //cleaning up what was initalized by the graphics system
-void tt_gfx_quit(const bool quiet);
+void tt_gfx_quit();
 
 #endif

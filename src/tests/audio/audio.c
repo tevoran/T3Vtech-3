@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-	tt_init("T3Vtech3 test window", 1920, 1080, false, 16, true);
+	tt_init("T3Vtech3 test window", 1920, 1080, false, 16, NULL);
 
 	printf("Create first source\n");
 	tt_3d_audio_source *source = tt_audio_3d_source_new();
