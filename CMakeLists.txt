@@ -7,7 +7,7 @@ project("T3Vtech-3")
 #DEBUGMODE
 #SET(CMAKE_CXX_FLAGS "-g -ggdb -fsanitize=address")
 #SET(CMAKE_CXX_FLAGS "-g -Werror -Wall -Wextra")
-SET(CMAKE_CXX_FLAGS "-Os")
+SET(CMAKE_CXX_FLAGS "-O0 -g")
 
 
 #PROFILERMODE
@@ -73,13 +73,13 @@ file(COPY settings DESTINATION .)
 
 
 #creating TTMV (T3Vtech-3 model viewer)
-file(GLOB_RECURSE "ttmv" SRC src/ttmv/*.cpp)
-include_directories(src/ttmv/)
-add_executable(TTMV WIN32 ${ttmv})
-target_link_libraries(TTMV LINK_PRIVATE T3Vtech)
+#file(GLOB_RECURSE "ttmv" SRC src/ttmv/*.cpp)
+#include_directories(src/ttmv/)
+#add_executable(TTMV WIN32 ${ttmv})
+#target_link_libraries(TTMV LINK_PRIVATE T3Vtech)
 
 #shooting range demo
-file(GLOB_RECURSE "shooting_range" SRC src/demo-shooting-range/*.cpp)
-include_directories(src/demo-shooting-range/)
-add_executable(shooting_range WIN32 ${shooting_range})
-target_link_libraries(shooting_range LINK_PRIVATE T3Vtech)
+#file(GLOB_RECURSE "shooting_range" SRC src/demo-shooting-range/*.cpp)
+#include_directories(src/demo-shooting-range/)
+#add_executable(shooting_range WIN32 ${shooting_range})
+#target_link_libraries(shooting_range LINK_PRIVATE T3Vtech)
