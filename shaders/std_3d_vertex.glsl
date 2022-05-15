@@ -2,7 +2,7 @@
 #define NUM_MAX_DIR_LIGHTS 8
 #define NUM_MAX_POINT_LIGHTS 128
 #define NUM_MAX_POINT_LIGHTS_PER_OBJECT 16
-#define NUM_MAX_AO_LIGHTS 128
+#define NUM_MAX_AO_LIGHTS 512
 #define NUM_MAX_AO_LIGHTS_PER_OBJECT 16
 
 layout(location = 0) in vec3 pos_in;

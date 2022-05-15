@@ -1,6 +1,6 @@
 #include <tt.h>
 
-#define NUM_MAX_AO_LIGHTS 128
+#define NUM_MAX_AO_LIGHTS 512
 
 extern GLuint tt_gfx_ubo_ao_light; //uniform buffer object for ao light data
 

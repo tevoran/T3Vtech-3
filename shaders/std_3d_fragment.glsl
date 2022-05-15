@@ -2,7 +2,7 @@
 #define NUM_MAX_DIR_LIGHTS 8
 #define NUM_MAX_POINT_LIGHTS 128
 #define NUM_MAX_POINT_LIGHTS_PER_OBJECT 16
-#define NUM_MAX_AO_LIGHTS 128
+#define NUM_MAX_AO_LIGHTS 512
 #define NUM_MAX_AO_LIGHTS_PER_OBJECT 16
 
 struct ao_light
@@ -195,10 +195,10 @@ void main()
 		vec3 normal = normalize(normal_out);
 
 		//calculate ambient occlusion
-		float ao = 0;
+		float ao = 0.0;
 		for (int i = 0; i < object_ao_light_count; i++)
 		{
-			ao = max(ao, get_ao(world_position_out, normal, ao_lights[object_ao_lights[i]]));
+			ao = 1 - (1 - ao) * (1 - get_ao(world_position_out, normal, ao_lights[object_ao_lights[i]]));
 		}
 
 		//ambient lighting
