@@ -4,7 +4,7 @@ void tt_3d_object_use_batch_object(tt_3d_object *object, tt_3d_batch_object *bat
 {
 	if(!object || !batch_object)
 	{
-		printf("[ERROR] no 3D object or batch object is available\n");
+		tt_log(TT_ERROR, "no 3D object or batch object is available");
 		return;
 	}
 

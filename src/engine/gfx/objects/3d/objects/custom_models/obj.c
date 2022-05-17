@@ -37,7 +37,7 @@ bool tt_3d_object_custom_model_load_obj_file(
 	FILE *file=fopen(path, "r");
 	if(!file)
 	{
-		printf("[ERROR] obj model couldn't be read from %s\n", path);
+		tt_log(TT_ERROR, "obj model couldn't be read from %s", path);
 		return false;
 	}
 
@@ -115,8 +115,8 @@ bool tt_3d_object_custom_model_load_obj_file(
 				tt_vec3 tmp;
 				if(!sscanf(line, "v %f %f %f", &tmp.x, &tmp.y, &tmp.z))
 				{
-					printf("[ERROR] vertex position couldn't be processed in");
-					printf(" OBJ file\n");
+					tt_log(TT_ERROR, "vertex position couldn't be processed in");
+					tt_log(TT_ERROR, " OBJ file");
 					return false;
 				}
 
@@ -135,8 +135,8 @@ bool tt_3d_object_custom_model_load_obj_file(
 				tt_vec2 tmp;
 				if(!sscanf(line, "vt %f %f", &tmp.x, &tmp.y))
 				{
-					printf("[ERROR] texture coordinates couldn't be processed");
-					printf("in OBJ file\n");
+					tt_log(TT_ERROR, "texture coordinates couldn't be processed");
+					tt_log(TT_ERROR, "in OBJ file");
 					return false;
 				}
 
@@ -150,8 +150,8 @@ bool tt_3d_object_custom_model_load_obj_file(
 				tt_vec3 tmp;
 				if(!sscanf(line, "vn %f %f %f", &tmp.x, &tmp.y, &tmp.z))
 				{
-					printf("[ERROR] vertex normals couldn't be processed in");
-					printf(" OBJ file\n");
+					tt_log(TT_ERROR, "vertex normals couldn't be processed in");
+					tt_log(TT_ERROR, "OBJ file");
 					return false;
 				}
 
@@ -233,14 +233,14 @@ bool tt_3d_object_custom_model_load_obj_file(
 
 		if(*num_vertices!=num_verts_done)
 		{
-			printf("[ERROR] number of processed vertices is differently than");
-			printf(" expected\n");
+			tt_log(TT_ERROR, "number of processed vertices is different than");
+			tt_log(TT_ERROR, "expected");
 		}
 
 		if(*num_indices!=num_indices_done)
 		{
-			printf("[ERROR] number of processed indices is differently than");
-			printf(" expected\n");
+			tt_log(TT_ERROR, "number of processed indices is different than");
+			tt_log(TT_ERROR, "expected");
 		}
 	}
 

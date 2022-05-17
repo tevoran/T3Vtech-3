@@ -180,14 +180,14 @@ GLuint tt_gfx_create_shader(
 		!path_to_geometry_shader &&
 		!path_to_fragment_shader)
 	{
-		printf("[ERROR] no shader to compile has been found\n");
+		tt_log(TT_ERROR, "no shader to compile has been found");
 		return 0;
 	}
 
 	GLuint program=glCreateProgram();
 	if(!program)
 	{
-		printf("[ERROR] OpenGL couldn't create the shader program\n");
+		tt_log(TT_ERROR, "OpenGL couldn't create the shader program");
 		return 0;
 	}
 
