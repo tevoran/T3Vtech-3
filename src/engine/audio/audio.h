@@ -11,6 +11,7 @@ struct tt_3d_audio_source
 struct tt_sound
 {
 	ALuint buffer;
+	float gain;
 } typedef tt_sound;
 
 //engine audio functions
@@ -37,7 +38,10 @@ tt_sound* tt_audio_sound_from_file(const char *path);
 void tt_audio_buffer_sound_for_3d_source(
 	tt_sound *sound,
 	tt_3d_audio_source *source);
+void tt_audio_set_sound_gain(tt_sound *sound, const float gain);
 void tt_audio_play_3d_source(tt_3d_audio_source *source);
 void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle);
+
+void tt_audio_set_global_gain(float volume);
 
 #endif

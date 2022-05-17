@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 		printf("Audio file could be successfully loaded\n");
 	}
 
+	tt_audio_set_sound_gain(sound_2, 10.0f);
 	tt_audio_buffer_sound_for_3d_source(sound_2, source_2);
 	SDL_Delay(5000);
 	tt_audio_play_3d_source(source_2);

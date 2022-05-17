@@ -71,6 +71,8 @@ tt_3d_audio_source* tt_audio_3d_source_new()
 	alSource3f(new_source->source, AL_POSITION, 0, 0, 0);
 	alSource3f(new_source->source, AL_VELOCITY, 0, 0, 0);
 	alSourcei(new_source->source, AL_LOOPING, AL_FALSE);
+	alSourcef(new_source->source, AL_MIN_GAIN, 0.0);
+	alSourcef(new_source->source, AL_MAX_GAIN, 1000.0);
 
 	return new_source;
 }
@@ -150,12 +152,19 @@ tt_sound* tt_audio_sound_from_file(const char *path)
 	if(new_sound)
 	{
 		tt_log(TT_INFO, "audio file successfully read from %s", path);
+		//default values
+		new_sound->gain=1.0;
 	}
 	else
 	{
 		tt_log(TT_ERROR, "error while reading audio file from %s", path);
 	}
 	return new_sound;
+}
+
+void tt_audio_set_sound_gain(tt_sound *sound, const float gain)
+{
+	sound->gain=gain;
 }
 
 void tt_audio_buffer_sound_for_3d_source(
@@ -165,6 +174,13 @@ void tt_audio_buffer_sound_for_3d_source(
 	if(sound && source)
 	{
 		alSourcei(source->source, AL_BUFFER, sound->buffer);
+		alGetError();
+		alSourcef(source->source, AL_GAIN, sound->gain);
+		ALenum error=alGetError();
+		if(error!=AL_NO_ERROR)
+		{
+			tt_log(TT_ERROR, "couldn't set gain for sound");
+		}
 	}
 	else
 	{
@@ -198,4 +214,17 @@ void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle)
 	{
 		alSourcei(source->source, AL_LOOPING, AL_FALSE);
 	}
+}
+
+void tt_audio_set_global_gain(float volume)
+{
+	alGetError();
+	alListenerf(AL_GAIN, volume);
+	ALenum error=alGetError();
+	if(error!=AL_NO_ERROR)
+	{
+		tt_log(TT_ERROR, "the global volume couldn't be set");
+		return;
+	}
+	tt_log(TT_INFO, "global gain was set to %f", volume);
 }
