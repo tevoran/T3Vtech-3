@@ -751,3 +751,27 @@ long tt_time_current_frame_ns(); //returns ns resolution
 float tt_time_current_frame_s(); //returns a float with the fraction of a second
 ```
 
+## Logging
+
+T3Vtech-3 has a simple logging system that can be used to store information in a logging file during runtime. The default logging file will be T3Vtech-3.log in the directory where the executable is located.
+
+There are three different levels for logging messages. They are
+
+```c
+TT_INFO
+TT_WARN
+TT_ERROR
+```
+For now they will simply be a prefix to the logged message.
+
+Messages can be logged by calling
+
+```c
+void tt_log(enum tt_log_type type, const char *format, ...);
+```
+
+An example would be
+
+```c
+tt_log(TT_ERROR, "file %s couldn't be found", file_path);
+```
