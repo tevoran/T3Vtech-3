@@ -42,12 +42,12 @@ tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering
 	unsigned char *image_data=stbi_load(path, &x, &y, &n, 0);
 	if(image_data)
 	{
-		printf("image successfully loaded as a 3D texture from %s\n", path);
-		printf("texture resolution is %ix%i\n", x, y);
+		tt_log(TT_INFO, "image successfully loaded as a 3D texture from %s", path);
+		tt_log(TT_INFO, "texture resolution is %ix%i", x, y);
 	}
 	else
 	{
-		printf("[ERROR] image couldn't be read from %s\n", path);
+		tt_log(TT_ERROR, "image couldn't be read from %s", path);
 		free(new_texture);
 		stbi_image_free(image_data);
 		return NULL;
@@ -55,7 +55,7 @@ tt_3d_texture* tt_3d_texture_new(const char *path, const bool bilinear_filtering
 
 	if(n==4)
 	{
-		printf("[ERROR] image has 4 channels but only 3 are supported right now\n");
+		tt_log(TT_ERROR, "image has 4 channels but only 3 are supported right now");
 		stbi_image_free(image_data);
 		return NULL;
 	}

@@ -26,7 +26,7 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 		}
 		else
 		{
-			printf("OBJ model from %s successfully loaded\n", path);
+			tt_log(TT_INFO, "OBJ model from %s successfully loaded", path);
 		}
 	}
 	else
@@ -38,7 +38,7 @@ tt_3d_custom_model* tt_3d_custom_model_load_file(const char *path)
 	tt_3d_custom_model *model=malloc(sizeof(tt_3d_custom_model));
 	if(!model)
 	{
-		printf("[ERROR] memory couldn't be allocated for a custom 3D model\n");
+		tt_log(TT_ERROR, "memory couldn't be allocated for a custom 3D model");
 		return NULL;
 	}
 	//saving data to the custom object's struct

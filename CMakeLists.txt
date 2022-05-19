@@ -7,7 +7,8 @@ project("T3Vtech-3")
 #DEBUGMODE
 #SET(CMAKE_CXX_FLAGS "-g -ggdb -fsanitize=address")
 #SET(CMAKE_CXX_FLAGS "-g -Werror -Wall -Wextra")
-SET(CMAKE_CXX_FLAGS "-O0 -g")
+SET(CMAKE_C_FLAGS "-O0 -g")
+SET(CMAKE_CXX_FLAGS "-O0 -g -debug expr-source-pos")
 
 
 #PROFILERMODE

@@ -751,3 +751,99 @@ long tt_time_current_frame_ns(); //returns ns resolution
 float tt_time_current_frame_s(); //returns a float with the fraction of a second
 ```
 
+## Audio
+
+T3Vtech-3 supports audio output and can currently read WAV files for songs and sound effects.
+
+### Basic Usage
+
+The typical usage of audio in T3Vtech-3 is the creation of a sound source from which a sound is played back. Then a sound is loaded from a file that is being buffered for a source or is loaded into the source so to speak. After the buffering the source can be played.
+
+The creation of a source is done by calling 
+```c
+tt_3d_audio_source* tt_audio_3d_source_new();
+```
+
+A sound can be loaded from a file by using
+```c
+tt_sound* tt_audio_sound_from_file(const char *path);
+```
+
+The buffering is done with
+```c
+void tt_audio_buffer_sound_for_3d_source(
+	tt_sound *sound,
+	tt_3d_audio_source *source);
+```
+
+and the playing of a source by
+```c
+void tt_audio_play_3d_source(tt_3d_audio_source *source);
+```
+
+A full example would be
+```c
+tt_3d_audio_source *source = tt_audio_3d_source_new();
+if(source)
+{
+	printf("Audio source successfully created\n");
+}
+
+tt_sound *sound = tt_audio_sound_from_file("assets/audio/test-moo.wav");
+if(sound)
+{
+	printf("Audio file could be successfully loaded\n");
+}
+
+tt_audio_buffer_sound_for_3d_source(sound, source);
+tt_audio_play_3d_source(source);
+```
+
+### Changing Gain
+
+The gain for one single sound can be changed by with
+```c
+void tt_audio_set_sound_gain(tt_sound *sound, const float gain);
+```
+
+By default the gain is a float between 0.0f and 1000.f.
+
+It is also possible to set a global gain which can be used to change the global volume. This is done by calling
+```c
+void tt_audio_set_global_gain(float volume);
+```
+
+### Loops
+
+A sound can be set to looping mode. If this is done then it plays indefinitely.
+
+The looping mode can be set by calling
+```c
+void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle);
+```
+If the loop_toggle is true then the sound will be looped when it's played back from a source.
+
+## Logging
+
+T3Vtech-3 has a simple logging system that can be used to store information in a logging file during runtime. The default logging file will be T3Vtech-3.log in the directory where the executable is located.
+
+There are three different levels for logging messages. They are
+
+```c
+TT_INFO
+TT_WARN
+TT_ERROR
+```
+For now they will simply be a prefix to the logged message.
+
+Messages can be logged by calling
+
+```c
+void tt_log(enum tt_log_type type, const char *format, ...);
+```
+
+An example would be
+
+```c
+tt_log(TT_ERROR, "file %s couldn't be found", file_path);
+```

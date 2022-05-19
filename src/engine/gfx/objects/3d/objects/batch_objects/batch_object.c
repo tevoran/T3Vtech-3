@@ -6,7 +6,7 @@ tt_3d_batch_object* tt_3d_batch_object_new()
 	tt_3d_batch_object *new_batch_object=malloc(sizeof(tt_3d_batch_object));
 	if(!new_batch_object)
 	{
-		printf("[ERROR] couldn't create a new batch render object\n");
+		tt_log(TT_ERROR, "couldn't create a new batch render object");
 		return NULL;
 	}
 

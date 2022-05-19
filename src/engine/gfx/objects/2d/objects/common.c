@@ -71,7 +71,7 @@ void tt_2d_object_render(tt_2d_object *object)
 	tt_2d_list_last_entry=tt_list_new_node(tt_2d_list_last_entry);
 	if(!tt_2d_list_last_entry)
 	{
-		printf("[ERROR] couldn't create a new entry to the 2D render list\n");
+		tt_log(TT_ERROR, "couldn't create a new entry to the 2D render list");
 	}
 	//if there is no node yet then use the newly created one as first one
 	if(tt_2d_list_entry_node==NULL)
