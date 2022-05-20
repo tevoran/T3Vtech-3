@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 	{
 		printf("Audio source successfully created\n");
 	}
+	tt_audio_is_source_playing(source_2);
 
 	tt_sound *sound_2 = tt_audio_sound_from_file("assets/audio/test-moo.wav");
 	if(sound_2)
@@ -33,10 +34,15 @@ int main(int argc, char *argv[])
 		printf("Audio file could be successfully loaded\n");
 	}
 
-	tt_audio_set_sound_gain(sound_2, 10.0f);
+	tt_audio_set_sound_gain(sound_2, 3.0f);
 	tt_audio_buffer_sound_for_3d_source(sound_2, source_2);
 	SDL_Delay(5000);
 	tt_audio_play_3d_source(source_2);
+	tt_audio_is_source_playing(source_2);
+
+	SDL_Delay(15000);
+	tt_audio_is_source_playing(source_2);
+
 
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{

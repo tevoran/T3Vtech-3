@@ -73,6 +73,7 @@ tt_3d_audio_source* tt_audio_3d_source_new()
 	alSourcei(new_source->source, AL_LOOPING, AL_FALSE);
 	alSourcef(new_source->source, AL_MIN_GAIN, 0.0);
 	alSourcef(new_source->source, AL_MAX_GAIN, 1000.0);
+	alSourcePlay(new_source->source); //sets the AL_SOURCE_STATE to AL_STOPPED
 
 	return new_source;
 }
@@ -218,16 +219,33 @@ void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle)
 
 bool tt_audio_is_source_playing(tt_3d_audio_source *source)
 {
-	ALint value = AL_INVALID_VALUE;
+	ALenum error=alGetError();
+	ALint value;
 	alGetSourcei(source->source, AL_SOURCE_STATE, &value);
+	error=alGetError();
 	if(value==AL_STOPPED)
 	{
 		return false;
 	}
-	else
+	switch(error)
 	{
-		return true;
+		case AL_INVALID_VALUE:
+			tt_log(TT_ERROR, "invalid value pointer was given to OpenAL");
+			break;
+
+		case AL_INVALID_ENUM:
+			tt_log(TT_ERROR, "invalid enum value was given to OpenAL");
+			break;
+
+		case AL_INVALID_NAME:
+			tt_log(TT_ERROR, "invalid source name was given to OpenAL");
+			break;
+
+		case AL_INVALID_OPERATION:
+			tt_log(TT_ERROR, "invalid context within OpenAL");
+			break;
 	}
+	return true;
 }
 
 void tt_audio_set_global_gain(float volume)
