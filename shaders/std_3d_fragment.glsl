@@ -202,7 +202,7 @@ void main()
 		}
 
 		//ambient lighting
-		vec3 amb_light = amb_light_strength * amb_light_color;
+		vec3 amb_light = amb_light_strength * amb_light_color * (1 - ao);
 		color = vec4(amb_light, 1.0) * color;
 
 		if(phong_shading_toggle)
@@ -222,7 +222,7 @@ void main()
 					l_dot_n /= l_distance;
 
 					float falloff = 1 / (l_distance * l_distance);
-					vec3 diffuse = point_light_color[l].rgb * base_color.rgb * point_light_strength[l].rgb * l_dot_n * falloff * (1 - ao);
+					vec3 diffuse = point_light_color[l].rgb * base_color.rgb * point_light_strength[l].rgb * l_dot_n * falloff  * (1 - ao);
 
 					color += vec4(diffuse, 0.0);
 				}
