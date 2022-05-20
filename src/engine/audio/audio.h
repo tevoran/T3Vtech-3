@@ -41,7 +41,7 @@ void tt_audio_buffer_sound_for_3d_source(
 void tt_audio_set_sound_gain(tt_sound *sound, const float gain);
 void tt_audio_play_3d_source(tt_3d_audio_source *source);
 void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle);
-
+bool tt_audio_is_source_playing(tt_3d_audio_source *source);
 void tt_audio_set_global_gain(float volume);
 
 #endif

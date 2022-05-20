@@ -216,6 +216,20 @@ void tt_audio_loop_3d_source(tt_3d_audio_source *source, const bool loop_toggle)
 	}
 }
 
+bool tt_audio_is_source_playing(tt_3d_audio_source *source)
+{
+	ALint value = AL_INVALID_VALUE;
+	alGetSourcei(source->source, AL_SOURCE_STATE, &value);
+	if(value==AL_STOPPED)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 void tt_audio_set_global_gain(float volume)
 {
 	alGetError();
