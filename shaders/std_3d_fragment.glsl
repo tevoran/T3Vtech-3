@@ -233,13 +233,6 @@ void main()
 		if(gouraud_shading_toggle)
 		{
 			//directional lighting
-//			vec4 tmp_color;
-//			for(int i=0; i<dir_light_num_active.x; i++)
-//			{
-//				tmp_color=vec4(dir_light_color[i].xyz * dir_light_strength[i].xyz, 1.0);
-//				tmp_color=directional_light_angle[i] * tmp_color;
-//				color += tmp_color;
-//			}
 			color+=base_color * dir_light_result;
 		
 			//point lights
