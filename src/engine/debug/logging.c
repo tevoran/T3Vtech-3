@@ -49,3 +49,8 @@ void tt_log(enum tt_log_type type, const char *format, ...)
 	va_end(args);
 	fclose(tt_log_file.file);
 }
+
+void tt_log_s(enum tt_log_type type, const char *string)
+{
+	tt_log(type, "%s", string);
+}
