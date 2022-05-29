@@ -134,6 +134,9 @@ void tt_gfx_3d_render()
 		{
 			if(	!current_object->invisibility_toggle) //if invisible there is no need to render 
 			{
+				//frustum culling
+				
+
 				//backface culling
 				if(current_object->backface_culling_toggle)
 				{

@@ -148,6 +148,16 @@ By default a 3D object is visible.
 
 True makes it invisible and false makes it visible.
 
+#### Enabling/Disabling Back Face Culling
+
+Usually the back face culling is set to on for all objects but in some cases it is desired to have back face culling turned off for some objects. It can be turned on or off by calling.
+
+```c
+	void tt_3d_object_back_face_culling(tt_3d_object *object, bool toggle);
+```
+
+With the toggle set to true it is turned on and when it is set to false it is turned off for the object.
+
 #### Usage of a Texture
 
 To use a texture to cover a 3D object it needs to be created first by calling tt_3d_texture_new() and is available until the call the of tt_3d_texture_delete(). In between the texture is usable on as many models as desired. And if no texture is specified then the pink default texture will be used.
