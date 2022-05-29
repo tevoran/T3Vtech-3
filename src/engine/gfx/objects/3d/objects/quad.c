@@ -21,7 +21,7 @@ void tt_gfx_prepare_quad()
 
 	GLuint quad_indices[]=
 	{
-		0,1,2,
+		2,1,0,
 		1,2,3,
 	};
 

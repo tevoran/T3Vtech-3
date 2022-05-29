@@ -68,7 +68,6 @@ bool tt_gfx_init()
 		tt_far_plane);
 
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE); //GL_BACK is the default
 
 	//setting lighting defaults
 	tt_gfx_gouraud_shading_active=true; //activate gouraud shading
