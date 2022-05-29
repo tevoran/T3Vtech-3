@@ -64,6 +64,10 @@ file(GLOB_RECURSE "3d_textures" SRC src/tests/textures/3d_textures.c)
 add_executable(3d_textures WIN32 ${3d_textures})
 target_link_libraries(3d_textures LINK_PRIVATE T3Vtech)
 
+file(GLOB_RECURSE "batch_rendering" SRC src/tests/batch_rendering/batch_rendering.c)
+add_executable(batch_rendering WIN32 ${batch_rendering})
+target_link_libraries(batch_rendering LINK_PRIVATE T3Vtech)
+
 #creating library test
 file(GLOB_RECURSE "test" SRC src/test.c)
 add_executable(test WIN32 ${test})
