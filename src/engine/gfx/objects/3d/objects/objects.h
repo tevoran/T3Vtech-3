@@ -86,6 +86,7 @@ void tt_3d_object_use_default_texture(tt_3d_object *object);
 void tt_3d_object_set_color(tt_3d_object *object, tt_vec3 *color);
 void tt_3d_object_set_emission(tt_3d_object *object, tt_vec3 *emission);
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle);
+void tt_3d_object_back_face_culling(tt_3d_object *object, bool toggle);
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object);
 
 void tt_3d_object_light_affected(tt_3d_object *object, bool toggle);

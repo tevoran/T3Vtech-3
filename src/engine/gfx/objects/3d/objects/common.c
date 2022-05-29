@@ -220,6 +220,11 @@ void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle)
 	object->invisibility_toggle=toggle;
 }
 
+void tt_3d_object_back_face_culling(tt_3d_object *object, bool toggle)
+{
+	object->backface_culling_toggle=toggle;	
+}
+
 //getting object properties
 float tt_3d_object_get_bounding_sphere_size(tt_3d_object *object)
 {
