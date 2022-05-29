@@ -135,14 +135,10 @@ void tt_gfx_3d_render()
 			if(	!current_object->invisibility_toggle) //if invisible there is no need to render 
 			{
 				//frustum culling
-				
 
-				//backface culling
-				if(current_object->backface_culling_toggle)
-				{
-					glEnable(GL_CULL_FACE);
-				}
-				else
+
+				//deactivate back face culling if not desired for this object
+				if(!current_object->backface_culling_toggle)
 				{
 					glDisable(GL_CULL_FACE);
 				}
@@ -200,6 +196,11 @@ void tt_gfx_3d_render()
 					current_object->num_indices,
 					GL_UNSIGNED_INT,
 					NULL);
+
+				if(!current_object->backface_culling_toggle)
+				{
+					glEnable(GL_CULL_FACE);
+				}
 					
 			}
 
