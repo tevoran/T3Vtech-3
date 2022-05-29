@@ -37,6 +37,11 @@ extern tt_vec3 tt_gfx_amb_light_color; //the ambient light color
 //this is the beginning of the 3D object rendering list
 extern tt_node *tt_3d_list_entry_node;
 
+//frustum culling
+tt_vec3 tt_gfx_frustum_culling_frustum_pos;
+float tt_gfx_frustum_culling_frustum_distance;
+
+
 //setting the field of view
 void tt_set_fov(float radians)
 {
@@ -67,6 +72,7 @@ void tt_gfx_3d_preparation()
 	glUseProgram(tt_std_3d_shader);
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+	glEnable(GL_CULL_FACE); //GL_BACK is the default
 
 	//global camera and projection matrix
 	tt_mat4 mat4_cam_and_projection=tt_math_mat4_mul(&tt_camera_rotation, &tt_camera_position);
@@ -120,6 +126,13 @@ void tt_gfx_3d_preparation()
 		tt_gfx_amb_light_color.x,
 		tt_gfx_amb_light_color.y,
 		tt_gfx_amb_light_color.z);
+
+	//frustum culling
+	tt_gfx_frustum_culling_frustum_pos=tt_camera_get_position();
+	tt_vec3 view_dir=tt_camera_view_direction();
+	view_dir=tt_math_vec3_mul_float(&view_dir, 0.5f * tt_far_plane);
+	tt_gfx_frustum_culling_frustum_pos=tt_math_vec3_add(&view_dir, &tt_gfx_frustum_culling_frustum_pos);
+	tt_gfx_frustum_culling_frustum_distance=(0.5f * tt_far_plane) * (0.5f * tt_far_plane);
 }
 
 void tt_gfx_3d_render()
@@ -132,74 +145,84 @@ void tt_gfx_3d_render()
 
 		while(true)
 		{
-			if(	!current_object->invisibility_toggle) //if invisible there is no need to render 
+			if(!current_object->invisibility_toggle) //if invisible there is no need to render 
 			{
 				//frustum culling
-
-
-				//deactivate back face culling if not desired for this object
-				if(!current_object->backface_culling_toggle)
+				float a, b, c, distance;
+				a=tt_gfx_frustum_culling_frustum_pos.x - current_object->translation.array[0][3];
+				b=tt_gfx_frustum_culling_frustum_pos.y - current_object->translation.array[1][3];
+				c=tt_gfx_frustum_culling_frustum_pos.z - current_object->translation.array[2][3];
+				a=a*a;
+				b=b*b;
+				c=c*c;
+				distance=a+b+c;
+				distance=distance-current_object->bounding_sphere_radius;
+				if(distance<tt_gfx_frustum_culling_frustum_distance) //if inside rendering sphere then render
 				{
-					glDisable(GL_CULL_FACE);
-				}
+					//deactivate back face culling if not desired for this object
+					if(!current_object->backface_culling_toggle)
+					{
+						glDisable(GL_CULL_FACE);
+					}
 
-				//prepare uniforms
-				GLint transform=glGetUniformLocation(tt_std_3d_shader, "transform");
-				GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
-				GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
-				GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
-				GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
-				GLint ao_light_count=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_count");
-				GLint ao_light_list=glGetUniformLocation(tt_std_3d_shader, "object_ao_lights");
-				GLint object_color=glGetUniformLocation(tt_std_3d_shader, "object_color");
-				GLint object_emission=glGetUniformLocation(tt_std_3d_shader, "object_emission");
+					//prepare uniforms
+					GLint transform=glGetUniformLocation(tt_std_3d_shader, "transform");
+					GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
+					GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
+					GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
+					GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
+					GLint ao_light_count=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_count");
+					GLint ao_light_list=glGetUniformLocation(tt_std_3d_shader, "object_ao_lights");
+					GLint object_color=glGetUniformLocation(tt_std_3d_shader, "object_color");
+					GLint object_emission=glGetUniformLocation(tt_std_3d_shader, "object_emission");
 
-				//calculate object transformation matrix
-				tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->translation, &current_object->rotation);
-				mat4_transform=tt_math_mat4_mul(&mat4_transform, &current_object->scale);
+					//calculate object transformation matrix
+					tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->translation, &current_object->rotation);
+					mat4_transform=tt_math_mat4_mul(&mat4_transform, &current_object->scale);
 
-				const GLfloat *mat4_uniform=NULL;
+					const GLfloat *mat4_uniform=NULL;
 
-				//set uniforms
-				mat4_uniform=(const GLfloat*)current_object->rotation.array;
-				glUniformMatrix4fv(rotation, 1, GL_TRUE, mat4_uniform);
+					//set uniforms
+					mat4_uniform=(const GLfloat*)current_object->rotation.array;
+					glUniformMatrix4fv(rotation, 1, GL_TRUE, mat4_uniform);
 
-				mat4_uniform=(const GLfloat*)&mat4_transform;
-				glUniformMatrix4fv(transform, 1, GL_TRUE, mat4_uniform);
+					mat4_uniform=(const GLfloat*)&mat4_transform;
+					glUniformMatrix4fv(transform, 1, GL_TRUE, mat4_uniform);
 
-				glUniform1i(affected_by_light, current_object->lighting_affected);
-				glUniform1i(point_light_count, current_object->point_light_count);
-				glUniform1iv(point_light_list, current_object->point_light_count, (const GLint *)current_object->point_lights);
-				glUniform1i(ao_light_count, current_object->ao_light_count);
-				glUniform1iv(ao_light_list, current_object->ao_light_count, (const GLint *)current_object->ao_lights);
-				glUniform3f(object_color, current_object->color.x, current_object->color.y, current_object->color.z);
-				glUniform3f(object_emission, current_object->emission.x, current_object->emission.y, current_object->emission.z);
+					glUniform1i(affected_by_light, current_object->lighting_affected);
+					glUniform1i(point_light_count, current_object->point_light_count);
+					glUniform1iv(point_light_list, current_object->point_light_count, (const GLint *)current_object->point_lights);
+					glUniform1i(ao_light_count, current_object->ao_light_count);
+					glUniform1iv(ao_light_list, current_object->ao_light_count, (const GLint *)current_object->ao_lights);
+					glUniform3f(object_color, current_object->color.x, current_object->color.y, current_object->color.z);
+					glUniform3f(object_emission, current_object->emission.x, current_object->emission.y, current_object->emission.z);
 
-				//bind buffers
-				//glBindVertexArray(current_object->vao);
-				glBindBuffer(GL_ARRAY_BUFFER, current_object->vbo);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_object->ibo);
+					//bind buffers
+					//glBindVertexArray(current_object->vao);
+					glBindBuffer(GL_ARRAY_BUFFER, current_object->vbo);
+					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, current_object->ibo);
 
-				//describe vertex data
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)0);
-				glEnableVertexAttribArray(0);
-				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
-				glEnableVertexAttribArray(1);
-				glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(5*sizeof(GLfloat)));
-				glEnableVertexAttribArray(2);
+					//describe vertex data
+					glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)0);
+					glEnableVertexAttribArray(0);
+					glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(3*sizeof(GLfloat)));
+					glEnableVertexAttribArray(1);
+					glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8*sizeof(GLfloat), (void*)(5*sizeof(GLfloat)));
+					glEnableVertexAttribArray(2);
 
-				//use textures
-				glBindTexture(GL_TEXTURE_2D, current_object->texture);
+					//use textures
+					glBindTexture(GL_TEXTURE_2D, current_object->texture);
 				
-				glDrawElements(
-					GL_TRIANGLES,
-					current_object->num_indices,
-					GL_UNSIGNED_INT,
-					NULL);
+					glDrawElements(
+						GL_TRIANGLES,
+						current_object->num_indices,
+						GL_UNSIGNED_INT,
+						NULL);
 
-				if(!current_object->backface_culling_toggle)
-				{
-					glEnable(GL_CULL_FACE);
+					if(!current_object->backface_culling_toggle)
+					{
+						glEnable(GL_CULL_FACE);
+					}
 				}
 					
 			}

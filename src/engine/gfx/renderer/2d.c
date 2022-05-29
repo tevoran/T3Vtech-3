@@ -14,9 +14,11 @@ void tt_gfx_2d_preparation()
 {
 	glUseProgram(tt_std_2d_shader);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 }
 
 void tt_gfx_2d_render()

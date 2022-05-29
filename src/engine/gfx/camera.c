@@ -17,6 +17,15 @@ void tt_camera_set_position(tt_vec3 *position)
 	tt_camera_position.array[2][3]=-position->z;
 }
 
+tt_vec3 tt_camera_get_position()
+{
+	tt_vec3 out;
+	out.x=-tt_camera_position.array[0][3];
+	out.y=-tt_camera_position.array[1][3];
+	out.z=-tt_camera_position.array[2][3];
+	return out;
+}
+
 void tt_camera_rotate(tt_vec3 *rot_axis, float radians)
 {
 	tt_mat4 rot_delta_mat=tt_math_mat4_make_quat_rot_mat(rot_axis, radians);
