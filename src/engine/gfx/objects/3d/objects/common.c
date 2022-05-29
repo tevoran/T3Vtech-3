@@ -35,6 +35,7 @@ tt_3d_object* tt_3d_object_new()
 	new_object->point_light_count=0;
 	new_object->bounding_sphere_radius=0;
 	new_object->invisibility_toggle=false; //make visible by default
+	new_object->backface_culling_toggle=true; //enable backface culling for the object
 
 	new_object->color = (tt_vec3){ 1.0f, 1.0f, 1.0f };
 	new_object->emission = (tt_vec3){ 0.0f, 0.0f, 0.0f };

@@ -35,6 +35,7 @@ struct tt_3d_object
 
 	float bounding_sphere_radius;
 	bool invisibility_toggle;
+	bool backface_culling_toggle;
 
 	//lighting
 	tt_point_light point_lights[MAX_POINT_LIGHTS_PER_OBJECT];

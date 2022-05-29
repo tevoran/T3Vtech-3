@@ -134,6 +134,16 @@ void tt_gfx_3d_render()
 		{
 			if(	!current_object->invisibility_toggle) //if invisible there is no need to render 
 			{
+				//backface culling
+				if(current_object->backface_culling_toggle)
+				{
+					glEnable(GL_CULL_FACE);
+				}
+				else
+				{
+					glDisable(GL_CULL_FACE);
+				}
+
 				//prepare uniforms
 				GLint transform=glGetUniformLocation(tt_std_3d_shader, "transform");
 				GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
