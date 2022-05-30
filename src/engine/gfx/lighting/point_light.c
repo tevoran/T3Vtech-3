@@ -60,6 +60,13 @@ void tt_gfx_point_light_cleanup()
 	glDeleteBuffers(1, &tt_gfx_ubo_point_light);
 }
 
+void tt_gfx_point_light_update_ubo()
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
 tt_point_light tt_point_light_new()
 {
 	ubo.num_active.x++;
@@ -79,13 +86,7 @@ tt_point_light tt_point_light_new()
 			break;
 		}
 	}
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
 	return out;
-
 }
 
 void tt_point_light_delete(tt_point_light light_id)
@@ -138,10 +139,6 @@ void tt_point_light_delete(tt_point_light light_id)
 	}
 
 	remap[light_id]=TT_NO_LIGHT;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 
@@ -162,9 +159,6 @@ void tt_point_light_set_strength(tt_point_light light_id, float strength)
 	ubo.strength[gpu_id].y=strength;
 	ubo.strength[gpu_id].z=strength;
 	ubo.strength[gpu_id].w=strength;
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_point_light_set_color(tt_point_light light_id, tt_vec3 *color)
@@ -183,9 +177,6 @@ void tt_point_light_set_color(tt_point_light light_id, tt_vec3 *color)
 	ubo.color[gpu_id].x=color->x; //r
 	ubo.color[gpu_id].y=color->y; //g
 	ubo.color[gpu_id].z=color->z; //b
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_point_light_set_position(tt_point_light light_id, tt_vec3 *position)
@@ -204,9 +195,6 @@ void tt_point_light_set_position(tt_point_light light_id, tt_vec3 *position)
 	ubo.location[gpu_id].x=position->x;
 	ubo.location[gpu_id].y=position->y;
 	ubo.location[gpu_id].z=position->z;
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_point_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ubo_layout), &ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 int tt_point_light_get_gpu_index(tt_point_light light_id)

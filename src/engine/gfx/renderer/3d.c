@@ -74,6 +74,7 @@ void tt_gfx_3d_preparation()
 	glDisable(GL_BLEND);
 	glEnable(GL_CULL_FACE); //GL_BACK is the default
 
+
 	//global camera and projection matrix
 	tt_mat4 mat4_cam_and_projection=tt_math_mat4_mul(&tt_camera_rotation, &tt_camera_position);
 	mat4_cam_and_projection=tt_math_mat4_mul(&tt_perspective_projection_mat, &mat4_cam_and_projection);
@@ -82,6 +83,10 @@ void tt_gfx_3d_preparation()
 	glUniformMatrix4fv(cam_and_projection_mat, 1, GL_TRUE, cam_and_projection_mat_ptr);
 
 	//lighting
+	tt_gfx_directional_light_update_ubo();
+	tt_gfx_point_light_update_ubo();
+	tt_gfx_ao_light_update_ubo();
+
 	GLint gouraud_shading_toggle=glGetUniformLocation(tt_std_3d_shader, "gouraud_shading_toggle");
 	glUniform1i(gouraud_shading_toggle, tt_gfx_gouraud_shading_active);
 

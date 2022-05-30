@@ -68,6 +68,13 @@ void tt_gfx_directional_light_cleanup()
 	glDeleteBuffers(1, &tt_gfx_ubo_dir_light);
 }
 
+void tt_gfx_directional_light_update_ubo()
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);	
+}
+
 //max number of directional lights is currently 8
 //the same value can be found in the std_3d_vertex shader
 tt_dir_light tt_directional_light_new()
@@ -88,10 +95,6 @@ tt_dir_light tt_directional_light_new()
 			break;
 		}
 	}
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);	
 	return out;
 }
 
@@ -140,10 +143,6 @@ void tt_directional_light_delete(tt_dir_light light_id)
 
 	dir_light_remap[i]=dir_light_remap[light_id];
 	dir_light_remap[light_id]=TT_NO_LIGHT;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_directional_light_set_direction(tt_dir_light light_id, tt_vec3 *direction)
@@ -162,9 +161,6 @@ void tt_directional_light_set_direction(tt_dir_light light_id, tt_vec3 *directio
 	layout.direction[gpu_id].x=direction->x;
 	layout.direction[gpu_id].y=direction->y;
 	layout.direction[gpu_id].z=direction->z;
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_directional_light_set_strength(tt_dir_light light_id, float strength)
@@ -184,9 +180,6 @@ void tt_directional_light_set_strength(tt_dir_light light_id, float strength)
 	layout.strength[gpu_id].y=strength;
 	layout.strength[gpu_id].z=strength;
 	layout.strength[gpu_id].w=strength;
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_directional_light_set_color(tt_dir_light light_id, tt_vec3 *color)
@@ -205,7 +198,4 @@ void tt_directional_light_set_color(tt_dir_light light_id, tt_vec3 *color)
 	layout.color[gpu_id].x=color->x;
 	layout.color[gpu_id].y=color->y;
 	layout.color[gpu_id].z=color->z;
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_dir_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(layout), &layout, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }

@@ -45,6 +45,13 @@ void tt_gfx_ao_light_cleanup()
 	glDeleteBuffers(1, &tt_gfx_ubo_ao_light);
 }
 
+void tt_gfx_ao_light_update_ubo()
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
 tt_ao_light tt_ao_light_new()
 {
 	if(n_active_ao_lights>=NUM_MAX_AO_LIGHTS)
@@ -65,11 +72,6 @@ tt_ao_light tt_ao_light_new()
 			break;
 		}
 	}
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
 	return out;
 }
 
@@ -95,10 +97,6 @@ void tt_ao_light_delete(tt_ao_light light_id)
 	}
 
 	ao_light_remap[light_id]=TT_NO_LIGHT;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_ao_light_set_strength(tt_ao_light light_id, float strength)
@@ -124,10 +122,6 @@ void tt_ao_light_set_strength(tt_ao_light light_id, float strength)
 	}
 
 	ao_light_ubo.ao_lights[gpu_id-1].strength=strength;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_ao_light_set_backfacing_attenuation(tt_ao_light light_id, float backfacing_attenuation)
@@ -153,10 +147,6 @@ void tt_ao_light_set_backfacing_attenuation(tt_ao_light light_id, float backfaci
 	}
 
 	ao_light_ubo.ao_lights[gpu_id-1].backfacing_attenuation=backfacing_attenuation;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_ao_light_set_falloff(tt_ao_light light_id, float falloff)
@@ -178,10 +168,6 @@ void tt_ao_light_set_falloff(tt_ao_light light_id, float falloff)
 	}
 
 	ao_light_ubo.ao_lights[gpu_id-1].falloff = falloff;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_ao_light_set_radius(tt_ao_light light_id, float radius)
@@ -203,10 +189,6 @@ void tt_ao_light_set_radius(tt_ao_light light_id, float radius)
 	}
 
 	ao_light_ubo.ao_lights[gpu_id-1].radius=radius;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void tt_ao_light_set_bounds(tt_ao_light light_id, tt_vec3 *a, tt_vec3 *b)
@@ -229,10 +211,6 @@ void tt_ao_light_set_bounds(tt_ao_light light_id, tt_vec3 *a, tt_vec3 *b)
 	ao_light_ubo.ao_lights[gpu_id-1].p1.x=b->x;
 	ao_light_ubo.ao_lights[gpu_id-1].p1.y=b->y;
 	ao_light_ubo.ao_lights[gpu_id-1].p1.z=b->z;
-
-	glBindBuffer(GL_UNIFORM_BUFFER, tt_gfx_ubo_ao_light);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(ao_light_ubo_layout), &ao_light_ubo, GL_STATIC_DRAW);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 int tt_ao_light_get_gpu_index(tt_ao_light light_id)

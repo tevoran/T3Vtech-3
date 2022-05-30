@@ -23,6 +23,7 @@ void tt_ambient_light_set_color(tt_vec3 *color);
 //directional light
 void tt_gfx_directional_light_setup();
 void tt_gfx_directional_light_cleanup();
+void tt_gfx_directional_light_update_ubo();
 
 tt_dir_light tt_directional_light_new();
 void tt_directional_light_delete(tt_dir_light light_id);
@@ -33,6 +34,7 @@ void tt_directional_light_set_color(tt_dir_light light_id, tt_vec3 *color);
 //point light
 void tt_gfx_point_light_setup();
 void tt_gfx_point_light_cleanup();
+void tt_gfx_point_light_update_ubo();
 
 tt_point_light tt_point_light_new();
 void tt_point_light_delete(tt_point_light light_id);
@@ -44,6 +46,7 @@ int tt_point_light_get_gpu_index(tt_point_light light_id);
 //ao light
 void tt_gfx_ao_light_setup();
 void tt_gfx_ao_light_cleanup();
+void tt_gfx_ao_light_update_ubo();
 
 tt_ao_light tt_ao_light_new();
 void tt_ao_light_delete(tt_ao_light light_id);
