@@ -18,6 +18,7 @@ tt_3d_batch_object* tt_3d_batch_object_new()
 	new_batch_object->num_indices=0;
 	new_batch_object->vertex_data=NULL;
 	new_batch_object->index_data=NULL;
+	new_batch_object->bounding_sphere_radius=0.0f;
 	return new_batch_object;
 }
 
@@ -78,6 +79,15 @@ void tt_3d_batch_object_batch_custom_model_objects(
 
 			//save vertex
 			vertex_out[i * model->num_verts + j]=vertex_translated;
+
+			//bounding sphere radius
+			if((vertex_translated.pos.x * vertex_translated.pos.x
+				+ vertex_translated.pos.y * vertex_translated.pos.y
+				+ vertex_translated.pos.z + vertex_translated.pos.z)
+				> batch_object->bounding_sphere_radius * batch_object->bounding_sphere_radius)
+			{
+				batch_object->bounding_sphere_radius=tt_math_vec3_length(&vertex_translated.pos);
+			}
 		}
 
 		//indices

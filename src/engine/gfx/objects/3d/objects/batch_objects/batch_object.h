@@ -19,6 +19,8 @@ struct tt_3d_batch_object
 	GLfloat *vertex_data;
 	GLuint *index_data;
 
+	float bounding_sphere_radius;
+
 } typedef tt_3d_batch_object;
 
 tt_3d_batch_object* tt_3d_batch_object_new();

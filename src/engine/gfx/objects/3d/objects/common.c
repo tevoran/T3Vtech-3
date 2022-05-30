@@ -291,11 +291,3 @@ bool tt_3d_object_colliding_aabb(tt_3d_object *a, tt_3d_object *b)
 		&& a_aabb.max.z >= b_aabb.min.z
 		&& a_aabb.min.z <= b_aabb.max.z;
 }
-
-/*
-
-	x_max=1,0,0;
-	x_min=-1,0,0;
-	y_max=0,1,0;
-	y_min=0,-1,0;
-*/
