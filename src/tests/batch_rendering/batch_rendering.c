@@ -4,6 +4,17 @@ int main(int argc, char *argv[])
 {
 	tt_init("T3Vtech3 test window", 1920, 1080, false, 16, NULL);
 
+    tt_gfx_phong_shading(true);
+    tt_gfx_gouraud_shading(true);
+    tt_gfx_tone_mapping(true);
+
+    tt_vec3 light_col={0.5f, 0.3f, 0.03f};
+    tt_vec3 light_pos={0.0f, 4.0f, -30.0f};
+    tt_point_light light=tt_point_light_new();
+    tt_point_light_set_color(light, &light_col);
+    tt_point_light_set_position(light, &light_pos);
+    tt_point_light_set_strength(light, 2500.0f);
+
 	tt_3d_custom_model *obj_model=tt_3d_custom_model_load_file("assets/models/ship/ship.obj");
 	tt_3d_texture *obj_tex=tt_3d_texture_new("assets/models/ship/ship.bmp", true);
 
@@ -28,7 +39,7 @@ int main(int argc, char *argv[])
 		obj);
 	tt_3d_object *batch=tt_3d_object_new();
 	tt_3d_object_use_batch_object(batch, batch_object);
-	tt_3d_object_light_affected(batch, false);
+	tt_3d_object_light_affected(batch, true);
 	tt_3d_object_use_texture(batch, obj_tex);
 
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
