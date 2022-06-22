@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 	tt_3d_object_set_position(quad, &pos);
 	tt_3d_object_scale(quad, &scale);
 	tt_3d_object_light_affected(quad, false);
+	tt_3d_object_back_face_culling(quad, false);
 
 	tt_font *font=tt_font_open("assets/fonts/OpenSans-Light.ttf", 50);
 	tt_color_rgba_u8 color={255,255,255,255};
