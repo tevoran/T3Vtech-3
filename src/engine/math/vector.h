@@ -1,25 +1,62 @@
 #ifndef TT_MATH_VECTOR_H
 #define TT_MATH_VECTOR_H
 
-struct tt_vec2
+union tt_vec2
 {
-	float x;
-	float y;
+	struct 
+	{
+		float x;
+		float y;
+	};
+	struct
+	{
+		float u;
+		float v;
+	};
+	struct
+	{
+		float s;
+		float t;
+	};
+	struct
+	{
+		float width;
+		float height;
+	};
 } typedef tt_vec2;
 
-struct tt_vec3
+union tt_vec3
 {
-	float x;
-	float y;
-	float z;
+	struct
+	{
+		float x;
+		float y;
+		float z;		
+	};
+	struct
+	{
+		float r;
+		float g;
+		float b;
+	};
 } typedef tt_vec3;
 
-struct tt_vec4
+union tt_vec4
 {
-	float x;
-	float y;
-	float z;
-	float w;
+	struct
+	{
+		float x;
+		float y;
+		float z;
+		float w;		
+	};
+	struct
+	{
+		float r;
+		float g;
+		float b;
+		float a;
+	};
 } typedef tt_vec4;
 
 //vec4
