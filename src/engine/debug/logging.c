@@ -15,6 +15,7 @@ void tt_log_open_log_file(const char *file_location)
 	if(tt_log_file.file==NULL)
 	{
 		printf("[ERROR] couldn't create logging file at %s\n", tt_log_file.location);
+		return;
 	}
 	fclose(tt_log_file.file);
 }
@@ -25,7 +26,6 @@ void tt_log(enum tt_log_type type, const char *format, ...)
 	if(tt_log_file.file==NULL)
 	{
 		printf("[ERROR] couldn't open logging file at %s\n", tt_log_file.location);
-		fclose(tt_log_file.file);
 		return;
 	}
 
