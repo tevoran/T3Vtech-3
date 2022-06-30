@@ -33,6 +33,7 @@ tt_3d_object* tt_3d_object_new()
 	new_object->texture=tt_gfx_3d_default_tex;
 	new_object->lighting_affected=true;
 	new_object->point_light_count=0;
+	new_object->ao_light_count=0;
 	new_object->bounding_sphere_radius=0;
 	new_object->invisibility_toggle=false; //make visible by default
 	new_object->backface_culling_toggle=true; //enable backface culling for the object
