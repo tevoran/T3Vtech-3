@@ -4,10 +4,6 @@ int main(int argc, char *argv[])
 {
 	tt_init("T3Vtech3 test window", 1920, 1080, false, 16, NULL);
 
-    tt_gfx_phong_shading(true);
-    tt_gfx_gouraud_shading(false);
-    tt_gfx_tone_mapping(true);
-
     tt_vec3 light_col={0.5f, 0.3f, 0.03f};
     tt_vec3 light_pos={-20.0f, 10.0f, -50.0f};
     tt_point_light light=tt_point_light_new();

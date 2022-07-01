@@ -70,9 +70,9 @@ bool tt_gfx_init()
 	glDepthFunc(GL_LESS);
 
 	//setting lighting defaults
-	tt_gfx_gouraud_shading_active=true; //activate gouraud shading
-	tt_gfx_phong_shading_active=false;
-	tt_gfx_tone_mapping_toggle=false;
+	tt_gfx_gouraud_shading_active=false;
+	tt_gfx_phong_shading_active=true;
+	tt_gfx_tone_mapping_toggle=true;
 	tt_gfx_exposure=1.0f;
 	tt_gfx_directional_light_setup();
 	tt_gfx_point_light_setup();
