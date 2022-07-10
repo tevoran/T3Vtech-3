@@ -33,6 +33,7 @@ find_package(OpenAL REQUIRED)
 #creating the library
 include_directories(src/engine/)
 include_directories(vendor/stb/)
+include_directories(vendor/Tlib/)
 file(GLOB_RECURSE "engine" SRC src/engine/*.c)
 add_library(T3Vtech STATIC ${engine})
 
@@ -68,10 +69,6 @@ file(GLOB_RECURSE "batch_rendering" SRC src/tests/batch_rendering/batch_renderin
 add_executable(batch_rendering WIN32 ${batch_rendering})
 target_link_libraries(batch_rendering LINK_PRIVATE T3Vtech)
 
-#creating library test
-file(GLOB_RECURSE "test" SRC src/test.c)
-add_executable(test WIN32 ${test})
-target_link_libraries(test LINK_PRIVATE T3Vtech)
 file(COPY shaders DESTINATION .)
 file(COPY assets DESTINATION .)
 file(COPY settings DESTINATION .)
