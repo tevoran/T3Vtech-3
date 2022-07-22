@@ -219,15 +219,23 @@ int tt_3d_object_get_ao_light_count(tt_3d_object *object)
 
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle)
 {
-	if(!tt_3d_list_entry_node)
+	if(!tt_3d_list_entry_node) //no objects were created yet
 	{
 		return;
 	}
-	if(!tt_3d_list_start_invisible)
+	if(toggle)
 	{
-		tt_3d_list_start_invisible=tt_3d_list_entry_node;
+		if(!tt_3d_list_start_invisible)
+		{
+			T_node *node=tt_3d_list_entry_node;
+			while(node->next)
+			{
+				node=T_list_next_node(node);
+			}
+			tt_3d_list_start_invisible=node;
+		}
+		T_list_move_node_after(object->node, tt_3d_list_start_invisible);
 	}
-	T_list_move_node_after(object->node, tt_3d_list_start_invisible);
 	object->invisibility_toggle=toggle;
 }
 

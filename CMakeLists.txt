@@ -69,6 +69,10 @@ file(GLOB_RECURSE "batch_rendering" SRC src/tests/batch_rendering/batch_renderin
 add_executable(batch_rendering WIN32 ${batch_rendering})
 target_link_libraries(batch_rendering LINK_PRIVATE T3Vtech)
 
+file(GLOB_RECURSE "rendering_visible_and_invisible" SRC src/tests/rendering_visible_and_invisible/rendering_visible_and_invisible.c)
+add_executable(rendering_visible_and_invisible WIN32 ${rendering_visible_and_invisible})
+target_link_libraries(rendering_visible_and_invisible LINK_PRIVATE T3Vtech)
+
 file(COPY shaders DESTINATION .)
 file(COPY assets DESTINATION .)
 file(COPY settings DESTINATION .)

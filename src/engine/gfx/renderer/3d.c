@@ -246,9 +246,12 @@ void tt_gfx_3d_render()
 			}
 			current_object=current_node->data;
 
-			if(current_node!=tt_3d_list_start_invisible->next) //stop when the invisible section is reached
+			if(tt_3d_list_start_invisible) //if something is invisible
 			{
-				break;
+				if(current_node->last==tt_3d_list_start_invisible) //stop when the invisible section is reached
+				{
+					break;
+				}
 			}
 		}
 	}	
