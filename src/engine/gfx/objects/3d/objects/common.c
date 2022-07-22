@@ -4,6 +4,7 @@
 
 //this is the beginning of the 3D object rendering list
 extern T_node *tt_3d_list_entry_node;
+extern T_node *tt_3d_list_start_invisible;
 
 extern GLuint tt_gfx_3d_default_tex; //default texture
 
@@ -218,6 +219,15 @@ int tt_3d_object_get_ao_light_count(tt_3d_object *object)
 
 void tt_3d_object_make_invisible(tt_3d_object *object, bool toggle)
 {
+	if(!tt_3d_list_entry_node)
+	{
+		return;
+	}
+	if(!tt_3d_list_start_invisible)
+	{
+		tt_3d_list_start_invisible=tt_3d_list_entry_node;
+	}
+	T_list_move_node_after(object->node, tt_3d_list_start_invisible);
 	object->invisibility_toggle=toggle;
 }
 

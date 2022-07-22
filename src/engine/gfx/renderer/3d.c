@@ -36,6 +36,8 @@ extern tt_vec3 tt_gfx_amb_light_color; //the ambient light color
 
 //this is the beginning of the 3D object rendering list
 extern T_node *tt_3d_list_entry_node;
+extern T_node *tt_3d_list_start_invisible; //necessary for ignoring the invisible objects
+
 
 //frustum culling
 tt_vec3 tt_gfx_frustum_culling_frustum_pos;
@@ -158,8 +160,6 @@ void tt_gfx_3d_render()
 
 		while(true)
 		{
-			if(!current_object->invisibility_toggle) //if invisible there is no need to render 
-			{
 				//frustum culling
 				float a, b, c, distance;
 				a=tt_gfx_frustum_culling_frustum_pos.x - current_object->translation.array[0][3];
@@ -237,8 +237,6 @@ void tt_gfx_3d_render()
 						glEnable(GL_CULL_FACE);
 					}
 				}
-					
-			}
 
 			//get to the next object to render
 			current_node=T_list_next_node(current_node);
@@ -247,6 +245,11 @@ void tt_gfx_3d_render()
 				break;
 			}
 			current_object=current_node->data;
+
+			if(current_node!=tt_3d_list_start_invisible->next) //stop when the invisible section is reached
+			{
+				break;
+			}
 		}
 	}	
 }
