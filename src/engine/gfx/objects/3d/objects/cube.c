@@ -1,7 +1,7 @@
 #include <tt.h>
 
 //this is the beginning of the 3D object rendering list
-extern tt_node *tt_3d_list_entry_node;
+extern T_node *tt_3d_list_entry_node;
 
 //the cube preparation OpenGL ID
 extern GLuint tt_gfx_3d_cube_vao;

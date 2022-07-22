@@ -7,8 +7,8 @@ extern GLuint tt_std_2d_shader; //the default shader program for all 2d objects
 extern GLuint tt_gfx_2d_default_tex; //default texture
 
 //this is the beginning of the 2D object rendering list
-extern tt_node *tt_2d_list_entry_node;
-extern tt_node *tt_2d_list_last_entry;
+extern T_node *tt_2d_list_entry_node;
+extern T_node *tt_2d_list_last_entry;
 
 void tt_gfx_2d_preparation()
 {
@@ -29,7 +29,7 @@ void tt_gfx_2d_render()
 	if(tt_2d_list_entry_node)
 	{
 		current_2d_object=tt_2d_list_entry_node->data; //get the object
-		tt_node *current_node=tt_2d_list_entry_node;
+		T_node *current_node=tt_2d_list_entry_node;
 
 		int i=0;
 		while(true) //actual 2d render loop
@@ -75,7 +75,7 @@ void tt_gfx_2d_render()
 					NULL);
 
 				//go to next element in the 2D render element
-				current_node=tt_list_next_node(current_node);
+				current_node=T_list_next_node(current_node);
 				if(!current_node) //if no following object is left then exit
 				{
 					break;

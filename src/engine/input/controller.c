@@ -8,7 +8,7 @@ extern bool tt_quiet; //this activates/deactivates debug messages
 
 struct controller
 {
-	tt_node *this_node;
+	T_node *this_node;
 	SDL_GameController *controller;
 	SDL_Joystick *joy;
 	SDL_JoystickID id;
@@ -25,7 +25,7 @@ struct controller
 } typedef controller;
 
 //controllers
-tt_node *c_list_start=NULL; //the begin of the list for the controllers
+T_node *c_list_start=NULL; //the begin of the list for the controllers
 
 
 
@@ -69,11 +69,11 @@ void tt_input_controller_update(SDL_Event event)
 int tt_input_controller_count()
 {
 	int i=0;
-	tt_node *node=c_list_start;
+	T_node *node=c_list_start;
 	while(node)
 	{
 		i++;
-		node=tt_list_next_node(node);
+		node=T_list_next_node(node);
 	}
 	return i;
 }
@@ -93,12 +93,12 @@ void tt_input_controller_add_new(SDL_Event event)
 
 		//saving data into the list
 		controller *new_controller=malloc(sizeof(controller));
-		new_controller->this_node=tt_list_new_node(c_list_start);
+		new_controller->this_node=T_list_new_node(c_list_start);
 		if(!c_list_start)
 		{
 			c_list_start=new_controller->this_node;
 		}
-		tt_list_node_set_data(new_controller->this_node, new_controller);
+		T_list_node_set_data(new_controller->this_node, new_controller);
 
 		new_controller->controller=tmp_controller;
 		new_controller->joy=tmp_joy;
@@ -134,7 +134,7 @@ void tt_input_controller_add_new(SDL_Event event)
 
 void tt_input_controller_removed(SDL_Event event)
 {
-	tt_node *node=c_list_start;
+	T_node *node=c_list_start;
 
 	while(node)
 	{
@@ -148,7 +148,7 @@ void tt_input_controller_removed(SDL_Event event)
 			}
 			//remove the controller
 			free(c_active);
-			tt_list_remove_node(&node);
+			T_list_remove_node(&node);
 
 			if(is_beginning)
 			{
@@ -158,7 +158,7 @@ void tt_input_controller_removed(SDL_Event event)
 		}
 
 		//next controller
-		node=tt_list_next_node(node);
+		node=T_list_next_node(node);
 	}
 }
 
@@ -166,7 +166,7 @@ void tt_input_controller_removed(SDL_Event event)
 void tt_input_controller_button_down_update(SDL_Event event)
 {
 	//looking for the right controller
-	tt_node *node=c_list_start;
+	T_node *node=c_list_start;
 	while(node)
 	{
 		controller *c_active=node->data;
@@ -181,14 +181,14 @@ void tt_input_controller_button_down_update(SDL_Event event)
 		}
 
 		//going to the next controller
-		node=tt_list_next_node(node);
+		node=T_list_next_node(node);
 	}
 }
 
 void tt_input_controller_button_up_update(SDL_Event event)
 {
 	//looking for the right controller
-	tt_node *node=c_list_start;
+	T_node *node=c_list_start;
 	while(node)
 	{
 		controller *c_active=node->data;
@@ -202,14 +202,14 @@ void tt_input_controller_button_up_update(SDL_Event event)
 		}
 
 		//going to the next controller
-		node=tt_list_next_node(node);
+		node=T_list_next_node(node);
 	}
 }
 
 void tt_input_controller_axis_update(SDL_Event event)
 {
 	//looking for the right controller
-	tt_node *node=c_list_start;
+	T_node *node=c_list_start;
 	while(node)
 	{
 		controller *c_active=node->data;
@@ -259,14 +259,14 @@ void tt_input_controller_axis_update(SDL_Event event)
 			c_active->r_stick_y=0;
 		}
 		//next controller
-		node=tt_list_next_node(node);
+		node=T_list_next_node(node);
 	}
 }
 
 void tt_input_controller_button_reset()
 {
 	//resetting all button arrays
-	tt_node *node=c_list_start;
+	T_node *node=c_list_start;
 	while(node)
 	{
 		controller *c_active=node->data;
@@ -275,7 +275,7 @@ void tt_input_controller_button_reset()
 			c_active->button_press[i]=false;
 		}
 
-		node=tt_list_next_node(node);
+		node=T_list_next_node(node);
 	}
 }
 
@@ -285,7 +285,7 @@ bool tt_input_controller_button_press(const int ctl_number, const unsigned char 
 	int i_ctl=0;
 	if(c_list_start)
 	{
-		tt_node *node=c_list_start;
+		T_node *node=c_list_start;
 		while(node)
 		{
 			i_ctl++;
@@ -296,7 +296,7 @@ bool tt_input_controller_button_press(const int ctl_number, const unsigned char 
 			}
 
 			//next controller
-			node=tt_list_next_node(node);			
+			node=T_list_next_node(node);			
 		}
 	}
 	else
@@ -311,7 +311,7 @@ bool tt_input_controller_button_down(const int ctl_number, const unsigned char b
 	int i_ctl=0;
 	if(c_list_start)
 	{
-		tt_node *node=c_list_start;
+		T_node *node=c_list_start;
 		while(node)
 		{
 			i_ctl++;
@@ -322,7 +322,7 @@ bool tt_input_controller_button_down(const int ctl_number, const unsigned char b
 			}
 
 			//next controller
-			node=tt_list_next_node(node);
+			node=T_list_next_node(node);
 		}
 	}
 	else
@@ -341,7 +341,7 @@ void tt_input_controller_axis_state(
 	int i_ctl=0;
 	if(c_list_start)
 	{
-		tt_node *node=c_list_start;
+		T_node *node=c_list_start;
 		while(node)
 		{
 			i_ctl++;
@@ -358,7 +358,7 @@ void tt_input_controller_axis_state(
 			}
 
 			//next controller
-			node=tt_list_next_node(node);
+			node=T_list_next_node(node);
 		}
 	}
 	else

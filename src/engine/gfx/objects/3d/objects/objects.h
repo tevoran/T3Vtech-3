@@ -10,7 +10,7 @@
 struct tt_3d_object
 {
 	//pointer to a node in the render list that points also back to the object
-	tt_node *node;
+	T_node *node;
 
 	//OpenGL relevant data
 	GLuint vao;

@@ -3,7 +3,7 @@
 #include <float.h>
 
 //this is the beginning of the 3D object rendering list
-extern tt_node *tt_3d_list_entry_node;
+extern T_node *tt_3d_list_entry_node;
 
 extern GLuint tt_gfx_3d_default_tex; //default texture
 
@@ -12,12 +12,12 @@ tt_3d_object* tt_3d_object_new()
 {
 	//creating the 3d object and putting it into the render list
 	tt_3d_object *new_object=malloc(sizeof(tt_3d_object));
-	new_object->node=tt_list_new_node(tt_3d_list_entry_node);
+	new_object->node=T_list_new_node(tt_3d_list_entry_node);
 	if(!tt_3d_list_entry_node) //save the entry node if it's one
 	{
 		tt_3d_list_entry_node=new_object->node;
 	}
-	tt_list_node_set_data(new_object->node, new_object);
+	T_list_node_set_data(new_object->node, new_object);
 
 	//initializing the object to default values
 	new_object->num_indices=0;
@@ -66,11 +66,11 @@ void tt_3d_object_delete(tt_3d_object **object)
 	//if this object is the first object in the render list
 	if((*object)->node==tt_3d_list_entry_node)
 	{
-		tt_list_remove_node(&tt_3d_list_entry_node);
+		T_list_remove_node(&tt_3d_list_entry_node);
 	}
 	else
 	{
-		tt_list_remove_node(&(*object)->node);
+		T_list_remove_node(&(*object)->node);
 	}
 
 	free(*object);

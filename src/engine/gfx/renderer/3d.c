@@ -35,7 +35,7 @@ extern float tt_gfx_amb_light_strength; //the ambient light strength
 extern tt_vec3 tt_gfx_amb_light_color; //the ambient light color
 
 //this is the beginning of the 3D object rendering list
-extern tt_node *tt_3d_list_entry_node;
+extern T_node *tt_3d_list_entry_node;
 
 //frustum culling
 tt_vec3 tt_gfx_frustum_culling_frustum_pos;
@@ -154,7 +154,7 @@ void tt_gfx_3d_render()
 	if(tt_3d_list_entry_node)
 	{
 		current_object=tt_3d_list_entry_node->data;
-		tt_node *current_node=tt_3d_list_entry_node;
+		T_node *current_node=tt_3d_list_entry_node;
 
 		while(true)
 		{
@@ -241,7 +241,7 @@ void tt_gfx_3d_render()
 			}
 
 			//get to the next object to render
-			current_node=tt_list_next_node(current_node);
+			current_node=T_list_next_node(current_node);
 			if(!current_node) //if no following object is left then exit
 			{
 				break;

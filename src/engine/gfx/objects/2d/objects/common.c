@@ -9,8 +9,8 @@ extern GLuint tt_gfx_2d_default_tex; //default texture
 
 //render list
 //used once per frame
-extern tt_node *tt_2d_list_entry_node;
-extern tt_node *tt_2d_list_last_entry;
+extern T_node *tt_2d_list_entry_node;
+extern T_node *tt_2d_list_last_entry;
 
 tt_2d_object* tt_2d_object_new()
 {
@@ -68,7 +68,7 @@ void tt_2d_object_render(tt_2d_object *object)
 		return;
 	}
 
-	tt_2d_list_last_entry=tt_list_new_node(tt_2d_list_last_entry);
+	tt_2d_list_last_entry=T_list_new_node(tt_2d_list_last_entry);
 	if(!tt_2d_list_last_entry)
 	{
 		tt_log(TT_ERROR, "couldn't create a new entry to the 2D render list");
@@ -78,7 +78,7 @@ void tt_2d_object_render(tt_2d_object *object)
 	{
 		tt_2d_list_entry_node=tt_2d_list_last_entry;
 	}
-	tt_list_node_set_data(tt_2d_list_last_entry, object);
+	T_list_node_set_data(tt_2d_list_last_entry, object);
 }
 
 
@@ -86,7 +86,7 @@ void tt_2d_object_clear_render_list()
 {
 	while(tt_2d_list_entry_node)
 	{
-		tt_list_remove_node(&tt_2d_list_entry_node);
+		T_list_remove_node(&tt_2d_list_entry_node);
 	}
 	tt_2d_list_last_entry=NULL;
 }
