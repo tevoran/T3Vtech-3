@@ -66,11 +66,11 @@ void tt_3d_object_delete(tt_3d_object **object)
 	//if this object is the first object in the render list
 	if((*object)->node==tt_3d_list_entry_node)
 	{
-		T_list_remove_node(&tt_3d_list_entry_node);
+		T_list_destroy_node(&tt_3d_list_entry_node);
 	}
 	else
 	{
-		T_list_remove_node(&(*object)->node);
+		T_list_destroy_node(&(*object)->node);
 	}
 
 	free(*object);

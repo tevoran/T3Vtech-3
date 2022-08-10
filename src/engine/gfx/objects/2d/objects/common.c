@@ -86,7 +86,7 @@ void tt_2d_object_clear_render_list()
 {
 	while(tt_2d_list_entry_node)
 	{
-		T_list_remove_node(&tt_2d_list_entry_node);
+		T_list_destroy_node(&tt_2d_list_entry_node);
 	}
 	tt_2d_list_last_entry=NULL;
 }

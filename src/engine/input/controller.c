@@ -148,7 +148,7 @@ void tt_input_controller_removed(SDL_Event event)
 			}
 			//remove the controller
 			free(c_active);
-			T_list_remove_node(&node);
+			T_list_destroy_node(&node);
 
 			if(is_beginning)
 			{
