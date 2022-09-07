@@ -30,6 +30,15 @@ bool tt_init(
 	tt_res_x=res_x;
 	tt_res_y=res_y;
 
+	//detect platform
+	#ifdef _WIN32
+		tt_log(TT_INFO, "platform is Windows");
+	#elif __linux__
+		tt_log(TT_INFO, "platform is Linux");
+	#else
+		tt_log(TT_INFO, "unknown platform");
+	#endif
+
 	//zero as return value means everything is fine
 	if(0!=SDL_Init(
 		SDL_INIT_TIMER |
