@@ -113,9 +113,9 @@ bool tt_init(
 	}
 
 	//setting the desired OpenGL version
-	tt_log(TT_INFO, "using OpenGL 4.5");
+	tt_log(TT_INFO, "using OpenGL 4.3");
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
 	tt_glcontext=SDL_GL_CreateContext(tt_window);
 	if(tt_glcontext==NULL)
