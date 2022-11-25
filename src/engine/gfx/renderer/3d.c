@@ -38,6 +38,8 @@ extern tt_vec3 tt_gfx_amb_light_color; //the ambient light color
 extern T_node *tt_3d_list_entry_node;
 
 //frustum culling
+extern bool tt_frustum_culling_trigger; //whether frustum culling is active or not
+
 tt_vec3 tt_gfx_frustum_culling_frustum_pos;
 float tt_gfx_frustum_culling_frustum_distance;
 
@@ -170,7 +172,7 @@ void tt_gfx_3d_render()
 				c=c*c;
 				distance=a+b+c;
 				distance=distance-current_object->bounding_sphere_radius;
-				if(distance<tt_gfx_frustum_culling_frustum_distance) //if inside rendering sphere then render
+				if(distance<tt_gfx_frustum_culling_frustum_distance || !tt_frustum_culling_trigger) //if inside rendering sphere then render
 				{
 					//deactivate back face culling if not desired for this object
 					if(!current_object->backface_culling_toggle)
