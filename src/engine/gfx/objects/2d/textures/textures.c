@@ -138,3 +138,23 @@ void tt_2d_texture_delete(tt_2d_texture **texture)
 	free((*texture));
 	*texture=NULL; //marking the texture as deleted
 }
+
+int tt_2d_texture_get_width(tt_2d_texture *texture) {
+	int width;
+    int mip_level = 0;
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, mip_level, GL_TEXTURE_WIDTH, &width);
+    return width;
+}
+
+int tt_2d_texture_get_height(tt_2d_texture *texture)
+{
+    int width;
+    int mip_level = 0;
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, mip_level, GL_TEXTURE_HEIGHT, &width);
+    return width;
+}
+
+float tt_2d_texture_get_aspect_ratio(tt_2d_texture *texture)
+{
+    return (float)tt_2d_texture_get_width(texture) / tt_2d_texture_get_height(texture);
+}

@@ -19,6 +19,9 @@ tt_2d_texture* tt_2d_texture_new_from_RGBA(
 	const int res_y,
 	const bool bilinear_filtering);
 void tt_2d_texture_delete(tt_2d_texture **texture);
+int tt_2d_texture_get_width(tt_2d_texture *texture);
+int tt_2d_texture_get_height(tt_2d_texture *texture);
+float tt_2d_texture_get_aspect_ratio(tt_2d_texture *texture);
 
 
 //text textures

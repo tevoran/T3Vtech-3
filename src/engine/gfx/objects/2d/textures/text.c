@@ -18,7 +18,7 @@ tt_2d_texture* tt_2d_texture_make_text(
 		return NULL;
 	}
 
-	SDL_Surface *text_surface=TTF_RenderUTF8_Solid(font->font, text, color_tmp);
+	SDL_Surface *text_surface = TTF_RenderUTF8_Blended(font->font, text, color_tmp);
 	if(!text_surface)
 	{
 		tt_log(TT_ERROR, "error while rendering the text into a surface");

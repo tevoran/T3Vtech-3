@@ -80,3 +80,20 @@ bool tt_gfx_init()
 
 	return true;
 }
+
+uint32_t tt_gfx_get_window_width()
+{
+	return tt_res_x;
+}
+
+uint32_t tt_gfx_get_window_height()
+{
+    return tt_res_y; }
+
+tt_vec2 tt_gfx_pixels_to_screen_space(const tt_vec2 *v)
+{
+    tt_vec2 result;
+    result.x = v->x / tt_gfx_get_window_width();
+    result.y = v->y / tt_gfx_get_window_height();
+    return result;
+}
