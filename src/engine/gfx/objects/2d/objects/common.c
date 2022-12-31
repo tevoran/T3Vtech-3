@@ -149,6 +149,6 @@ bool tt_2d_object_is_colliding(tt_2d_object *a, tt_2d_object *b)
 {
 	return a->translation.x + a->scale.x > b->translation.x &&
 		a->translation.x < b->translation.x + b->scale.x &&
-		a->translation.y + a->scale.y > b->translation.y &&
-		a->translation.y < b->translation.y + b->scale.y;
+		a->translation.y - a->scale.y < b->translation.y &&
+		a->translation.y > b->translation.y - b->scale.y;
 }
