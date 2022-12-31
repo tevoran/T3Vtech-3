@@ -144,3 +144,11 @@ void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture)
 		object->texture=tt_gfx_2d_default_tex;
 	}
 }
+
+bool tt_2d_object_is_colliding(tt_2d_object *a, tt_2d_object *b)
+{
+	return a->translation.x + a->scale.x > b->translation.x &&
+		a->translation.x < b->translation.x + b->scale.x &&
+		a->translation.y + a->scale.y > b->translation.y &&
+		a->translation.y < b->translation.y + b->scale.y;
+}

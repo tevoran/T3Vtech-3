@@ -34,6 +34,7 @@ void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position);
 void tt_2d_object_scale(tt_2d_object *object, tt_vec2 *scale);
 void tt_2d_object_rotate(tt_2d_object *object, float radians);
 void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture);
+bool tt_2d_object_is_colliding(tt_2d_object *a, tt_2d_object *b);
 
 //object kinds
 void tt_2d_object_make_sprite(tt_2d_object *object);
