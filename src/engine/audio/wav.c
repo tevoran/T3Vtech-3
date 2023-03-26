@@ -1,5 +1,5 @@
 #include <tt.h>
-
+#include <string.h>
 
 //reads currently only 16 bit audio
 void tt_audio_load_wav(
