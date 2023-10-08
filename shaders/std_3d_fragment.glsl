@@ -76,6 +76,7 @@ uniform vec3 amb_light_color;
 uniform bool fog_active;
 uniform vec3 fog_color;
 uniform float fog_max_distance;
+uniform float fog_min_distance;
 
 //output
 out vec4 color;
@@ -250,7 +251,7 @@ void main()
 	//fog
 	if (fog_active)
 	{
-		float fog_intensity = gl_FragCoord.z / fog_max_distance;
+		float fog_intensity = 1.0f - (fog_max_distance - gl_FragCoord.z) / (fog_max_distance - fog_min_distance);
 		fog_intensity = clamp(fog_intensity, 0.0f, 1.0f);
 		color.rgb = fog_intensity * fog_color + (1.0f - fog_intensity) * color.rgb;
 	}

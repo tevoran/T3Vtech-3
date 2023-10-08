@@ -40,13 +40,15 @@ int main(int argc, char *argv[])
 	tt_3d_object_add_point_light(batch, light);
 
 	tt_gfx_fog_set_active(true);
-	tt_vec3 fog_color={0.1,0.1,0.1};
+	tt_vec3 fog_color={1.0,0.1,0.1};
 	tt_gfx_fog_set_color(&fog_color);
 	float i=0.0f;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
-		i+=0.01f;
-		tt_gfx_fog_set_max_distance(abs(10000.0*sin(i)));
+		i+=0.5f;
+		tt_gfx_fog_set_max_distance(10000.0f);
+		tt_gfx_fog_set_min_distance(500.0f + i);
+		printf("i: %f\n", i);
 		tt_new_frame();
 	}
 

@@ -38,6 +38,7 @@ extern tt_vec3 tt_gfx_amb_light_color; //the ambient light color
 extern bool tt_gfx_fog_active; //toggle if fog is used
 extern tt_vec3 tt_gfx_fog_color; //default fog color
 extern float tt_gfx_fog_max_distance; //max fog distance (1.0 is the max drawing distance)
+extern float tt_gfx_fog_min_distance; //min fog distance (1.0 is the max drawing distance)
 
 //this is the beginning of the 3D object rendering list
 extern T_node *tt_3d_list_entry_node;
@@ -113,6 +114,8 @@ void tt_gfx_3d_preparation()
 
 	GLint fog_max_distance=glGetUniformLocation(tt_std_3d_shader, "fog_max_distance");
 	glUniform1f(fog_max_distance, tt_gfx_fog_max_distance);
+	GLint fog_min_distance=glGetUniformLocation(tt_std_3d_shader, "fog_min_distance");
+	glUniform1f(fog_min_distance, tt_gfx_fog_min_distance);
 
 	//global settings
 	GLint tone_mapping_toggle = glGetUniformLocation(tt_std_3d_shader, "tone_mapping_toggle");
