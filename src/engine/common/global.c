@@ -42,6 +42,11 @@ GLuint tt_gfx_ubo_ao_light; //uniform buffer object for ao light data
 	float tt_gfx_amb_light_strength=0.33; //the ambient light strength
 	tt_vec3 tt_gfx_amb_light_color={1.0,1.0,1.0}; //the ambient light color
 
+//fog
+bool tt_gfx_fog_active=false; //toggle if fog is used
+tt_vec3 tt_gfx_fog_color={0.3,0.3,0.3}; //default fog color
+float tt_gfx_fog_max_distance=10.0; //max fog distance (1.0 is the max drawing distance)
+
 //global settings
 bool tt_gfx_tone_mapping_toggle=false;
 float tt_gfx_exposure=1.0; //full scene exposure

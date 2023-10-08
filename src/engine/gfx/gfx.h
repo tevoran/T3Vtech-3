@@ -5,6 +5,7 @@
 #include "vertex.h"
 #include "shaders.h"
 #include "camera.h"
+#include "fog.h"
 #include "renderer/renderer.h"
 #include "lighting/lighting.h"
 #include "objects/fonts/fonts.h"

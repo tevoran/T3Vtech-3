@@ -72,6 +72,11 @@ uniform float contrast;
 uniform float amb_light_strength;
 uniform vec3 amb_light_color;
 
+//fog
+uniform bool fog_active;
+uniform vec3 fog_color;
+uniform float fog_max_distance;
+
 //output
 out vec4 color;
 
@@ -240,6 +245,14 @@ void main()
 		}
 
 		color.rgb += base_color.rgb * srgb_to_linear(object_emission);
+	}
+
+	//fog
+	if (fog_active)
+	{
+		float fog_intensity = gl_FragCoord.z / fog_max_distance;
+		fog_intensity = clamp(fog_intensity, 0.0f, 1.0f);
+		color.rgb = fog_intensity * fog_color + (1.0f - fog_intensity) * color.rgb;
 	}
 
 	color.rgb *= exposure;

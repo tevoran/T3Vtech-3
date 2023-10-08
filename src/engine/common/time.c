@@ -23,14 +23,25 @@ void tt_time_update()
 
 long tt_time_current_ns()
 {
-	long time_out=0;
-	struct timespec ts;
-	if(TIME_UTC==timespec_get(&ts, TIME_UTC))
-	{
-		time_out=ts.tv_sec*1000000000;
-		time_out+=ts.tv_nsec;
-	}
-	return time_out;
+	#ifndef __MINGW32__
+		long time_out=0;
+		struct timespec ts;
+		if(TIME_UTC==timespec_get(&ts, TIME_UTC))
+		{
+			time_out=ts.tv_sec*1000000000;
+			time_out+=ts.tv_nsec;
+		}
+		return time_out;
+	#endif
+	#ifdef __MINGW32__
+	    int first_clock = clock();
+        int first_time = time(NULL);
+
+        while(time(NULL) <= first_time) {}
+
+        int second_time = time(NULL);
+        int second_clock = clock();
+	#endif
 }
 
 long tt_time_current_frame_ns()

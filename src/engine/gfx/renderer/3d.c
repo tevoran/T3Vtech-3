@@ -34,6 +34,11 @@ extern GLuint tt_gfx_ubo_ao_light; //uniform buffer object for ao light data
 extern float tt_gfx_amb_light_strength; //the ambient light strength
 extern tt_vec3 tt_gfx_amb_light_color; //the ambient light color
 
+//fog
+extern bool tt_gfx_fog_active; //toggle if fog is used
+extern tt_vec3 tt_gfx_fog_color; //default fog color
+extern float tt_gfx_fog_max_distance; //max fog distance (1.0 is the max drawing distance)
+
 //this is the beginning of the 3D object rendering list
 extern T_node *tt_3d_list_entry_node;
 
@@ -94,6 +99,20 @@ void tt_gfx_3d_preparation()
 
 	GLint phong_shading_toggle = glGetUniformLocation(tt_std_3d_shader, "phong_shading_toggle");
 	glUniform1i(phong_shading_toggle, tt_gfx_phong_shading_active);
+
+	//fog
+	GLint fog_toggle=glGetUniformLocation(tt_std_3d_shader, "fog_active");
+	glUniform1i(fog_toggle, tt_gfx_fog_active);
+
+	GLint fog_color=glGetUniformLocation(tt_std_3d_shader, "fog_color");
+	glUniform3f(
+		fog_color,
+		tt_gfx_fog_color.x,
+		tt_gfx_fog_color.y,
+		tt_gfx_fog_color.z);
+
+	GLint fog_max_distance=glGetUniformLocation(tt_std_3d_shader, "fog_max_distance");
+	glUniform1f(fog_max_distance, tt_gfx_fog_max_distance);
 
 	//global settings
 	GLint tone_mapping_toggle = glGetUniformLocation(tt_std_3d_shader, "tone_mapping_toggle");
