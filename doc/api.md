@@ -59,6 +59,16 @@ void tt_gfx_gouraud_shading(bool active);
 
 When active is true gouraud shading will activated and with false it will be deactivated.
 
+### Fog
+
+Fog can be activated with tt_gfx_fog_set_active(true) while the other two functions are used to determine the appearance of the fog.
+
+```c
+void tt_gfx_fog_set_active(bool fog_active);
+void tt_gfx_fog_set_color(const tt_vec3 *fog_color);
+void tt_gfx_fog_set_max_distance(float distance);
+```
+
 ## 3D
 
 ### Camera
