@@ -117,8 +117,6 @@ bool tt_init(
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
-	tt_log(TT_INFO,"active OpenGL extensions: %s", glGetString(GL_EXTENSIONS));
-
 	tt_glcontext=SDL_GL_CreateContext(tt_window);
 	if(tt_glcontext==NULL)
 	{
@@ -142,6 +140,7 @@ bool tt_init(
 	}
 
 	SDL_DisableScreenSaver();
+	tt_log(TT_INFO,"active OpenGL extensions: %s", glGetString(GL_EXTENSIONS));
 
 	if(TTF_Init()!=0)
 	{
