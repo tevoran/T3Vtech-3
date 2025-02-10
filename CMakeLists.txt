@@ -5,10 +5,18 @@ project("T3Vtech-3")
 #SET(CMAKE_CXX_FLAGS  "-m64 -Ofast -flto -march=native -funroll-loops")
 
 #DEBUGMODE
-#SET(CMAKE_CXX_FLAGS "-g -ggdb -fsanitize=address")
-#SET(CMAKE_CXX_FLAGS "-g -Werror -Wall -Wextra")
-SET(CMAKE_C_FLAGS "-O0 -g")
-SET(CMAKE_CXX_FLAGS "-O0 -g -debug expr-source-pos")
+# SET(CMAKE_CXX_FLAGS "-g -ggdb -fsanitize=address")
+# SET(CMAKE_CXX_FLAGS "-g -Werror -Wall -Wextra")
+# SET(CMAKE_C_FLAGS "-O0 -g")
+# SET(CMAKE_CXX_FLAGS "-O0 -g -debug expr-source-pos")
+
+if (MSVC)
+    # warning level 4
+    add_compile_options(/W4)
+else()
+    # additional warnings
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
 
 #PROFILERMODE

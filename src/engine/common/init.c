@@ -10,12 +10,12 @@ extern SDL_GLContext tt_glcontext;
 //return true if successful
 bool tt_init(
 	const char *window_name,
-	const uint32_t res_x, 
+	const uint32_t res_x,
 	const uint32_t res_y,
 	const bool fullscreen,
 	const int msaa,
 	const char *logging_file)
-{	
+{
 	//if no logging file is specified set a default one
 	if(logging_file==NULL)
 	{
@@ -53,14 +53,14 @@ bool tt_init(
 	{
 		tt_log(TT_INFO, "SDL2 initialized");
 	}
-	
+
 	//if antialiasing with msaa is requested
 	//then set SDL to what is necessary
 	if(msaa>1)
 	{
 		tt_log(TT_INFO, "activating %ix MSAA", msaa);
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaa);		
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaa);
 	}
 
 	//get current desktop resolution to avoid resolution errors
@@ -73,7 +73,7 @@ bool tt_init(
 		"desktop resolution is %ix%i at %iHz",
 		tt_desktop_res_x,
 		tt_desktop_res_y,
-		dm.refresh_rate);		
+		dm.refresh_rate);
 
 	if(fullscreen)
 	{
@@ -81,22 +81,22 @@ bool tt_init(
 		tt_log(TT_INFO, "SDL_GetNumVideoDisplays(): %i", num_displays);
 
 		tt_window=SDL_CreateWindow(
-			window_name, 
+			window_name,
 			0,
 			0,
 			0, 0,
 			SDL_WINDOW_FULLSCREEN_DESKTOP |
 			SDL_WINDOW_BORDERLESS |
-			SDL_WINDOW_OPENGL);		
+			SDL_WINDOW_OPENGL);
 	}
 	else
 	{
 		tt_window=SDL_CreateWindow(
-			window_name, 
+			window_name,
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			res_x, res_y,
-			SDL_WINDOW_OPENGL);		
+			SDL_WINDOW_OPENGL);
 	}
 	if(tt_window==NULL)
 	{
@@ -116,6 +116,8 @@ bool tt_init(
 	tt_log(TT_INFO, "using OpenGL 4.3");
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+
+    tt_log(TT_INFO,"active OpenGL extensions: %s", glGetString(GL_EXTENSIONS));
 
 	tt_glcontext=SDL_GL_CreateContext(tt_window);
 	if(tt_glcontext==NULL)
@@ -167,7 +169,7 @@ bool tt_init(
 	//activate MSAA, if requested
 	if(msaa>1)
 	{
-		glEnable(GL_MULTISAMPLE); 
+		glEnable(GL_MULTISAMPLE);
 	}
 
 	//initializing input devices
