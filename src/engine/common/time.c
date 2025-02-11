@@ -1,5 +1,7 @@
 #include <tt.h>
 #include <time.h>
+#include <pthread.h>
+
 
 
 long time_last_frame_ns=0;
@@ -23,25 +25,21 @@ void tt_time_update()
 
 long tt_time_current_ns()
 {
-	#ifndef __MINGW32__
-		long time_out=0;
-		struct timespec ts;
-		if(TIME_UTC==timespec_get(&ts, TIME_UTC))
-		{
-			time_out=ts.tv_sec*1000000000;
-			time_out+=ts.tv_nsec;
-		}
-		return time_out;
-	#endif
-	#ifdef __MINGW32__
-	    int first_clock = clock();
-        int first_time = time(NULL);
-
-        while(time(NULL) <= first_time) {}
-
-        int second_time = time(NULL);
-        int second_clock = clock();
-	#endif
+    #ifndef __MINGW32__
+        long time_out=0;
+        struct timespec ts;
+        if(TIME_UTC==timespec_get(&ts, TIME_UTC))
+        {
+            time_out=ts.tv_sec*1000000000;
+            time_out+=ts.tv_nsec;
+        }
+        return time_out;
+    #endif
+    #ifdef __MINGW32__
+        static clock_t time;
+        time=clock()/CLOCKS_PER_SEC;
+        return (long)(time*1000000000);
+    #endif
 }
 
 long tt_time_current_frame_ns()
