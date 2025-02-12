@@ -180,6 +180,17 @@ void tt_gfx_3d_render()
 		current_object=tt_3d_list_entry_node->data;
 		T_node *current_node=tt_3d_list_entry_node;
 
+		//prepare uniforms
+		GLint transform=glGetUniformLocation(tt_std_3d_shader, "transform");
+		GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
+		GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
+		GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
+		GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
+		GLint ao_light_count=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_count");
+		GLint ao_light_list=glGetUniformLocation(tt_std_3d_shader, "object_ao_lights");
+		GLint object_color=glGetUniformLocation(tt_std_3d_shader, "object_color");
+		GLint object_emission=glGetUniformLocation(tt_std_3d_shader, "object_emission");
+
 		while(true)
 		{
 			if(!current_object->invisibility_toggle) //if invisible there is no need to render 
@@ -201,17 +212,6 @@ void tt_gfx_3d_render()
 					{
 						glDisable(GL_CULL_FACE);
 					}
-
-					//prepare uniforms
-					GLint transform=glGetUniformLocation(tt_std_3d_shader, "transform");
-					GLint rotation=glGetUniformLocation(tt_std_3d_shader, "rotation");
-					GLint affected_by_light=glGetUniformLocation(tt_std_3d_shader, "object_light_affected");
-					GLint point_light_count=glGetUniformLocation(tt_std_3d_shader, "object_point_light_count");
-					GLint point_light_list=glGetUniformLocation(tt_std_3d_shader, "object_point_lights");
-					GLint ao_light_count=glGetUniformLocation(tt_std_3d_shader, "object_ao_light_count");
-					GLint ao_light_list=glGetUniformLocation(tt_std_3d_shader, "object_ao_lights");
-					GLint object_color=glGetUniformLocation(tt_std_3d_shader, "object_color");
-					GLint object_emission=glGetUniformLocation(tt_std_3d_shader, "object_emission");
 
 					//calculate object transformation matrix
 					tt_mat4 mat4_transform=tt_math_mat4_mul(&current_object->translation, &current_object->rotation);
