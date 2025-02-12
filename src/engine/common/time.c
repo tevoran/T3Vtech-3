@@ -36,9 +36,7 @@ long tt_time_current_ns()
         return time_out;
     #endif
     #ifdef __MINGW32__
-        static clock_t time;
-        time=clock()/CLOCKS_PER_SEC;
-        return (long)(time*1000000000);
+        return SDL_GetTicks() * 1000000;
     #endif
 }
 
