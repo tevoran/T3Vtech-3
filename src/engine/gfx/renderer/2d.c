@@ -40,11 +40,13 @@ void tt_gfx_2d_render()
 				GLint rotation=glGetUniformLocation(tt_std_2d_shader, "rotation");
 				GLint scale=glGetUniformLocation(tt_std_2d_shader, "scale");
 				GLint aspect=glGetUniformLocation(tt_std_2d_shader, "aspect");
+				GLint transparency=glGetUniformLocation(tt_std_2d_shader, "transparency");
 
 				//set uniforms
 				glUniform2f(translation, current_2d_object->translation.x, current_2d_object->translation.y);
 				glUniform2f(scale, current_2d_object->scale.x, current_2d_object->scale.y);
 				glUniform1f(aspect, aspect_val);
+				glUniform1f(transparency, current_2d_object->transparency);
 		
 				const GLfloat *rot_ptr=(GLfloat*)&current_2d_object->rotation;
 				glUniformMatrix2fv(rotation, 1, false, rot_ptr);

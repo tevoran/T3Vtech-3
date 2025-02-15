@@ -31,6 +31,7 @@ tt_2d_object* tt_2d_object_new()
 	tt_math_mat2_make_identity_matrix(&new_object->rotation);
 
 	//properties
+	new_object->transparency=1.0f;
 	new_object->texture=tt_gfx_2d_default_tex;
 	new_object->is_text_object=false;
 
@@ -143,6 +144,11 @@ void tt_2d_object_use_texture(tt_2d_object *object, tt_2d_texture *texture)
 	{
 		object->texture=tt_gfx_2d_default_tex;
 	}
+}
+
+void tt_2d_object_set_transparency(tt_2d_object *object, float transparency)
+{
+	object->transparency=transparency;
 }
 
 bool tt_2d_object_is_colliding(tt_2d_object *a, tt_2d_object *b)

@@ -69,6 +69,10 @@ file(GLOB_RECURSE "input" SRC src/tests/input/input.c)
 add_executable(input WIN32 ${input})
 target_link_libraries(input LINK_PRIVATE T3Vtech)
 
+file(GLOB_RECURSE "2d_transparency" SRC src/tests/2d_transparency/2d_transparency.c)
+add_executable(2d_transparency WIN32 ${2d_transparency})
+target_link_libraries(2d_transparency LINK_PRIVATE T3Vtech)
+
 file(GLOB_RECURSE "3d_textures" SRC src/tests/textures/3d_textures.c)
 add_executable(3d_textures WIN32 ${3d_textures})
 target_link_libraries(3d_textures LINK_PRIVATE T3Vtech)

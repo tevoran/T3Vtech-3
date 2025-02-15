@@ -490,6 +490,16 @@ Setting the position of a 2D object is done by calling
 void tt_2d_object_set_position(tt_2d_object *object, tt_vec2 *position);
 ```
 
+#### Transparency of a 2D Object
+
+Setting the transparency of a 2D object is done by calling
+
+```c
+void tt_2d_object_set_transparency(tt_2d_object *object, float transparency);
+```
+
+The transparency value is set between 1.0f and 0.0f. 1.0f is equal to the entire texture is displayed as in the texture. 0.0f is totally transparent on the other hand.
+
 #### 2D Textures
 
 ##### Creation of 2D Textures
