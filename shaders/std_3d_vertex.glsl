@@ -1,4 +1,4 @@
-#version 450
+#version 430
 #define NUM_MAX_DIR_LIGHTS 8
 #define NUM_MAX_POINT_LIGHTS 128
 #define NUM_MAX_POINT_LIGHTS_PER_OBJECT 16

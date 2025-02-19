@@ -1,4 +1,4 @@
-#version 450
+#version 430
 
 //incoming variables
 in vec2 base_tex_coord;
